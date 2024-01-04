@@ -20,7 +20,14 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'cedula',
+        'usuario',
+        'fecha_ingreso',
+        'estado',
+        'role',
+        'tlf',
         'password',
+
     ];
 
     /**
@@ -42,4 +49,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relationships to other Models
+
+    // VentasLineas
+
 }

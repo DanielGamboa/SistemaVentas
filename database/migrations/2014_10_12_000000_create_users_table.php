@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('name'); // Nombre y apellido del vendedor Ej: Daniel Gamboa
+            $table->string('cedula', 25); // Documento de identidad Ej: 19560922
+            $table->string('usuario', 20)->unique(); // Usuario Ej: dgamboa
+            $table->bigInteger('tlf'); // Telefono de contacto del agente personal
+            $table->string('email')->unique(); // Correo electronico del vendedor Ej: dgamboa@test.com
+            $table->timestamp('email_verified_at')->nullable(); // Hora de validacion del correo
+            $table->date('fecha_ingreso');
+            $table->string('estado', 8); // Usuario Activo, Inactivo
+            $table->string('role', 20); // Role para permisos del usuario.
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

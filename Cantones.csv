@@ -1,0 +1,102 @@
+id_provincia,id_canton,nombre
+1,1,"San José"
+1,2,Escazú
+1,3,Desamparados
+1,4,Puriscal
+1,5,Tarrazú
+1,6,Aserri
+1,7,Mora
+1,8,Goicoechea
+1,9,"Santa Ana"
+1,10,Alajuelita
+1,11,Acosta
+1,12,Tibás
+1,13,Moravia
+1,14,"Montes de Oca"
+1,15,Turrubares
+1,16,Dota
+1,17,Curridabat
+1,18,"Pérez Zeledón"
+1,19,Catedral
+1,20,Alajuela
+1,21,"Vasquez de  Coronado"
+1,22,"León Cortes Castro"
+1,23,Gonzalez
+1,24,"San Sebastían"
+1,25,Santiago
+2,1,Heredia
+2,2,Barba
+2,3,Aurora
+2,4,"Santa Bárbara"
+2,6,"San Rafael"
+2,7,"San Isidro"
+2,8,"San Rafael"
+2,9,Flores
+2,10,Sarapiqui
+2,13,"San  Pablo"
+2,14,"Santo Domingo"
+2,15,"San Joaquín"
+3,1,Alajuela
+3,2,"San Carlos"
+3,3,Grecia
+3,4,"San Mateo"
+3,5,Atenas
+3,6,Naranjo
+3,7,Palmares
+3,8,Poás
+3,9,Orotina
+3,10,"San Carlos"
+3,11,Zarcero
+3,12,Sarchí
+3,13,Upala
+3,14,"Los Chiles"
+3,15,Guatuso
+3,16,"Rio Cuarto"
+3,17,Centro
+4,1,Liberia
+4,2,Nicoya
+4,3,"Santa Cruz"
+4,4,Bagaces
+4,5,Carrillo
+4,6,Cañas
+4,7,Tilarán
+4,8,Nandayure
+4,9,"La Cruz"
+4,10,Aguirre
+4,11,Abangares
+5,1,Puntarenas
+5,2,Esparza
+5,3,"Buenos Aires"
+5,4,"Montes de Oro"
+5,5,Osa
+5,6,Quepos
+5,7,Golfito
+5,8,"Coto Brus"
+5,9,Parrita
+5,10,Corredores
+5,11,Garabito
+5,12,Monteverde
+5,13,"Puerto Jiménez"
+5,14,"El Tigre"
+5,15,Barrancas
+6,1,Limón
+6,2,Pococi
+6,3,Siquirres
+6,4,Talamanca
+6,5,Matina
+6,6,Guácimo
+6,7,Germania
+6,8,Central
+7,1,Cartago
+7,2,Paraiso
+7,3,"Tres Rios"
+7,4,"Juan Viñas"
+7,5,Turrialba
+7,6,Alvarado
+7,7,Oreamuno
+7,8,"El Guarco"
+7,9,Oriental
+7,10,Occidental
+7,11,Carmen
+7,12,"San Nicolas"
+7,13,"La Unión"

@@ -1,0 +1,449 @@
+id_provincia,id_canton,id_distrito,nombre
+1,1,1,Carmen
+1,1,2,Merced
+1,1,3,Hospital
+1,1,4,Catedral
+1,1,5,"San Francisco de Dos Ríos"
+1,1,6,Uruca
+1,1,7,"Mata Redonda"
+1,1,8,Pavas
+1,1,9,"San Sebastián"
+1,1,10,Zapote
+1,1,11,Hatillo
+1,2,1,Escazú
+1,2,2,"San Antonio"
+1,2,3,"San Rafael"
+1,3,1,Desamparados
+1,3,2,"San Miguel"
+1,3,3,"San Juan de Dios"
+1,3,4,"San Rafael Arriba"
+1,3,5,Frailes
+1,3,6,Patarrá
+1,3,7,"San Cristóbal"
+1,3,8,Rosario
+1,3,9,Damas
+1,3,10,"San Rafael Abajo"
+1,3,11,Gravilias
+1,3,12,"Los Guido"
+1,3,13,"San Antonio"
+1,4,1,Santiago
+1,4,2,"Mercedes Sur"
+1,4,3,Barbacoas
+1,4,4,"Grifo Alto"
+1,4,5,"San Rafael"
+1,4,6,Candelarita
+1,4,7,Desamparaditos
+1,4,8,"San Antonio"
+1,4,9,Chires
+1,5,1,"San Marcos"
+1,5,2,"San Lorenzo"
+1,5,3,"San Carlos"
+1,6,1,Aserrí
+1,6,2,Tarbaca
+1,6,3,"Vuelta de Jorco"
+1,6,4,"San Gabriel"
+1,6,5,Legua
+1,6,6,Monterrey
+1,6,7,Salitrillos
+1,7,1,Colón
+1,7,2,Guayabo
+1,7,3,Tabarcia
+1,7,4,"Piedras Negras"
+1,7,5,Picagres
+1,7,6,Jaris
+1,7,7,Quitirrisí
+1,8,1,Guadalupe
+1,8,2,"Calle Blancos"
+1,8,3,"San Francisco"
+1,8,4,"Mata de Plátano"
+1,8,5,"San Francisco"
+1,8,6,"Calle Blancos"
+1,8,7,Ipís
+1,8,8,"Rancho Redondo"
+1,8,9,Purral
+1,9,1,"Santa Ana"
+1,9,2,Salitral
+1,9,3,Pozos
+1,9,4,Uruca
+1,9,5,Piedades
+1,9,6,Brasil
+1,10,2,"San Josecito"
+1,10,3,"San Antonio"
+1,10,4,Concepción
+1,10,5,"San Felipe"
+1,11,1,"San Ignacio"
+1,11,2,Guaitil
+1,11,3,Palmichal
+1,11,4,Cangrejal
+1,11,5,Sabanillas
+1,12,1,"San Juan"
+1,12,2,"Cinco Esquinas"
+1,12,3,"Anselmo Llorente"
+1,12,4,"León XIII"
+1,12,5,Colima
+1,13,1,"San Vicente"
+1,13,2,"San Jerónimo"
+1,13,3,"La Trinidad"
+1,14,1,"San Pedro"
+1,14,2,Sabanilla
+1,14,3,Mercedes
+1,14,4,"San Rafael"
+1,15,1,"San Pablo"
+1,15,2,"San Pedro"
+1,15,3,"San Juan de Mata"
+1,15,4,"San Luis"
+1,15,5,Carara
+1,16,1,"Santa María"
+1,16,2,Jardín
+1,16,3,Copey
+1,17,1,Curridabat
+1,17,2,Granadilla
+1,17,3,Sánchez
+1,17,4,Tirrases
+1,18,1,"San Isidro de El General"
+1,18,2,"El General"
+1,18,3,"Daniel Flores"
+1,18,4,Rivas
+1,18,5,"San Pedro"
+1,18,6,Platanares
+1,18,7,Pejibaye
+1,18,8,Cajón
+1,18,9,Barú
+1,18,10,"Río Nuevo"
+1,18,11,Páramo
+1,18,12,"La Amistad"
+1,21,1,"San Isidro"
+1,21,2,"San Rafael"
+1,21,3,"Dulce Nombre de Jesús"
+1,21,4,Patalillo
+1,21,5,Cascajal
+1,22,1,"San Pablo"
+1,22,2,"San Andrés"
+1,22,3,"Llano Bonito"
+1,22,4,"San Isidro"
+1,22,5,"Santa Cruz"
+1,22,6,"San Antonio"
+2,1,1,heredia
+2,1,2,Mercedes
+2,1,3,"San Francisco"
+2,1,4,Ulloa
+2,1,5,Varablanca
+2,2,1,Barva
+2,2,2,"San Pedro"
+2,2,3,"San pablo"
+2,2,4,"San Roque"
+2,2,5,"Santa Lucia"
+2,2,6,"San José de la Montaña"
+2,4,1,"Santa Bárbara"
+2,4,2,"San pedro"
+2,4,3,"San Juan"
+2,4,4,Jesús
+2,4,5,"Santo Domingo"
+2,4,6,Purabá
+2,7,1,"San isidro"
+2,7,2,"San José"
+2,7,3,Concepción
+2,7,4,"San Francisco"
+2,8,1,"San Rafael"
+2,8,2,"San Josecito"
+2,8,3,Santiago
+2,8,4,Ángeles
+2,8,5,Concepción
+2,9,1,"San Joaquin"
+2,9,2,Barrantes
+2,9,3,Llorente
+2,10,1,"Puerto Viejo"
+2,10,2,"La virgen"
+2,10,3,"Las Horquetas"
+2,10,4,"Llanuras del Gaspar"
+2,10,5,Cureña
+2,13,1,"San pablo"
+2,13,2,"Rincón de Sabanilla"
+2,14,1,"Santo Domingo"
+2,14,2,Pará
+2,14,3,Paracito
+2,14,4,"San Miguel"
+2,14,5,"San Vicente"
+2,14,6,"Santa Rosa"
+2,14,7,"Santo Tomás"
+2,14,8,Tures
+3,1,2,"San José"
+3,1,3,"San José"
+3,1,4,"San Roque"
+3,1,5,Tacares
+3,1,6,"Puente de Piedra"
+3,1,7,Sabanilla
+3,1,8,"San Rafael"
+3,1,9,"Río Segundo"
+3,1,10,Desamparados
+3,1,11,Turrúcares
+3,1,12,Tambor
+3,1,13,Garita
+3,1,14,Sarapiquí
+3,2,1,Quesada
+3,3,1,Grecia
+3,3,2,"San Isidro"
+3,4,1,"San Mateo"
+3,4,2,Desmonte
+3,4,3,"Jesús María"
+3,4,4,Labrador
+3,5,1,Atenas
+3,5,2,Jesús
+3,5,3,Mercedes
+3,5,4,"San Isidro"
+3,5,5,Concepción
+3,5,6,"San José"
+3,5,7,"Santa Eulalia"
+3,5,8,Escobal
+3,6,1,Naranjo
+3,6,2,"San Miguel"
+3,6,3,"San José"
+3,6,4,"Cirrí Sur"
+3,6,5,"San Jerónimo"
+3,6,6,"San Juan"
+3,6,7,"El Rosario"
+3,7,2,Zaragoza
+3,7,3,"Buenos Aires"
+3,7,4,Santiago
+3,7,5,Candelaria
+3,7,6,Esquipulas
+3,7,7,"La Granja"
+3,7,8,Palmitos
+3,8,1,"San Pedro"
+3,8,2,"San Juan"
+3,8,3,"San Rafael"
+3,8,4,Carrillos
+3,8,5,"Sabana Redonda"
+3,9,1,Orotina
+3,9,2,Florencia
+3,9,3,"Buena Vista"
+3,9,4,"Aguas Zarcas"
+3,9,5,Venecia
+3,9,6,Pital
+3,9,7,"La Fortuna"
+3,9,8,"La Tigra"
+3,9,9,"La Palmera"
+3,9,10,Venado
+3,9,11,Cutris
+3,9,12,Monterrey
+3,9,13,Pocosol
+3,11,1,Zarcero
+3,11,2,Laguna
+3,11,3,Tapesco
+3,11,4,Guadalupe
+3,11,5,Palmira
+3,11,6,Zapote
+3,11,7,Brisas
+3,12,1,"Sarchí Norte"
+3,12,2,"Sarchí Sur"
+3,12,3,"Toro Amarillo"
+3,12,4,"San Pedro"
+3,12,5,Rodrígez
+3,13,1,Upala
+3,13,2,"Aguas Claras"
+3,13,3,"San José"
+3,13,4,Bijagua
+3,13,5,Delicias
+3,13,6,"Dos Ríos"
+3,13,7,Yolillal
+3,13,8,Canalete
+3,14,1,"Los Chiles"
+3,14,2,"Caño Negro"
+3,14,3,"El Amparo"
+3,14,4,"San Jorge"
+3,15,1,"San Rafael"
+3,15,2,Buenavista
+3,15,3,cote
+3,15,4,Katira
+3,16,1,"Río Cuarto"
+3,16,2,"Santa Rita"
+3,16,3,"Santa Isabel"
+4,1,1,"  Liberia"
+4,1,2,"Cañas Dulces"
+4,1,3,Mayorga
+4,1,4,Nacascolo
+4,1,5,Curubandé
+4,2,1,Nicoya
+4,2,2,Mansión
+4,2,3,"San Antonio"
+4,2,4,"Quebrada Honda"
+4,2,5,Sámara
+4,2,6,Nosara
+4,2,7,"Belén de Nosarita"
+4,3,1,"Santa Cruz"
+4,3,2,Bolsón
+4,3,3,"Veintisiete de Abril"
+4,3,4,Tempate
+4,3,5,Cartagena
+4,3,6,Cuajiniquil
+4,3,7,Diriá
+4,3,8,"Cabo Velas"
+4,3,9,Tamarindo
+4,4,1,Bagaces
+4,4,2,"La Fortuna"
+4,4,3,Mogote
+4,4,4,"Río Naranjo"
+4,5,1,Belén
+4,5,2,Filadelfia
+4,5,3,Palmira
+4,5,4,Sardinal
+4,6,1,Bebedero
+4,6,2,Cañas
+4,6,3,Palmira
+4,6,4,Porozal
+4,6,5,"San Miguel"
+4,7,1,Tilarán
+4,7,2,"Quebrada Grande"
+4,7,3,Tronadora
+4,7,4,"Santa Rosa"
+4,7,5,Líbano
+4,7,6,"Tierras Morenas"
+4,7,7,Arenal
+4,7,8,Cabeceras
+4,8,1,Carmona
+4,8,2,"Santa Rita"
+4,8,3,Zapotal
+4,8,4,"San Pablo"
+4,8,5,Porvenir
+4,8,6,Bejuco
+4,9,1,"La Cruz"
+4,9,2,"La Garita"
+4,9,3,"Santa Cecilia"
+4,9,4,"Santa Elena"
+4,10,1,Hojancha
+4,10,2,Hojancha
+4,10,3,Huacas
+4,10,4,"Monte Romo"
+4,10,5,"Puerto Carrillo"
+4,10,6,Matambú
+5,1,1,Puntarenas
+5,1,2,Pitahaya
+5,1,3,Chomes
+5,1,4,Lepanto
+5,1,5,Paquera
+5,1,6,Manzanillo
+5,1,7,Guacimal
+5,1,8,Barranca
+5,1,9,"Monte Verde"
+5,1,10,"Isla del Coco"
+5,1,11,Cóbano
+5,1,12,Chacarita
+5,1,13,Chira
+5,1,14,Acapulco
+5,1,15,"El Roble"
+5,1,16,Arancibia
+5,2,1,"Espíritu Santo"
+5,2,2,"San Juan Grande"
+5,2,3,Macacona
+5,2,4,"San Rafael"
+5,2,5,"San Jerónimo"
+5,2,6,Caldera
+5,3,1,"Buenos Aires"
+5,3,2,Volcán
+5,3,3,"Potrero Grande"
+5,3,4,Boruca
+5,3,5,Pilas
+5,3,6,Colinas
+5,3,7,Chánguena
+5,3,8,Biolley
+5,3,9,Brunka
+5,4,1,Miramar
+5,4,2,"La Unión"
+5,4,3,"San Isidro"
+5,5,1,"Puerto Cortés"
+5,5,2,Palmar
+5,5,3,Sierpe
+5,5,4,"Bahía Ballena"
+5,5,5,"Piedras Blancas"
+5,5,6,"Bahía Drake"
+5,6,1,Quepos
+5,6,2,Savegre
+5,6,3,Naranjito
+5,7,1,Golfito
+5,7,2,"Puerto Jiménez"
+5,7,3,Guaycará
+5,7,4,Pavón
+5,8,1,"San Vito"
+5,8,2,Sabalito
+5,8,3,Aguabuena
+5,8,4,Limoncito
+5,8,5,Pittier
+5,8,6,"Gutiérrez Braun"
+5,9,1,Parrita
+5,10,1,Corredor
+5,10,2,"La Cuesta"
+5,10,3,Canoas
+5,10,4,Laurel
+5,11,1,Jacó
+5,11,2,Tárcoles
+5,11,3,Lagunillas
+6,1,1,limón
+6,1,2,Matama
+6,1,3,"Río Blanco"
+6,1,4,"Valle La Estrella"
+6,2,1,Cariari
+6,2,2,Colorado
+6,2,3,Guápiles
+6,2,4,Jiménez
+6,2,5,Rita
+6,2,6,Roxana
+6,3,1,Siquirres
+6,3,2,Alegría
+6,3,3,Cairo
+6,3,4,Florida
+6,3,5,Germania
+6,3,6,Pacuarito
+6,4,1,Bratsi
+6,4,2,Cahuita
+6,4,3,Sixaola
+6,4,4,Telire
+6,5,1,Matina
+6,5,2,Batán
+6,5,3,Carrandi
+6,6,1,Guácimo
+6,6,2,Duacarí
+6,6,3,Mercedes
+6,6,4,Pocora
+6,6,5,"Río Jiménez"
+7,1,1,Oriental
+7,1,2,Occidental
+7,1,3,Carmen
+7,1,5,Aguacaliente
+7,1,6,Guadalupe
+7,1,7,Corralillo
+7,1,8,"Tierra Blanca"
+7,1,9,"Dulce Nombre"
+7,1,10,"Llano Grande"
+7,1,11,Quebradilla
+7,1,12,"Oriental "
+7,1,13,"Occidental "
+7,2,1,Paraíso
+7,2,2,Santiago
+7,2,3,Orosi
+7,2,4,Cachí
+7,2,5,"Llanos de Santa Lucía"
+7,2,6,Birrisito
+7,5,1,Turrialba
+7,5,2,"La Suiza"
+7,5,3,Peralta
+7,5,4,"Santa Cruz"
+7,5,5,"Santa Teresita"
+7,5,6,Pavones
+7,5,7,Tuis
+7,5,8,Tayutic
+7,5,9,"Santa Rosa"
+7,5,10,"Tres Equis"
+7,5,11,"La Isabel"
+7,5,12,Chirripó
+7,6,1,Pacayas
+7,6,2,Cervantes
+7,6,3,Capellades
+7,7,1,"San Rafael"
+7,7,2,Cot
+7,7,3,"Potrero Cerrado"
+7,7,4,Cipreses
+7,7,5,"Santa Rosa"
+7,8,1,"El Tejar"
+7,8,2,"San Isidro"
+7,8,3,Tobosi
+7,11,4,"San Nicolás"
