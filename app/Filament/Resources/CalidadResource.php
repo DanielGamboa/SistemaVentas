@@ -27,6 +27,7 @@ use App\Models\Distrito;
 use Carbon\Carbon;
 use Illuminate\Support\Number;
 
+
 class CalidadResource extends Resource
 {
     protected static ?string $model = Calidad::class;
