@@ -2,8 +2,29 @@
 
 namespace App\Filament\Resources;
 
+// Enums
 use App\Enums\TipoDocumentoEnum;
 use App\Enums\Calidad\MotivoEvaluacionEnum;
+// Enum Alphabeticaly
+use App\Enums\Calidad\AbandonoLlamadaEnum;
+use App\Enums\Calidad\AceptacionServicioEnum;
+use App\Enums\Calidad\AclaraDudasClienteEnum;
+use App\Enums\Calidad\BienvenidaEnum;
+use App\Enums\Calidad\DiccionEnum;
+use App\Enums\Calidad\EmpatiaEnum;
+use App\Enums\Calidad\EscuchaActivaEnum;
+use App\Enums\Calidad\EsperaVaciosEnum;
+use App\Enums\Calidad\EvitaMaltratoAlClienteEnum;
+use App\Enums\Calidad\GenerarVentasIrregularesEnum;
+use App\Enums\Calidad\ManejoObjecionesEnum;
+use App\Enums\Calidad\OfertaComercialEnum;
+use App\Enums\Calidad\SolicitudNumeroAlternativoEnum;
+use App\Enums\Calidad\SondeoEnum;
+use App\Enums\Calidad\TecnicasDeCierreVentasEnum;
+use App\Enums\Calidad\UtilizaTecnicasCierreEnum;
+use App\Enums\Calidad\ValidacionVentaEnum;
+
+
 use App\Filament\Resources\CalidadResource\Pages;
 use App\Filament\Resources\CalidadResource\RelationManagers;
 use App\Models\Calidad;
@@ -26,6 +47,9 @@ use App\Models\Cantone;
 use App\Models\Distrito;
 use Carbon\Carbon;
 use Illuminate\Support\Number;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Radio;
 
 
 class CalidadResource extends Resource
@@ -40,74 +64,85 @@ class CalidadResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('motivo_evaluacion')
-                    ->options(MotivoEvaluacionEnum::class)
-                    ->enum(MotivoEvaluacionEnum::class)
-                    ->live()
-                    ->afterStateUpdated(function (Set $set) {
-                        $set('venta_lineas_id', null); //clears venta_lineas_id field on change
-                        })
-                    ->required(),
-                Forms\Components\Select::make('venta_lineas_id')
-                    ->label('Telefon Venta')
-                    ->live()
-                    ->searchable()
-                    ->visible(fn ($get) => $get('motivo_evaluacion') == 'Venta')
-                    ->options(VentaLinea::all()->pluck('tlf', 'id'))
-                    ->required(),
-                Forms\Components\Radio::make('ventas_telefono')
-                    ->live()
-                    // ->visible(fn ($get) => $get('motivo_evaluacion') == 'Venta')
-                    ->options(function (Get $get) {
-                        if ($get('venta_lineas_id')) {
-                            // Fetch data based on the selected value (VentaLinea model or any other logic)
-                            // This will return the selected phone number not ID
-                                $VentaLinea = VentaLinea::find($get('venta_lineas_id'));
-                                // dd($VentaLinea);
-                                $cliente = $VentaLinea->clientes_id;
-                             // Query the model based on the phone number
-                                // dd($VentaLinea);
-                                $records = VentaLinea::where('clientes_id', $cliente)->get();
-                            // Generate options array for radio buttons with associated and concatenated data
-                                $options = [];
-                                
-                                foreach ($records as $record) {
-                            // Get specific VentaLinea record clientes_id for asosiated Cliente record
-                                $cliente = $record->clientes_id;
-                                $clienteId = Cliente::find($cliente);
-                            // Return the plan associated with the selected ID
-                                $PlanesLibertyLineasEnum = $record->plan;
-                            // Return enum plan value from VentaLinea model record to be passed to $optionText
-                                $PlanesLibertyLineasStringValue = $PlanesLibertyLineasEnum->value;
-                            // Return the price associated with the plan ID
-                                $PreciosPlanesLibertyEnum = $record->precio;
-                                dd($PreciosPlanesLibertyEnum);
-                            // Return enum plan value from VentaLinea model record to be passed to $optionText
-                            $PreciosPlanesLibertyStringValue = $PreciosPlanesLibertyEnum->value;
-                            // Eddit String, add number format
-                            $PreciosPlanesLibertyNumberValueFormat = Number::format($PreciosPlanesLibertyStringValue);
-                            // Assuming $createdAt contains the 'created_at' date
-                                $createdAt = Carbon::parse($record->created_at);
-                                // Format the 'created_at' date to display as day, month, year
-                                $formattedDate = $createdAt->format('d-m-Y');
-                            // Concatenate associated data (e.g., Name, Document) for each record
-                                $optionText =  $record->id . ' ' . $PlanesLibertyLineasStringValue. ' '. $PreciosPlanesLibertyNumberValueFormat. ' ' . $formattedDate ; //. ' ' . $record->plan. ' ' . $record->precio. ' ' . $record->created_at; // Adjust with your column names
-                               // $optionText = Str::squish($optionTextt);
-                            // Store as key-value pair in the options array
-                                $options[$record->id] = $optionText;  
-                        }
-                        return $options;
-                        }
-                        // dd($options);// return 'foo'; // Return an empty string if no value selected
-                    })
+                Fieldset::make('Label')
+                    ->schema([
+                        // Motivo de la auditoria
+                        Select::make('motivo_evaluacion')
+                            ->options(MotivoEvaluacionEnum::class)
+                            ->enum(MotivoEvaluacionEnum::class)
+                            ->live()
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('venta_lineas_id', null); //clears venta_lineas_id field on change
+                                })
+                            ->required(),
+                            // If Venta is selected then this field will be visable and selectable
+                            // Populated with VentasLinea drop down.
+                        Select::make('venta_lineas_id')
+                            ->label('Telefon Venta')
+                            ->live()
+                            ->searchable()
+                            ->visible(fn ($get) => $get('motivo_evaluacion') == 'Venta')
+                            ->options(VentaLinea::all()->pluck('tlf', 'id'))
+                            ->required(),
+                        Radio::make('ventas_telefono')
+                            ->live()
+                            // ->visible(fn ($get) => $get('motivo_evaluacion') == 'Venta')
+                            ->options(function (Get $get) {
+                                if ($get('venta_lineas_id')) {
+                                    // Fetch data based on the selected value (VentaLinea model or any other logic)
+                                    // This will return the selected phone number not ID
+                                        $VentaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                        $cliente = $VentaLinea->clientes_id;
+                                     // Query the model based on the phone number
+                                        $records = VentaLinea::where('clientes_id', $cliente)->get();
+                                    // Generate options array for radio buttons with associated and concatenated data
+                                        $options = [];
+                                        
+                                        foreach ($records as $record) {
+                                    // Get specific VentaLinea record clientes_id for asosiated Cliente record
+                                            $cliente = $record->clientes_id;
+                                    // Get Client record based on client_id asosiated to the VentaLinea sale.
+                                            $clienteId = Cliente::find($cliente);
+                                    // Return the plan associated with the selected ID
+                                        $PlanesLibertyLineasEnum = $record->plan;
+                                    // Return enum plan value from VentaLinea model record to be passed to $optionText
+                                        $PlanesLibertyLineasStringValue = $PlanesLibertyLineasEnum->value;
+                                    // Return the price associated with the plan ID
+                                        $PreciosPlanesLibertyEnum = $record->precio;
+                                        
+                                    // Return enum plan value from VentaLinea model record to be passed to $optionText
+                                    $PreciosPlanesLibertyStringValue = $PreciosPlanesLibertyEnum;
+                                    
+                                    // Eddit String, add number format
+                                    $PreciosPlanesLibertyNumberValueFormat = Number::format($PreciosPlanesLibertyStringValue);
+                                    // Assuming $createdAt contains the 'created_at' date
+                                        $createdAt = Carbon::parse($record->created_at);
+                                        // Format the 'created_at' date to display as day, month, year
+                                        $formattedDate = $createdAt->format('d-m-Y');
+                                    // Concatenate associated data (e.g., Name, Document) for each record
+                                        $optionText =  $record->id . ' ' . $PlanesLibertyLineasStringValue. ' '. $PreciosPlanesLibertyNumberValueFormat. ' ' . $formattedDate ; //. ' ' . $record->plan. ' ' . $record->precio. ' ' . $record->created_at; // Adjust with your column names
+                                       // $optionText = Str::squish($optionTextt);
+                                    // Store as key-value pair in the options array
+                                        $options[$record->id] = $optionText;  
+                                    }
+                                return $options;
+                                }
+                                // dd($options);// return 'foo'; // Return an empty string if no value selected
+                            })->visible(function (Get $get) {
+                                    // Get value from venta_lineas_id
+                                    $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                    
+                                    // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
+                                    return $ventaLinea && ($ventaLinea->tlf !== '' or $ventaLinea->tlf !== null);
+                                }),
 
-                    ->visible(function (Get $get) {
-                        // Get value from venta_lineas_id
-                        $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
-                        
-                        // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
-                        return $ventaLinea && ($ventaLinea->tlf !== '' or $ventaLinea->tlf !== null);
-                    }),
+
+
+            // En of Fieldset            
+                    ]),
+                
+              
+                
                     Placeholder::make('venta_telefono_marcado')
                         ->label('Telefono Marcado')
                         // Edited Filament Resource file.  If filament does not fix this this will be overwriten on update
