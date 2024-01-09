@@ -3,46 +3,35 @@
 namespace App\Filament\Resources;
 
 //Resources
-use Filament\Resources\Resource;
-use App\Filament\Resources\VentaLineaResource\Pages;
-use App\Filament\Resources\VentaLineaResource\RelationManagers;
+use App\Enums\EstatusVentaLineaEnum;
+use App\Enums\PlanesLibertyLineasEnum;
 // Models
-use App\Models\VentaLinea;
-use App\Models\Cliente;
-use App\Models\Provincia;
+use App\Enums\PreciosPlanesLibertyLineasEnum;
+use App\Enums\VentaLineasEnum;
+use App\Filament\Resources\VentaLineaResource\Pages;
 use App\Models\Cantone;
-use App\Models\Distrito;
-
+use App\Models\Cliente;
 // Forms
+use App\Models\Distrito;
+use App\Models\Provincia;
+use App\Models\VentaLinea;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\maxLength;
-
 // Tables
+use Filament\Forms\Form;
+use Filament\Forms\Get;
+// Eloquent
+use Filament\Forms\Set;
+// Enums
+use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-
-// Eloquent
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
-
-// Enums
-use App\Enums\PlanesLibertyLineasEnum;
-use App\Enums\VentaLineasEnum;
-use App\Enums\PreciosPlanesLibertyLineasEnum;
-use App\Enums\EstatusVentaLineaEnum;
 use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
 
 class VentaLineaResource extends Resource
 {
@@ -99,28 +88,27 @@ class VentaLineaResource extends Resource
                     Select::make('plan')
                         ->options(PlanesLibertyLineasEnum::class)
                         ->live()
-                        ->afterStateUpdated(function (Set $set, $state)
-                            {
-                                // Set: is a built in function that takes two parameters 
-                                // $state is the retrived value in this case the PlanesLibertyLineasEnum value (not key)
-                                $PlanLiberty = Str::replace(' ', '', $state);
-                        
-                                $PrecioLibery = match ($PlanLiberty) {
-                                    // $PlanLiberty takes the @ from the value for PlanesLibertyLineasEnum::class
-                                    // Not the key that does not have the @ in its name.
-                                    'Plan@1' => PreciosPlanesLibertyLineasEnum::Plan1,
-                                    'Plan@1Pluss' => PreciosPlanesLibertyLineasEnum::Plan1Pluss,
-                                    'Plan@2' => PreciosPlanesLibertyLineasEnum::Plan2,
-                                    'Plan@3' => PreciosPlanesLibertyLineasEnum::Plan3,
-                                    'Plan@4' => PreciosPlanesLibertyLineasEnum::Plan4,
-                                    'Plan@5' => PreciosPlanesLibertyLineasEnum::Plan5,
-                                    'Plan@6' => PreciosPlanesLibertyLineasEnum::Plan6,
+                        ->afterStateUpdated(function (Set $set, $state) {
+                            // Set: is a built in function that takes two parameters
+                            // $state is the retrived value in this case the PlanesLibertyLineasEnum value (not key)
+                            $PlanLiberty = Str::replace(' ', '', $state);
 
-                                    default => null,
-                                    };
-                            
-                                $set('precio', $PrecioLibery);
-                            })
+                            $PrecioLibery = match ($PlanLiberty) {
+                                // $PlanLiberty takes the @ from the value for PlanesLibertyLineasEnum::class
+                                // Not the key that does not have the @ in its name.
+                                'Plan@1' => PreciosPlanesLibertyLineasEnum::Plan1,
+                                'Plan@1Pluss' => PreciosPlanesLibertyLineasEnum::Plan1Pluss,
+                                'Plan@2' => PreciosPlanesLibertyLineasEnum::Plan2,
+                                'Plan@3' => PreciosPlanesLibertyLineasEnum::Plan3,
+                                'Plan@4' => PreciosPlanesLibertyLineasEnum::Plan4,
+                                'Plan@5' => PreciosPlanesLibertyLineasEnum::Plan5,
+                                'Plan@6' => PreciosPlanesLibertyLineasEnum::Plan6,
+
+                                default => null,
+                            };
+
+                            $set('precio', $PrecioLibery);
+                        })
                         ->required()
                         ->columnSpan(4),
                     TextInput::make('precio')
@@ -128,7 +116,7 @@ class VentaLineaResource extends Resource
                         ->required()
                         ->columnSpan(4),
                 ])->columns(12)->columnSpan(12),
-                
+
                 Select::make('Estatus')
                     ->options(EstatusVentaLineaEnum::class)
                     ->enum(EstatusVentaLineaEnum::class)
@@ -149,37 +137,37 @@ class VentaLineaResource extends Resource
                 Section::make()->schema([
                     // Direccion de facturación
                     RichEditor::make('direccion_entrega')
-                    ->label('Dirección de Entrega')
-                    ->disableToolbarButtons([
-                         'blockquote',
-                         'strike',
-                         'link',
-                         'codeBlock',
-                         'attachFiles',
-                         ])
-                    
+                        ->label('Dirección de Entrega')
+                        ->disableToolbarButtons([
+                        'blockquote',
+                        'strike',
+                        'link',
+                        'codeBlock',
+                        'attachFiles',
+                        ]),
+
                 ])->columnSpan(6)->visible(fn (Get $get): bool => $get('entrega_distinta')),
-            Section::make()->schema([  
-                // 
-                Select::make('provincias_id')
-                    ->label('Provincia')
-                    ->options(Provincia::all()->pluck('provincia', 'id'))
-                    ->searchable()
-                    ->columnSpan(2)
-                    ->preload()
-                    ->live()
-                    ->afterStateUpdated(function (Set $set) {
-                        $set('cantones_id', null); //clears Cantones field on change
-                        $set('distritos_id', null); //clears Distritos field on change
+                Section::make()->schema([
+                    //
+                    Select::make('provincias_id')
+                        ->label('Provincia')
+                        ->options(Provincia::all()->pluck('provincia', 'id'))
+                        ->searchable()
+                        ->columnSpan(2)
+                        ->preload()
+                        ->live()
+                        ->afterStateUpdated(function (Set $set) {
+                            $set('cantones_id', null); //clears Cantones field on change
+                            $set('distritos_id', null); //clears Distritos field on change
                         })
-                    ->required(),
-                // Donde dice CantonNumber tenia "id" anteriormente
-                Select::make('cantones_id')
+                        ->required(),
+                    // Donde dice CantonNumber tenia "id" anteriormente
+                    Select::make('cantones_id')
                         ->label('Canton')
                         ->options(fn (Get $get): Collection => Cantone::query()
-                            ->where('id_provincias', $get('provincias_id'))
-                            ->pluck('canton', 'CantonNumber')
-                            )
+                        ->where('id_provincias', $get('provincias_id'))
+                        ->pluck('canton', 'CantonNumber')
+                        )
                         ->searchable()
                         ->preload()
                         ->live()
@@ -188,13 +176,13 @@ class VentaLineaResource extends Resource
                         })
                         ->columnSpan(2)
                         ->required(),
-                Select::make('distritos_id')
+                    Select::make('distritos_id')
                         ->label('Distrito')
                         ->options(fn (Get $get): Collection => Distrito::query()
                             ->where('provincias_id', $get('provincias_id'))
                             ->where('cantones_id', $get('cantones_id'))
                             ->pluck('distrito', 'id')
-                            )
+                        )
                         ->searchable()
                         ->columnSpan(2)
                         ->preload()
@@ -203,9 +191,8 @@ class VentaLineaResource extends Resource
                 ])->columnSpan(6)->visible(fn (Get $get): bool => $get('entrega_distinta')),
 
                 // copy paste
-                
-                //
 
+                //
 
             ])->columns(12);
     }
@@ -230,10 +217,10 @@ class VentaLineaResource extends Resource
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('cliente.primer_nombre')
-                    ->formatStateUsing(function ($state, VentaLinea $cliente)
-                    {
-                        $NombreCompletoCliente = $cliente->cliente->primer_nombre. ' ' . $cliente->cliente->segundo_nombre. ' ' . $cliente->cliente->primer_apellido. ' ' . $cliente->cliente->segundo_apellido;
+                    ->formatStateUsing(function ($state, VentaLinea $cliente) {
+                        $NombreCompletoCliente = $cliente->cliente->primer_nombre.' '.$cliente->cliente->segundo_nombre.' '.$cliente->cliente->primer_apellido.' '.$cliente->cliente->segundo_apellido;
                         $Nombre = Str::squish($NombreCompletoCliente);
+
                         return $Nombre;
                     })
                     ->sortable()
@@ -293,14 +280,14 @@ class VentaLineaResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -308,5 +295,5 @@ class VentaLineaResource extends Resource
             'create' => Pages\CreateVentaLinea::route('/create'),
             'edit' => Pages\EditVentaLinea::route('/{record}/edit'),
         ];
-    }    
+    }
 }

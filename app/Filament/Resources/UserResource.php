@@ -3,21 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Select;
 use Illuminate\Support\Str;
-use Filament\Forms\Set;
 
 class UserResource extends Resource
 {
@@ -38,14 +34,13 @@ class UserResource extends Resource
                 TextInput::make('name')
                     ->autocapitalize('words')
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function (Set $set, $state)
-                        {
-                            // Set: is a built in function that takes two parameters 
-                            // $name is the retrived value in this case the 'name' value
-                            // Str::title() will make the first letter of every word capitalized and the rest lower case
-                            $name = Str::title($state);
-                            $set('name', $name);
-                        })
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        // Set: is a built in function that takes two parameters
+                        // $name is the retrived value in this case the 'name' value
+                        // Str::title() will make the first letter of every word capitalized and the rest lower case
+                        $name = Str::title($state);
+                        $set('name', $name);
+                    })
                     ->required()
                     ->columnSpan(2),
                 TextInput::make('cedula')->required(),
@@ -56,15 +51,14 @@ class UserResource extends Resource
                 TextInput::make('usuario')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function (Set $set, $state)
-                        {
-                            // Set: is a built in function that takes two parameters 
-                            // $removed is the retrived value in this case the 'usuario' value and we remove spaces
-                            // Str::lower() will make the evry letter lower case
-                            $removed = Str::remove(' ', $state);
-                            $usuario = Str::lower($removed);
-                            $set('usuario', $usuario);
-                        })
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        // Set: is a built in function that takes two parameters
+                        // $removed is the retrived value in this case the 'usuario' value and we remove spaces
+                        // Str::lower() will make the evry letter lower case
+                        $removed = Str::remove(' ', $state);
+                        $usuario = Str::lower($removed);
+                        $set('usuario', $usuario);
+                    })
                     ->columnSpan(2),
                 DatePicker::make('fecha_ingreso')
                     ->native(false)
@@ -78,10 +72,10 @@ class UserResource extends Resource
                     'default' => '',
                     'activo' => 'Activo',
                     'inactivo' => 'Inactivo',
-                    ])
-                        ->default('default')
-                        ->selectablePlaceholder(false)
-                        ->required(),
+                ])
+                    ->default('default')
+                    ->selectablePlaceholder(false)
+                    ->required(),
 
                 TextInput::make('role'),
                 TextInput::make('password')->required()->password(),
@@ -128,14 +122,14 @@ class UserResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -143,5 +137,5 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
-    }    
+    }
 }

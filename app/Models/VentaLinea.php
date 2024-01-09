@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use App\Enums\EstatusVentaLineaEnum;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Enums\PlanesLibertyLineasEnum;
 use App\Enums\VentaLineasEnum;
-use App\Models\User;
-use App\Models\Cliente;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class VentaLinea extends Model
@@ -26,22 +24,23 @@ class VentaLinea extends Model
         'precio',
         'Estatus',
         'tlf',
-        'tlf_venta_distinto', 
-        'user_id', 
+        'tlf_venta_distinto',
+        'user_id',
         // 'venta_linea',
-        'tlf_marcado', 
+        'tlf_marcado',
         'clientes_id',
         'entrega_distinta',
         'direccion_entrega',
         'provincias_id',
         'cantones_id',
-        'distritos_id'
+        'distritos_id',
     ];
-  
+
     /**
      * Write code on Method
      *
      * @return response()
+     *
      * @var array
      */
     protected $casts = [
@@ -66,7 +65,7 @@ class VentaLinea extends Model
         return $this->belongsTo(Cliente::class, 'clientes_id');
     }
 
-    public function provincias(): BelongsTo 
+    public function provincias(): BelongsTo
     {
         return $this->belongsTo(Provincia::class);
     }
@@ -79,8 +78,7 @@ class VentaLinea extends Model
     }
 
     public function distrito(): BelongsTo
-    {  
+    {
         return $this->belongsTo(Distrito::class, 'distritos_id');
     }
-
 }

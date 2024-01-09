@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Provincia;
-use App\Models\Cantone;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Distrito extends Model
@@ -21,17 +19,17 @@ class Distrito extends Model
         ])->value('DistritoName');
     }
 
-    public function provincias(): BelongsTo 
+    public function provincias(): BelongsTo
     {
         return $this->belongsTo(Provincia::class, 'provincias_id');
     }
 
-    public function cantones(): BelongsTo 
+    public function cantones(): BelongsTo
     {
         return $this->belongsTo(Cantone::class, 'cantones_id', 'id');
     }
 
-    public function distrito(): BelongsTo 
+    public function distrito(): BelongsTo
     {
         return $this->belongsTo(Distrito::class, 'distrito');
     }

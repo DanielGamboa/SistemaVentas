@@ -3,20 +3,19 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CantoneResource\Pages;
-use App\Filament\Resources\CantoneResource\RelationManagers;
 use App\Models\Cantone;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CantoneResource extends Resource
 {
     protected static ?string $navigationGroup = 'División Territorial';
+
     protected static ?int $navigationSort = 2;
+
     protected static ?string $model = Cantone::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
@@ -62,14 +61,14 @@ class CantoneResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -77,5 +76,5 @@ class CantoneResource extends Resource
             'create' => Pages\CreateCantone::route('/create'),
             'edit' => Pages\EditCantone::route('/{record}/edit'),
         ];
-    }    
+    }
 }

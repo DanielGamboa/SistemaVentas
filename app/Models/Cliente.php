@@ -2,35 +2,29 @@
 
 namespace App\Models;
 
+use App\Enums\ImagenesDocumentoEnum;
+use App\Enums\TipoDocumentoEnum;
+use Database\Factories\ClienteFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
-use App\Enums\TipoDocumentoEnum;
-use App\Enums\ImagenesDocumentoEnum;
-use App\Models\Provincia;
-use App\Models\Cantone;
-use App\Models\Distrito;
-use App\Models\User;
-use App\Models\ClienteDocumento;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use App\Models\VentaLinea;
-use Database\Factories\ClienteFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
 class Cliente extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     *
      * @return response()
      */
     protected $fillable = [
@@ -51,13 +45,14 @@ class Cliente extends Model
         // On create Logged in user is added
         'user_id',
         // Images Documents Tab
-        'tipo_documento_img'
+        'tipo_documento_img',
     ];
 
     /**
      * Write code on Method
      *
      * @return response()
+     *
      * @var array
      */
     protected $casts = [
@@ -76,7 +71,7 @@ class Cliente extends Model
     //     ])->value('DistritoName');
     // }
 
-    public function provincias(): BelongsTo 
+    public function provincias(): BelongsTo
     {
         return $this->belongsTo(Provincia::class);
     }
@@ -87,15 +82,15 @@ class Cliente extends Model
         // dd($provincia);
         // return $this->belongsTo(Cantone::class, 'cantones_id', 'CantonNumber',);
         return $this->belongsTo(Cantone::class, 'cantones_id');
-        
+
         // ->where('id_provincias', $provincia)->value('canton');
-        
+
         // ->where('provincia_id', 'id_provincias');
         // return $this->belongsTo(Cantone::class, 'CantonNumber');
     }
 
     public function distrito(): BelongsTo
-    {  
+    {
         return $this->belongsTo(Distrito::class, 'distritos_id');
     }
 
@@ -119,17 +114,17 @@ class Cliente extends Model
     {
         return $this->belongsTo(Cantone::class, function ($query) {
             $query->where('id_provincias', $this->provincia_id)
-                  ->where('CantonNumber', $this->canton_id);
+                ->where('CantonNumber', $this->canton_id);
         });
         // return $cantones;
     }
-    
+
     public function fuu(): BelongsTo
     {
         return $this->belongsTo(Cantone::class, 'CantonNumber', 'cantones_id')
             // ->where('provincia_id', 'provincia_id')
             ->where('CantonNumber', 'canton_id');
-            // ->value('canton');
+        // ->value('canton');
         // $cantones = DB::table('cantones')
         //     ->where('id_provincia', 'provincia_id')
         //     ->where('CantonNumber', 'canton_id')
@@ -139,11 +134,10 @@ class Cliente extends Model
 
     // Faker factory
     /**
- * Create a new factory instance for the model.
- */
+     * Create a new factory instance for the model.
+     */
     protected static function ClienteFactory(): Factory
     {
         return ClienteFactory::new();
     }
 }
-

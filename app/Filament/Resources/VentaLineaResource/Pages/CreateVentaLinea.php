@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\VentaLineaResource\Pages;
 
 use App\Filament\Resources\VentaLineaResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateVentaLinea extends CreateRecord
@@ -13,6 +12,7 @@ class CreateVentaLinea extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = auth()->id();
+
         return $data;
     }
 
@@ -20,5 +20,4 @@ class CreateVentaLinea extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
-
 }

@@ -9,7 +9,6 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Provincia extends Model
 {
-
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -23,12 +22,12 @@ class Provincia extends Model
         'created_at',
     ];
 
-        /**
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
     protected $casts = [
-        
+
     ];
 }

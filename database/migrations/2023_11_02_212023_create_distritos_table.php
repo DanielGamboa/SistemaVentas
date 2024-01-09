@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('distrito');
             $table->foreignId('provincias_id')->constrained();
             $table->foreignId('cantones_id')->constrained();
-    
+
         });
     }
 

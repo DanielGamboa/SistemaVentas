@@ -2,24 +2,22 @@
 
 namespace App\Models;
 
+use App\Enums\Calidad\MotivoEvaluacionEnum;
+use App\Enums\Calidad\BienvenidaEnum;
+use App\Enums\Calidad\DiccionEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\VentaLinea;
-use App\Enums\Calidad\BienvenidaEnum;
-use App\Enums\Calidad\EmpatiaEnum;
-use App\Enums\Calidad\DiccionEnum;
-use App\Enums\Calidad\MotivoEvaluacionEnum;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Calidad extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use Notifiable;
-        /**
+    use SoftDeletes;
+
+    /**
      * Write code on Method
      *
      * @return response()
@@ -43,14 +41,16 @@ class Calidad extends Model
 
     ];
 
-        /**
+    /**
      * Write code on Method
      *
      * @return response()
+     *
      * @var array
      */
     protected $casts = [
-        'motivo_evaluacion' => MotivoEvaluacionEnum::class
+        'motivo_evaluacion' => MotivoEvaluacionEnum::class,
+        'bienvenida' => BienvenidaEnum::class,
     ];
 
     public function user(): BelongsTo

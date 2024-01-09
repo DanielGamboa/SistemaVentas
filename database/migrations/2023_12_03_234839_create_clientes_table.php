@@ -36,7 +36,7 @@ return new class extends Migration
             $table->unsignedBigInteger('distritos_id');
             $table->foreign('distritos_id')->references('id')->on('distritos');
             $table->text('direccion');
-            
+
             // $table->boolean('entrega_distinta'); --> On succesfull migration delete
             // $table->text('direccion_entrega')->nullable(); -->on succesfull migration delete
             $table->foreignId('user_id')->constrained()->restrictOnDelete();

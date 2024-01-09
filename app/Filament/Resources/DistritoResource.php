@@ -3,22 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DistritoResource\Pages;
-use App\Filament\Resources\DistritoResource\RelationManagers;
 use App\Models\Distrito;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DistritoResource extends Resource
 {
     protected static ?string $navigationGroup = 'División Territorial';
+
     protected static ?int $navigationSort = 3;
+
     protected static ?string $model = Distrito::class;
-    
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
@@ -69,14 +67,14 @@ class DistritoResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -84,5 +82,5 @@ class DistritoResource extends Resource
             'create' => Pages\CreateDistrito::route('/create'),
             'edit' => Pages\EditDistrito::route('/{record}/edit'),
         ];
-    }    
+    }
 }

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\CantoneResource\Pages;
 
 use App\Filament\Resources\CantoneResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateCantone extends CreateRecord
