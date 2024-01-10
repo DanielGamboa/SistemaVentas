@@ -227,7 +227,7 @@ class CalidadResource extends Resource
                                             return $ventaLinea && ($ventaLinea->tlf !== '' && $ventaLinea->tlf !== null);
                                         }),
                                 
-                                
+                                // Insert here
                                 Placeholder::make('venta_telefono_marcado')
                                     ->label('Telefono Marcado')
                                     // Edited Filament Resource file.  If filament does not fix this this will be overwriten on update
@@ -241,26 +241,28 @@ class CalidadResource extends Resource
                                     // Daniel Gamboa
                                     
                                     ->live()
+                                    ->visible(function (Get $get) {
+                                        // Get value from ventas_telefono this value for the radio button is the VentasLineas ID
+                                        $ventasTelefono = $get('ventas_telefono');
+                                        $tlfMarcado = VentaLinea::where('id', $ventasTelefono)->value('tlf_marcado');
+                                        
+                                        // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
+                                        // return $ventaLinea && ($ventaLinea->tlf_marcado !== '' &&  $tlfMarcado !== '');
+                                        return $tlfMarcado !== null;
+                                        })
                                     ->content(function (Get $get) {
-                                        if ($get('venta_lineas_id')) {
+                                        if ($get('ventas_telefono')) {
                                             // Fetch data based on the selected value (VentaLinea model or any other logic)
-                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
-
+                                                $ventasTelefono = $get('ventas_telefono');
+                                                // $ventaLinea = VentaLinea::find($get('ventas_telefono'))->id;
                                             // Return the tlf_marcado associated with the selected ID
-                                            return $ventaLinea ? $ventaLinea->tlf_marcado : '';
+                                                $tlfMarcado = VentaLinea::where('id', $ventasTelefono)->value('tlf_marcado');
+                                                // VentaLinea::where('id', $get('venta_lineas_id'))->value('clientes_id');
+                                            return $ventasTelefono ? $tlfMarcado : '';
                                             }
                                         return ''; // Return an empty string if no value selected
                                         })
-                                        ->inlineLabel()
-                                    ->visible(function (Get $get) {
-                                            // Get value from venta_lineas_id
-                                            $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
-                                            
-                                            // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
-                                            return $ventaLinea && ($ventaLinea->tlf_marcado !== '' && $ventaLinea->tlf_marcado !== null);
-                                        }),
-
-
+                                        ->inlineLabel(),
 
                                 Placeholder::make('Dirección')
                                     ->inlineLabel()  // Might want to delete thes for this Placeholder
@@ -319,6 +321,58 @@ class CalidadResource extends Resource
                                             return $ventaLinea && ($ventaLinea->tlf !== '' && $ventaLinea->tlf !== null);
                                         }),
 
+                                Placeholder::make('Dirección entrega')
+                                    ->inlineLabel()  // Might want to delete thes for this Placeholder
+                                    ->live()
+                                    ->visible(function (Get $get) {
+                                        // Get value from ventas_telefono, this value for the radio button is the specific VentasLineas ID
+                                        $ventasTelefono = $get('ventas_telefono');
+                                        $direccionEntrega = VentaLinea::where('id', $ventasTelefono)->value('direccion_entrega');
+                                        
+                                        // Check if $ventaLinea exists and direccion_entrega is not null on speficic VentaLinea record
+                                        // return $ventaLinea && ($ventaLinea->direccion_entrega !== '' &&  $tlfMarcado !== '');
+                                        return $direccionEntrega !== '';
+                                        })
+                                    ->content(function (Get $get) {
+                                        if ($get('ventas_telefono')) {
+
+                                            // Fetch data based on the selected value (VentaLinea model or any other logic)
+                                            $ventasTelefono = $get('ventas_telefono');
+                                            // Return the tlf_marcado associated with the selected ID
+                                            $tlfMarcado = VentaLinea::where('id', $ventasTelefono)->value('direccion_entrega');
+                                            // VentaLinea::where('id', $get('venta_lineas_id'))->value('clientes_id');
+                                            return $ventasTelefono ? $tlfMarcado : '';
+                                            }
+                                        return ''; // Return an empty string if no value selected
+                                        }),
+
+                                Placeholder::make('ProvinciaCantonDistritoEntrega')
+                                    ->label(' ')
+                                    ->inlineLabel()
+                                    ->live()
+                                    ->content(function (Get $get) {
+                                        if ($get('ventas_telefono')) {
+                                            // Fetch data based on the selected value (VentaLinea model or any other logic)
+                                            // Get specific VentaLinea record clientes_id for asosiated Cliente record
+                                                $ventaLinea = VentaLinea::find($get('ventas_telefono'));
+                                            // Return the tlf_marcado associated with the selected ID
+                                                $provincia = Provincia::where('id', $ventaLinea->provincias_id)->value('provincia');
+                                                $canton = Cantone::where('id_provincias', $ventaLinea->provincias_id)->where('CantonNumber', $ventaLinea->cantones_id)->value('canton');
+                                                $distrito = Distrito::where('id', $ventaLinea->distritos_id)->value('distrito');
+                                            // Concatenate Provincia, Canton, Distrito.  In order to save space
+                                            $ProvinciaCantonDistrito = $provincia. ', '. $canton. ', ' . $distrito;
+                                            $Nombre = Str::squish($ProvinciaCantonDistrito);
+                                            return $Nombre;
+                                            }
+                                        return ''; // Return an empty string if no value selected
+                                        })
+                                    ->visible(function (Get $get) {
+                                            // Get value from ventas_telefono, this value for the radio button is the specific VentasLineas ID
+                                            $ventasTelefono = $get('ventas_telefono');
+                                            $direccionEntrega = VentaLinea::where('id', $ventasTelefono)->value('direccion_entrega');
+                                            // Check if $ventaLinea exists and direccion_entrega is not null on speficic VentaLinea record
+                                            return $direccionEntrega !== '';
+                                        }),
 
                         //End of fieldset Datos del cliente y la venta
                             ])->columns(1)
@@ -351,16 +405,15 @@ class CalidadResource extends Resource
                                     ->required()
                                     ->live(),
                             
+                                // Get call duration from its starting and ending times, visible when not blank
                                 PlaceHolder::make('duracion')
                                     ->label('Duración')
                                     ->live()
                                     ->visible(function (Get $get) {
-                                        // Get value from venta_lineas_id
+                                        // Get value from dia_hora_inicio & dia_hora_final
                                         $HoraInicio = $get('dia_hora_inicio');
                                         $HoraFinal = $get('dia_hora_final');
-                                        
-                                        // dd($HoraInicio);
-                                        // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
+                                        // Check if $dia_hora_inicio and dia_hora_final are not null
                                         return ($HoraInicio !== null && $HoraFinal !== null);
                                     })
                                     ->content(function (Get $get) {
@@ -378,7 +431,7 @@ class CalidadResource extends Resource
                                             return $timeDifference;
 
                                         }
-                                        return 'Debe Ingresar una hora valida';
+                                        return 'Debe Ingresar una hora válida';
                                     })
                                 
                                     
