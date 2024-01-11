@@ -24,7 +24,7 @@ use App\Enums\Calidad\TecnicasDeCierreVentasEnum;
 use App\Enums\Calidad\UtilizaTecnicasCierreEnum;
 use App\Enums\Calidad\ValidacionVentaEnum;
 
-
+use Filament\Forms\Components\Repeater;
 use App\Filament\Resources\CalidadResource\Pages;
 use App\Filament\Resources\CalidadResource\RelationManagers;
 use App\Models\Calidad;
@@ -57,6 +57,8 @@ use Filament\Forms\Components\TimePicker;
 // use Filament\Actions\Action;
 //  Filament\Forms\Components\Actions\Action
 // use Filament\Forms\Components\Actions\Action;
+// Spatie media library
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 
 class CalidadResource extends Resource
@@ -417,20 +419,30 @@ class CalidadResource extends Resource
                     ])->columns(12),
 
 
-            // Start of fieldset for Fecha, hora for the call in cuestion.    
+            // Start of fieldset for Fecha, hora for the call in cuestion.
                 Fieldset::make('Fecha, hora y duración')
                             ->schema([
+                                Repeater::make('members')
+                                ->schema([
+                                    SpatieMediaLibraryFileUpload::make('grabacion')
+                                    ->label('Grabación')
+                                    ->acceptedFileTypes(['audio/wav', 'audio/webm', 'audio/aac', 'audio/mpeg', 'video/mp4', ])
+                                    ->required()
+                                    ->columnSpan(6),
                                 DatePicker::make('fecha_llamada')
                                     ->label('Fecha llamada (dd/mm/yyyy)')
                                     ->required()
                                     ->native(false)
-                                    ->displayFormat('d/m/Y'),
+                                    ->displayFormat('d/m/Y')
+                                    ->columnSpan(6),
                                 TimePicker::make('dia_hora_inicio')
                                     ->required()
-                                    ->live(),
+                                    ->live()
+                                    ->columnSpan(4),
                                 TimePicker::make('dia_hora_final')
                                     ->required()
-                                    ->live(),
+                                    ->live()
+                                    ->columnSpan(4),
                             
                                 // Get call duration from its starting and ending times, visible when not blank
                                 PlaceHolder::make('duracion')
@@ -460,9 +472,10 @@ class CalidadResource extends Resource
                                         }
                                         return 'Debe Ingresar una hora válida';
                                     })
-                                
-                                    
+                                    ->columnSpan(4),       
 
+                                // End repeater for recording
+                                ])->columns(12)->columnSpan(12), 
                             ]),    
 
                 Forms\Components\Textarea::make('observaciones')
