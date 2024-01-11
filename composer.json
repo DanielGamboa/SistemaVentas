@@ -11,6 +11,7 @@
         "php": "^8.1",
         "bensampo/laravel-enum": "^6.7",
         "filament/filament": "^3.1",
+        "filament/spatie-laravel-media-library-plugin": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.35",
         "laravel/sanctum": "^3.2",

@@ -25,3 +25,16 @@ Dependant drop down from another dropdown
                 ],
                 default => [],
 
+
+For media upload 
+This will create a sim link from public -> storage to the private Storage folder in order not to expose the file to the public forlder
+Also edit env to have the exact url loke localhost:8000 or FQDN
+    php artisan storage:link
+
+Installed Spatie Media Library plugin for filament.
+    composer require filament/spatie-laravel-media-library-plugin:"^3.1" -W
+    //This next comand as of today does not work properly
+    php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="medialibrary-migrations"
+    // Currently the correct comand is
+    php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"
+
