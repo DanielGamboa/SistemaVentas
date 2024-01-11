@@ -29,6 +29,7 @@ use App\Filament\Resources\CalidadResource\Pages;
 use App\Filament\Resources\CalidadResource\RelationManagers;
 use App\Models\Calidad;
 use App\Models\VentaLinea;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -52,6 +53,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TimePicker;
+//  filament\Actions\Action
+// use Filament\Actions\Action;
+//  Filament\Forms\Components\Actions\Action
+// use Filament\Forms\Components\Actions\Action;
 
 
 class CalidadResource extends Resource
@@ -66,6 +71,8 @@ class CalidadResource extends Resource
     {
         return $form
             ->schema([
+                // Action::make('edit')
+                //     ->button(),
                 Fieldset::make('Label')
                     ->schema([
                         // Motivo de la auditoria
@@ -80,6 +87,25 @@ class CalidadResource extends Resource
                             // If Venta is selected then this field will be visable and selectable
                             // Populated with VentasLinea drop down.
                             ->columnSpan(6),
+
+//  ================================================================================  START AGENTE ===================================================================================
+
+
+
+                        Select::make('agente')
+                            ->label('Seleccione el Agente')
+                            ->live()
+                            ->searchable()
+                            ->visible(fn ($get) => $get('motivo_evaluacion') == 'Agente')
+                            ->options(User::all()->pluck('name', 'id'))
+                            ->required()
+                            ->columnSpan(6),
+
+
+
+
+
+//  ================================================================================  END AGENTE ===================================================================================
                         Select::make('venta_lineas_id')
                             ->label('Telefon Venta')
                             ->live()
@@ -88,6 +114,7 @@ class CalidadResource extends Resource
                             ->options(VentaLinea::all()->pluck('tlf', 'id'))
                             ->required()
                             ->columnSpan(6),
+
                         Fieldset::make('Ventas')
                             ->schema([
                                 Radio::make('ventas_telefono')

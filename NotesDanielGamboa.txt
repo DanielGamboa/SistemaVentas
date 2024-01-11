@@ -1,0 +1,27 @@
+Notes:
+
+The required field will be required conditionally depending on the outcome of the bool statement.
+If true then it will be required
+If false then it will not be required 
+
+    TextInput::make('vat_number')
+        ->required(fn (Get $get): bool => filled($get('company_name')))
+
+Dependant drop down from another dropdown
+
+        Select::make('sub_category')
+            ->options(fn (Get $get): array => match ($get('category')) {
+                'web' => [
+                    'frontend_web' => 'Frontend development',
+                    'backend_web' => 'Backend development',
+                ],
+                'mobile' => [
+                    'ios_mobile' => 'iOS development',
+                    'android_mobile' => 'Android development',
+                ],
+                'design' => [
+                    'app_design' => 'Panel design',
+                    'marketing_website_design' => 'Marketing website design',
+                ],
+                default => [],
+
