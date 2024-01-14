@@ -13,12 +13,33 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+//  For registerMediaConversions for Spatie MediaLibrary
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+
+// class Cliente extends Model <-- previus
+// class Cliente extends Model implements HasMedia
 class Cliente extends Model
 {
+    //Spatie Media Library
+    // use InteractsWithMedia;
+    // Factory
     use HasFactory;
+    //
     use Notifiable;
     use SoftDeletes;
+
+
+//     public function registerMediaConversions(Media $media = null): void
+// {
+//     $this
+//         ->addMediaConversion('preview')
+//         ->fit(Manipulations::FIT_CROP, 300, 300)
+//         ->nonQueued();
+// }
 
     /**
      * The attributes that are mass assignable.
@@ -40,12 +61,15 @@ class Cliente extends Model
         'provincias_id',
         'cantones_id',
         'distritos_id',
-        'entrega_distinta',
+        // 'entrega_distinta',
         // 'direccion_entrega',
+        'documento_completo',
+        'documento_img',
+        'imagen_doc',
         // On create Logged in user is added
         'user_id',
         // Images Documents Tab
-        'tipo_documento_img',
+        // 'tipo_documento_img',
     ];
 
     /**
@@ -57,8 +81,8 @@ class Cliente extends Model
      */
     protected $casts = [
         'tipo_documento' => TipoDocumentoEnum::class,
-        'tipo_documento_img' => ImagenesDocumentoEnum::class,
-        'entrega_distinta' => 'boolean',
+        'documento_img' => ImagenesDocumentoEnum::class,
+        'documento_completo' => 'boolean',
 
     ];
 
@@ -140,4 +164,7 @@ class Cliente extends Model
     {
         return ClienteFactory::new();
     }
+
+    // Spatie media library
+
 }

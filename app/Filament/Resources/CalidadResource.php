@@ -422,8 +422,8 @@ class CalidadResource extends Resource
             // Start of fieldset for Fecha, hora for the call in cuestion.
                 Fieldset::make('Fecha, hora y duración')
                             ->schema([
-                                Repeater::make('members')
-                                ->schema([
+                                // Repeater::make('members')
+                                // ->schema([
                                     SpatieMediaLibraryFileUpload::make('grabacion')
                                     ->label('Grabación')
                                     ->acceptedFileTypes(['audio/wav', 'audio/webm', 'audio/aac', 'audio/mpeg', 'video/mp4', ])
@@ -475,21 +475,23 @@ class CalidadResource extends Resource
                                     ->columnSpan(4),       
 
                                 // End repeater for recording
-                                ])->columns(12)->columnSpan(12), 
+                                // ])->columns(12)->columnSpan(12), 
                             ]),    
 
                 Forms\Components\Textarea::make('observaciones')
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\Toggle::make('evaluacion_completa')
-                    ->required(),
-                Forms\Components\TextInput::make('bienvenida')
-                    ->required(),
-                Forms\Components\TextInput::make('empatia')
-                    ->required(),
-                Forms\Components\TextInput::make('diccion')
-                    ->required(),
+                // Forms\Components\Toggle::make('evaluacion_completa')
+                //     ->required(),
+                Select::make('bienvenida')
+                            ->options(BienvenidaEnum::class),
+                // Forms\Components\TextInput::make('bienvenida')
+                //     ->required(),
+                // Forms\Components\TextInput::make('empatia')
+                //     ->required(),
+                // Forms\Components\TextInput::make('diccion')
+                //     ->required(),
             ]);
     }
 

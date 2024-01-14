@@ -37,6 +37,11 @@ return new class extends Migration
             $table->foreign('distritos_id')->references('id')->on('distritos');
             $table->text('direccion');
 
+            // Document Images
+            $table->boolean('documento_completo');
+            $table->string('documento_img')->nullable();
+            $table->string('imagen_doc')->nullable();
+
             // $table->boolean('entrega_distinta'); --> On succesfull migration delete
             // $table->text('direccion_entrega')->nullable(); -->on succesfull migration delete
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
@@ -46,16 +51,16 @@ return new class extends Migration
 
         // Create the Migration for ClienteDocumento model
         // Combined, these two migrations pluss their models, will allow us to make dinamic document loading
-        Schema::create('cliente_documento', function (Blueprint $table) {
-            $table->id();
-            $table->string('documento_url')->nullable();
-            $table->date('fecha_ingreso')->nullable();
-            $table->boolean('documento_completo')->default(0);
-            $table->foreignIdFor(Cliente::class)->index();
-            $table->foreignIdFor(User::class)->index();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        // Schema::create('cliente_documento', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('documento_url')->nullable();
+        //     $table->date('fecha_ingreso')->nullable();
+        //     $table->boolean('documento_completo')->default(0);
+        //     $table->foreignIdFor(Cliente::class)->index();
+        //     $table->foreignIdFor(User::class)->index();
+        //     $table->timestamps();
+        //     $table->softDeletes();
+        // });
     }
 
     /**
@@ -64,6 +69,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('clientes');
-        Schema::dropIfExists('cliente_documento');
+        // Schema::dropIfExists('cliente_documento');
     }
 };

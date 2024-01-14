@@ -5,7 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasLabel;
 
 /**
- * Nombre de los Planes de liberty.
+ * Define el tipo de documento asociado a la imagen del cliente.
  */
 enum ImagenesDocumentoEnum: string implements HasLabel
 {

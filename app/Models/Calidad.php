@@ -10,9 +10,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+// Spatie MediaLibrary
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+//  Spatie MediaLibrary For registerMediaConversions
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Calidad extends Model
+class Calidad extends Model implements HasMedia
 {
+    //Spatie Media Library
+    use InteractsWithMedia;
     use HasFactory;
     use Notifiable;
     use SoftDeletes;
@@ -38,6 +46,10 @@ class Calidad extends Model
         'updated_at',
         // Radio
         'ventas_telefono',
+        // test
+        'grabacion',
+        'fecha_llamada',
+        
 
     ];
 
@@ -61,5 +73,13 @@ class Calidad extends Model
     public function VentaLinea(): BelongsTo
     {
         return $this->belongsTo(VentaLinea::class, 'venta_lineas_id');
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->nonQueued();
     }
 }

@@ -36,6 +36,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 // Filter methods
 use Livewire\Component as Livewire;
+// Spatie Media Library
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\FileUpload;
+use Illuminate\Support\Facades\Storage;
 
 class ClienteResource extends Resource
 {
@@ -70,8 +74,8 @@ class ClienteResource extends Resource
                                         // Set: is a built in function that takes two parameters
                                         // $PrimerNombre is the retrived value in this case the 'primer_nombre' value
                                         // Str::title() will make the first letter of every word capitalized and the rest lower case
-                                        $PrimerNombre = Str::title($state);
-                                        $set('primer_nombre', $PrimerNombre);
+                                        // $PrimerNombre = Str::title($state);
+                                        // $set('primer_nombre', $PrimerNombre);
                                     })
                                     ->columnSpan(2)
                                     ->required()
@@ -83,8 +87,8 @@ class ClienteResource extends Resource
                                         // Set: is a built in function that takes two parameters
                                         // $SegundoNombre is the retrived value in this case the 'segundo_nombre' value
                                         // Str::title() will make the first letter of every word capitalized and the rest lower case
-                                        $SegundoNombre = Str::title($state);
-                                        $set('segundo_nombre', $SegundoNombre);
+                                        // $SegundoNombre = Str::title($state);
+                                        // $set('segundo_nombre', $SegundoNombre);
                                     })
                                     ->columnSpan(2)
                                     ->columnSpan(2)
@@ -96,8 +100,8 @@ class ClienteResource extends Resource
                                         // Set: is a built in function that takes two parameters
                                         // $PrimerApellido is the retrived value in this case the 'primer_apellido' value
                                         // Str::title() will make the first letter of every word capitalized and the rest lower case
-                                        $PrimerApellido = Str::title($state);
-                                        $set('primer_apellido', $PrimerApellido);
+                                        // $PrimerApellido = Str::title($state);
+                                        // $set('primer_apellido', $PrimerApellido);
                                     })
                                     ->columnSpan(2)
                                     ->required()
@@ -105,12 +109,25 @@ class ClienteResource extends Resource
                                 TextInput::make('segundo_apellido')
                                     ->autocapitalize('words')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function (Set $set, $state) {
+                                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
+                                        //Primer nombre
+                                        $primer_nombre = $get('primer_nombre');
+                                        $PrimerNombre = Str::title($primer_nombre);
+                                        $set('primer_nombre', $PrimerNombre);
+                                        // Segundo Nombre
+                                        $segundo_nombre = $get('segundo_nombre');
+                                        $SegundoNombre = Str::title($segundo_nombre);
+                                        $set('segundo_nombre', $SegundoNombre);
+                                        //Primer Apellido
+                                        $primer_apellido = $get('primer_apellido');
+                                        $PrimerApellido = Str::title($primer_apellido);
+                                        $set('primer_apellido', $PrimerApellido);
                                         // Set: is a built in function that takes two parameters
                                         // $SegundoApellido is the retrived value in this case the 'segundo_apellido' value
                                         // Str::title() will make the first letter of every word capitalized and the rest lower case
                                         $SegundoApellido = Str::title($state);
                                         $set('segundo_apellido', $SegundoApellido);
+
                                     })
                                     ->columnSpan(2)
                                     ->maxLength(255),
@@ -189,18 +206,35 @@ class ClienteResource extends Resource
                                 // Imagenes de cedulas y otros documentos
                                 Section::make('Imagen Documento')->schema([
                                     // The name is the relationship from Cliente Model clientedocumento hasMany function
-                                    Repeater::make('clientedocumento')
-                                        ->relationship()
-                                        ->schema([
+                                   Repeater::make('clientedocumento')
+                                       ->relationship()
+                                       ->schema([
                                     /*
                                         * tipo_documento needs to be changed for a Database field registered in the DB
                                         * or cast to an array either way it must be changed.
                                         */
-                                    Select::make('tipo_documento')
-                                        ->options(ImagenesDocumentoEnum::class),
+                                    Select::make('documento_img')
+                                        ->options(ImagenesDocumentoEnum::class)
+                                        ->columnSpan(4),
 
-                                    TextInput::make('documento_url'),
+                                    SpatieMediaLibraryFileUpload::make('imagen_doc')
+                                        ->acceptedFileTypes(['image/gif', 'image/jpeg', 'image/png', 'image/tiff', 'image/webp ', 'image/avif', 'image/bmp' ])
+                                        ->visibility('private')
+                                        ->responsiveImages()
+                                        ->image()
+                                        ->imageEditor()
+                                        ->imageEditorAspectRatios([
+                                            '17:11',
+                                            '16:9',
+                                            '4:3',
                                         ])
+                                        ->columnSpan(8)
+                                        // ->collection(fn (SpatieMediaLibraryFileUpload $component) => (string) str($component->getContainer()->getStatePath())->afterLast('.')),
+                                        ->collection('ClienteDocumento'),
+                                        //Repeater
+                                       ])
+                                        ->afterStateHydrated(null)
+                                        ->mutateDehydratedStateUsing(null)
                                         ->grid(3)
                                         ->columnSpan(12)
                                         ->label('')
