@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ImagenesDocumentoEnum;
 use App\Enums\TipoDocumentoEnum;
 use Database\Factories\ClienteFactory;
+use App\Models\ClienteDocumento;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -16,7 +16,7 @@ class CreateCliente extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = auth()->id();
-
+        dd($request);
         return $data;
     }
 

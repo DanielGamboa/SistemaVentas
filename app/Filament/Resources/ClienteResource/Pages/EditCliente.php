@@ -27,4 +27,5 @@ class EditCliente extends EditRecord
     {
         return $this->getResource()::getUrl('index');
     }
+    
 }

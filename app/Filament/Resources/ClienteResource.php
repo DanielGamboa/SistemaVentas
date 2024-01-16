@@ -9,6 +9,7 @@ use App\Models\Cantone;
 use App\Models\Cliente;
 use App\Models\Distrito;
 use App\Models\Provincia;
+use App\Models\ClienteDocumento;
 use Filament\Forms;
 // Enums
 use Filament\Forms\Components\Repeater;
@@ -16,6 +17,7 @@ use Filament\Forms\Components\RichEditor;
 // Forms
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -40,6 +42,7 @@ use Livewire\Component as Livewire;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
+
 
 class ClienteResource extends Resource
 {
@@ -68,15 +71,18 @@ class ClienteResource extends Resource
                                     ->maxLength(30)
                                     ->unique(ignoreRecord: true),
                                 TextInput::make('primer_nombre')
-                                    ->autocapitalize('words')
+                                    ->autocapitalize()
                                     ->live(onBlur: true) // Will re-render and execute LiveWire componant after the user leaves the field
-                                    ->afterStateUpdated(function (Set $set, $state) {
+                                    // ->dehydrateStateUsing(fn (string $state): string => ucwords($state)) // Will capitalize the first letter of every word
+                                    // ->dehydrateStateUsing(fn (string $state): string => ucwords($state))
+                                    // ->afterStateUpdated(function (Set $set, $state) {
                                         // Set: is a built in function that takes two parameters
                                         // $PrimerNombre is the retrived value in this case the 'primer_nombre' value
                                         // Str::title() will make the first letter of every word capitalized and the rest lower case
                                         // $PrimerNombre = Str::title($state);
                                         // $set('primer_nombre', $PrimerNombre);
-                                    })
+                                    // })
+                                    ->afterStateUpdated((fn (string $state): string => ucwords($state)))
                                     ->columnSpan(2)
                                     ->required()
                                     ->maxLength(255),
@@ -208,16 +214,47 @@ class ClienteResource extends Resource
                                     // The name is the relationship from Cliente Model clientedocumento hasMany function
                                    Repeater::make('clientedocumento')
                                        ->relationship()
+                                    //    ->onsave(function (Cliente $cliente, Set $set) {
+                                    //        $cliente->clientedocumento()->create($set->toArray());
+                                    //    })
                                        ->schema([
                                     /*
                                         * tipo_documento needs to be changed for a Database field registered in the DB
                                         * or cast to an array either way it must be changed.
                                         */
+                                        // Group::make()
+                                        //     ->relationship('clientedocumento')
+                                        //     ->schema([
+                                        //         Select::make('documento_img')
+                                        //             ->live()
+                                        //             ->options(ImagenesDocumentoEnum::class)
+                                        //             ->afterStateUpdated(function ($state, Set $set) {
+                                        //                     $clienteDocumento = new ClienteDocumento;
+                                        //                     // array_push($state, $clienteDocumento);
+                                        //                     // Set any other necessary fields on $clienteDocumento here
+                                        //                     $clienteDocumento->save([$state]);
+                                        //                 }),
+                                        //             ]),
                                     Select::make('documento_img')
+                                        ->live()
                                         ->options(ImagenesDocumentoEnum::class)
+                                        // ->afterStateUpdated(function (Request $request, Set $set) {
+                                        //     $clienteDocumento = new ClienteDocumento;
+                                        //     // Set any other necessary fields on $clienteDocumento here
+                                        //     $clienteDocumento->save();
+                                        // })
+                                        // ->afterStateUpdated(function ($state, Set $set) {
+                                        //     $clienteDocumento = new ClienteDocumento;
+                                        //     // array_push($state, $clienteDocumento);
+                                        //     // Set any other necessary fields on $clienteDocumento here
+                                        //     $clienteDocumento->save([$state]);
+                                        // })
                                         ->columnSpan(4),
 
                                     SpatieMediaLibraryFileUpload::make('imagen_doc')
+                                        // ->live()
+                                        // ->visible(fn ($get) => $get('documento_img') !== null)
+                                        // ->hiddenOn('documento_img')
                                         ->acceptedFileTypes(['image/gif', 'image/jpeg', 'image/png', 'image/tiff', 'image/webp ', 'image/avif', 'image/bmp' ])
                                         ->visibility('private')
                                         ->responsiveImages()
@@ -229,8 +266,10 @@ class ClienteResource extends Resource
                                             '4:3',
                                         ])
                                         ->columnSpan(8)
+                                        // ->collection('ClienteDocumento'),
                                         // ->collection(fn (SpatieMediaLibraryFileUpload $component) => (string) str($component->getContainer()->getStatePath())->afterLast('.')),
-                                        ->collection('ClienteDocumento'),
+                                        // ->collection('cliente_documentos'),
+                                        
                                         //Repeater
                                        ])
                                         ->afterStateHydrated(null)

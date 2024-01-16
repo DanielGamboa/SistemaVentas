@@ -14,7 +14,7 @@ return new class extends Migration
         // Pivot table for ClienteDocumento
         Schema::create('cliente_documento', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id');
+            $table->foreignId('cliente_id')->nullable();
             // Target media table id
             $table->foreignId('media_id')->nullable();
             // Target Media table -> model_id column
