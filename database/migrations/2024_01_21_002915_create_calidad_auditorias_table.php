@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('calidad_auditorias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('calidad_id')->constrained('calidads')->restrictOnDelete()->nullable();
+            $table->foreignId('calidad_id')->constrained('calidads')->nullable();
+            $table->unsignedInteger('sort')->nullable(); // Sort order for the grabaciones repeater
             // $table->foreignId('calidad_id')->constrained()->restrictOnDelete()->nullable();
             // $table->foreignId('user_id')->constrained('users')->nullable();
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->nullable();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->time('dia_hora_inicio')->nullable();
             $table->time('dia_hora_final')->nullable();
             $table->string('duracion');
+            $table->unsignedInteger('durationseconds')->nullable();
             $table->unsignedInteger('hours')->nullable();
             $table->unsignedInteger('minutes')->nullable();
             $table->unsignedInteger('seconds')->nullable();

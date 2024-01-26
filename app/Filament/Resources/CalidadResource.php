@@ -563,30 +563,93 @@ class CalidadResource extends Resource
                                         
                             // End repeater for recording
                             ])
+                            ->orderColumn('sort')
                             ->columns(12)
                             ->columnSpan(12)
+                            // Mutate data in order to record duracion in H:i:s format between ending and starting time as well as calculate the duration of the call in seconds minutes and hours
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
-                    
+                                // Set current user as the user_id
                                 $data['user_id'] = auth()->id();
+                                // Get value from dia_hora_inicio & dia_hora_final
+                                $HoraInicio = $data['dia_hora_inicio'];
+                                $HoraFinal = $data['dia_hora_final'];
+                                // Check if $dia_hora_inicio and dia_hora_final are not null
+                                if ($HoraInicio !== null && $HoraFinal !== null) {
+                                    // Create Carbon instances for the starting and ending times
+                                    $startTime = Carbon::createFromFormat('H:i:s', $HoraInicio);
+                                    $endTime = Carbon::createFromFormat('H:i:s', $HoraFinal);
+                                    // Calculate the time difference
+                                    $timeDifference = $endTime->diff($startTime)->format('%H:%I:%S');
+                                    // Set the value of the 'duracion' field to the calculated time difference
+                                    $data['duracion'] = $timeDifference;
+                                }
 
-                                $grabaciones = request()->input('grabaciones');
+                                    $start = Carbon::parse($HoraInicio);
+                                    $end = Carbon::parse($HoraFinal);
+                                    $duration = $start->diffInSeconds($end);
+                                    
+                                    //Calculate the duration of the call in seconds minutes and hours
+                                    $totalDuration = 0;
+                                    $totalDuration += $duration;
+                                    
+                                   // Now we convert the total duration in seconds to hours, minutes and seconds
+                                    $hours = floor($totalDuration / 3600);
+                                    $minutes = floor(($totalDuration - ($hours * 3600)) / 60);
+                                    $seconds = $totalDuration - ($hours * 3600) - ($minutes * 60);
+                                    // $data['duracion'] = $hours . ':' . $minutes . ':' . $seconds;
+                                    $data['durationseconds']= $totalDuration;
+                                    $data['hours'] = $hours;
+                                    $data['minutes'] = $minutes;
+                                    $data['seconds'] = $seconds; 
+                             
+                                return $data;
+                            })
+                            // mutate data before update
+                            ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
+                                // Set current user as the user_id
+                                $data['user_id'] = auth()->id();
+                                // Get value from dia_hora_inicio & dia_hora_final
+                                $HoraInicio = $data['dia_hora_inicio'];
+                                $HoraFinal = $data['dia_hora_final'];
+                                // Check if $dia_hora_inicio and dia_hora_final are not null
+                                if ($HoraInicio !== null && $HoraFinal !== null) {
+                                    // Create Carbon instances for the starting and ending times
+                                    $startTime = Carbon::createFromFormat('H:i:s', $HoraInicio);
+                                    $endTime = Carbon::createFromFormat('H:i:s', $HoraFinal);
+                                    // Calculate the time difference
+                                    $timeDifference = $endTime->diff($startTime)->format('%H:%I:%S');
+                                    // Set the value of the 'duracion' field to the calculated time difference
+                                    $data['duracion'] = $timeDifference;
+                                }
+
+                                    $start = Carbon::parse($HoraInicio);
+                                    $end = Carbon::parse($HoraFinal);
+                                    $duration = $start->diffInSeconds($end);
+                                    
+                                    //Calculate the duration of the call in seconds minutes and hours
+                                    $totalDuration = 0;
+                                    $totalDuration += $duration;
+                                    
+                                   // Now we convert the total duration in seconds to hours, minutes and seconds
+                                    $hours = floor($totalDuration / 3600);
+                                    $minutes = floor(($totalDuration - ($hours * 3600)) / 60);
+                                    $seconds = $totalDuration - ($hours * 3600) - ($minutes * 60);
+                                    // $data['duracion'] = $hours . ':' . $minutes . ':' . $seconds;
+                                    $data['durationseconds']= $totalDuration;
+                                    $data['hours'] = $hours;
+                                    $data['minutes'] = $minutes;
+                                    $data['seconds'] = $seconds; 
+
+                             
+                                return $data;
                             }),
+                            
+                            // ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                    
+                            //     $data['user_id'] = auth()->id();
 
-                                // // Get value from dia_hora_inicio & dia_hora_final
-                                // $HoraInicio = $data['dia_hora_inicio'];
-                                // $HoraFinal = $data['dia_hora_final'];
-                                // // Check if $dia_hora_inicio and dia_hora_final are not null
-                                // if ($HoraInicio !== null && $HoraFinal !== null) {
-                                //     // Create Carbon instances for the starting and ending times
-                                //     $startTime = Carbon::createFromFormat('H:i:s', $HoraInicio);
-                                //     $endTime = Carbon::createFromFormat('H:i:s', $HoraFinal);
-                                //     // Calculate the time difference
-                                //     $timeDifference = $endTime->diff($startTime)->format('%H:%I:%S');
-                                //     // Set the value of the 'duracion' field to the calculated time difference
-                                //     $data['duracion'] = $timeDifference;
-                                // }
-                                // dd($data);
-                                
+                            //     $grabaciones = request()->input('grabaciones');
+                            
 
                             // Remove the extra closing parenthesis
                         // }),
@@ -694,9 +757,23 @@ class CalidadResource extends Resource
                     ->label('Auditor')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('agente')
+                // Get user_id from CalidadAuditoria related model to Calidad model and get the name from the User model
+                Tables\Columns\TextColumn::make('calidadauditoria.user_id')
                     ->label('Agente')
-                    ->formatStateUsing(fn (Calidad $calidad) => $calidad->agente->name),
+                    ->numeric()
+                    ->sortable(),
+                    // ->formatStateUsing(function (Calidad $calidad) {
+                    //     dd($calidad->calidadauditoria->first()->user_id);
+                    //     // dd($calidad->grabacionauditoria->first()->fecha_llamada);
+                    //     // Get first date and from grabacion auditoria table and format the day from Y/m/d to d/m/Y
+                    //     $auditor = $calidad->grabacionauditoria->first()->user_id;
+                    //     dd($auditor);
+                    //     return $auditor;
+                    // }),
+                // Tables\Columns\TextColumn::make('grabacionauditoria.user_id')
+                //     ->label('Agente'),
+
+                    // ->formatStateUsing(fn (Calidad $calidad) => $calidad->agente->name),
                 Tables\Columns\TextColumn::make('motivo_evaluacion')
                     ->label('Motivo de la evaluación')
                     ->searchable()
@@ -787,7 +864,8 @@ class CalidadResource extends Resource
                 //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                // Filter by deleted records
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -795,6 +873,8 @@ class CalidadResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }

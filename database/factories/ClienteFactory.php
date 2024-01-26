@@ -34,8 +34,13 @@ class ClienteFactory extends Factory
         // Get related provincias_id to $distrito and check to make sure it is not null
         $provinciasId = $distrito ? $distrito->provincias_id : null;
 
+
+
         // Actual Factory with column names and values to be assigned.
         return [
+            // Random tipo_documento from TipoDocumentoEnum
+            'tipo_documento' => $this->faker->randomElement(TipoDocumentoEnum::class),
+            // Random DNI
             // dni() --> spanish faker class Id
             'documento' => $this->faker->unique()->dni(),
             // Random names
@@ -54,7 +59,31 @@ class ClienteFactory extends Factory
             'distritos_id' => $distrito,
             // Assign random user_id from Users seeded table to generate.
             // If user factory is run first, a larger set of users will exist
-            'user_id' => User::all()->random()->id,
+            // and the random user_id will be more realistic.
+            // where user roll is not Administrador or Backoffice
+            'user_id' => function() {
+                    $rolePercentages = [
+                        'Vendedor' => 88, // 88%
+                        'Supervisor' => 10, // 10%
+                        'Gerente' => 2, // 2%
+                    ];
+                
+                    $totalUsers = User::count();
+                    $roleCounts = [];
+                
+                    foreach ($rolePercentages as $role => $percentage) {
+                        $roleCounts[$role] = (int) ($totalUsers * ($percentage / 100));
+                    }
+                
+                    $role = array_rand($roleCounts);
+                    $users = User::where('role', $role)->take($roleCounts[$role])->get();
+                
+                    return $users->random()->id;
+                },
+            // 'user_id' => User::whereNotIn('role', ['Administrador', 'Backoffice'])->get()->random()->id,
+            // 'user_id' => User::all()->random()->id,
+            // Random boolean documento_completo
+            'documento_completo' => $this->faker->boolean('true', 'false'),
             // Random date
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             // 'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),

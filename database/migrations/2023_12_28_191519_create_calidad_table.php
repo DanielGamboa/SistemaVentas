@@ -16,7 +16,7 @@ return new class extends Migration
             // Backoffice that made the audit
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             // Agent that was audited
-            $table->foreignId('agente')->constrained(table: 'user', indexName: 'id')->restrictOnDelete();
+            $table->unsignedMediumInteger('agente')->constrained(table: 'users', indexName: 'id')->restrictOnDelete();
             // Reason for the audit
             $table->string('motivo_evaluacion');
             // In case of sales, related sale Id
@@ -48,6 +48,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('calidad');
+        Schema::dropIfExists('calidads');
     }
 };
