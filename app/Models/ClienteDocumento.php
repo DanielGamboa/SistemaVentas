@@ -57,19 +57,19 @@ class ClienteDocumento extends Pivot implements HasMedia
                 $media->toMediaCollection('clientedocumento');
             });
     }
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('clientedocumento');
-        // $this->addMediaCollection(Cliente::class);
-    }
+    // public function registerMediaCollections(): void
+    // {
+    //     $this->addMediaCollection('clientedocumento');
+    //     // $this->addMediaCollection(Cliente::class);
+    // }
     
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
-    }
+    // public function registerMediaConversions(Media $media = null): void
+    // {
+    //     $this
+    //         ->addMediaConversion('preview')
+    //         ->fit(Manipulations::FIT_CROP, 300, 300)
+    //         ->nonQueued();
+    // }
 
     // public function beforeSave($record, $data)
     // {

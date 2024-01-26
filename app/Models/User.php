@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\VentaLinea;
+use App\Models\GrabacionAuditoria;
 
 class User extends Authenticatable
 {
@@ -54,4 +57,14 @@ class User extends Authenticatable
 
     // VentasLineas
 
+    public function ventaslineas(): HasMany
+    {
+        return $this->hasMany(VentaLinea::class);
+    }
+
+    // GrabacionAuditoria relationship
+    public function grabacionauditoria(): HasMany
+    {
+        return $this->hasMany(GrabacionAuditoria::class);
+    }
 }

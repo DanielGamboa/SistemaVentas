@@ -15,11 +15,10 @@ use Filament\Support\Contracts\HasLabel;
 enum UtilizaTecnicasCierreEnum: string implements HasLabel
 {
 
-    case Agente = 'Registra datos de la venta incompletos';
-    case Aleatorio = 'Registra datos de la venta incorrectos y/o falsos';
-    case Gerencia = 'Gerencia';
-    case SolicitudLiberty = 'Solicitud Liberty';
-    case Venta = 'Venta';
+    case RegistraDatosIncompletos = 'Registra datos de la venta incompletos';
+    case DatosIncorrectosFalsos = 'Registra datos de la venta incorrectos y/o falsos';
+    case NoRegistraDatos = 'No realiza registro de los datos';
+
 
     public function getLabel(): ?string
     {
@@ -27,9 +26,9 @@ enum UtilizaTecnicasCierreEnum: string implements HasLabel
 
         // or
         return match ($this) {
-            self::Agente => 'Registra datos de la venta incompletos',
-            self::Aleatorio => 'Registra datos de la venta incorrectos y/o falsos',
-            self::Gerencia => 'No realiza registro de los datos',
+            self::RegistraDatosIncompletos => 'Registra datos de la venta incompletos',
+            self::DatosIncorrectosFalsos => 'Registra datos de la venta incorrectos y/o falsos',
+            self::NoRegistraDatos => 'No realiza registro de los datos',
         };
     }
     public static function toArray(): array

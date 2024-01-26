@@ -16,6 +16,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 //  Spatie MediaLibrary For registerMediaConversions
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\CalidadAuditoria;
+// use App\Models\CalidadAuditorium;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\VentaLinea;
+use App\Models\User;
 
 class Calidad extends Model implements HasMedia
 {
@@ -69,17 +74,54 @@ class Calidad extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+    
 
     public function VentaLinea(): BelongsTo
     {
         return $this->belongsTo(VentaLinea::class, 'venta_lineas_id');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    // public function registerMediaConversions(Media $media = null): void
+    // {
+    //     $this
+    //         ->addMediaConversion('preview')
+    //         ->fit(Manipulations::FIT_CROP, 300, 300)
+    //         ->nonQueued();
+    // }
+
+    // Upload Multiple Audio Files
+    public function registerMediaCollections(): void
     {
         $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+            ->addMediaCollection('Audio')
+            ->acceptsMimeTypes(['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'])
+            ->singleFile();
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+    $this
+        ->addMediaConversion('preview')
+        ->nonQueued();
+    }
+    public function addMultipleMediaFromRequest(array $keys): void
+    {
+        $this
+            // ->addMultipleMediaFromRequest($keys)
+            ->each(function (Media $media) {
+                $media->toMediaCollection('ImagenesDocumentos');
+            });
+    }
+
+    // create a privot table for a one to many relationship between Calidad and GrabacionAuditoria
+
+    public function grabacionauditoria(): HasMany
+    {
+        return $this->hasMany(CalidadAuditoria::class);
+    }
+
+    public function foo(): BelongsTo
+    {
+        return $this->belongsTo(CalidadAuditoria::class);
     }
 }

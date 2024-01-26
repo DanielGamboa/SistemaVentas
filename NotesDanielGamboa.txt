@@ -1,5 +1,11 @@
 Notes:
 
+Edit php.ini in order to hangle larger file upload size.
+    upload_max_filesize = 36m
+    post_max_size = 36m
+    And published and edited App\Config\Livewire.php to hangle 36 Mb file uploads
+
+
 The required field will be required conditionally depending on the outcome of the bool statement.
 If true then it will be required
 If false then it will not be required 

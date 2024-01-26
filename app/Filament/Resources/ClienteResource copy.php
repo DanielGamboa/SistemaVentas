@@ -47,7 +47,6 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 
 
-
 class ClienteResource extends Resource
 {
     protected static ?string $model = Cliente::class;
@@ -261,30 +260,6 @@ class ClienteResource extends Resource
                                     ->offColor('gray')
                                     ->columnSpan(3),
                                 // Imagenes de cedulas y otros documentos
-                                SpatieMediaLibraryFileUpload::make('imagen_doc')
-                                    ->acceptedFileTypes(['image/gif', 'image/jpeg', 'image/png', 'image/tiff', 'image/webp ', 'image/avif', 'image/bmp' ])
-                                    ->collection('ImagenesDocumentos')
-                                    // ->visibility('private')
-                                    ->image()
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([  
-                                            '17:11', 
-                                            '16:9',  
-                                            '4:3',
-                                            ])
-                                    ->multiple()
-                                    ->responsiveImages()
-                                    ->reorderable()
-                                    // ->customProperties(fn (Get $get): array => [
-                                    //     'cliente_id' => $get('cliente_id'),
-                                    // ])
-                                    ->filterMediaUsing(
-                                        fn (Collection $media, Get $get): Collection => $media->where(
-                                            'custom_properties.cliente_id',
-                                            $get('cliente_id')
-                                        ))
-                                    ->columnSpan(4),
-                                    // ->columnSpan(4),
                                 Section::make('Imagen Documento')->schema([
                                     // The name is the relationship from Cliente Model clientedocumento hasMany function
                                    Repeater::make('clientedocumento')
@@ -355,25 +330,25 @@ class ClienteResource extends Resource
                                         ->addActionLabel('+ Documento'),
 
                                 ])->columns(12),
-                            //     Section::make()->schema([
-                            //         SpatieMediaLibraryFileUpload::make('imagen_doc')
-                            //         ->live()
-                            //         ->visible(fn ($get) => $get('documento_img') !== null)
-                            //         ->hiddenOn('documento_img')
-                            //         ->acceptedFileTypes(['image/gif', 'image/jpeg', 'image/png', 'image/tiff', 'image/webp ', 'image/avif', 'image/bmp' ]) // xxxxxxxxxxxxx
-                            //         ->visibility('private') // xxxxxxxxxxxxx
-                            //         ->responsiveImages() // xxxxxxxxxxxxx
-                            //         ->image()       // xxxxxxxxxxxxx
-                            //         ->imageEditor() // xxxxxxxxxxxxx
-                            //         ->imageEditorAspectRatios([  // xxxxxxxxxxxxx
-                            //             '17:11', // xxxxxxxxxxxxx
-                            //             '16:9',  // xxxxxxxxxxxxx
-                            //             '4:3',  // xxxxxxxxxxxxx
-                            //         ]) // xxxxxxxxxxxxx
-                            //         ->columnSpan(8)     // xxxxxxxxxxxxx
-                            //         ->collection('ClienteDocumento')
-                            //         // ->saveRelationships('documentoclientes', 'imagen_doc'),
-                            //     ])->label('Documentos'),
+                                Section::make()->schema([
+                                    SpatieMediaLibraryFileUpload::make('imagen_doc')
+                                    ->live()
+                                    ->visible(fn ($get) => $get('documento_img') !== null)
+                                    ->hiddenOn('documento_img')
+                                    ->acceptedFileTypes(['image/gif', 'image/jpeg', 'image/png', 'image/tiff', 'image/webp ', 'image/avif', 'image/bmp' ]) // xxxxxxxxxxxxx
+                                    ->visibility('private') // xxxxxxxxxxxxx
+                                    ->responsiveImages() // xxxxxxxxxxxxx
+                                    ->image()       // xxxxxxxxxxxxx
+                                    ->imageEditor() // xxxxxxxxxxxxx
+                                    ->imageEditorAspectRatios([  // xxxxxxxxxxxxx
+                                        '17:11', // xxxxxxxxxxxxx
+                                        '16:9',  // xxxxxxxxxxxxx
+                                        '4:3',  // xxxxxxxxxxxxx
+                                    ]) // xxxxxxxxxxxxx
+                                    ->columnSpan(8)     // xxxxxxxxxxxxx
+                                    ->collection('ClienteDocumento')
+                                    // ->saveRelationships('documentoclientes', 'imagen_doc'),
+                                ])->label('Documentos'),
                             ])->columns(12)
                             ->icon('heroicon-o-camera'),
                     ])->columns(12)->columnSpan(12)->contained(false),
