@@ -17,4 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/storage/media-library/temp/
+
+/storage/media-library/temp/*
+/storage/media-library/conversions/*
+/storage/media-library/responsive-images/*
+/storage/app/public/
+
