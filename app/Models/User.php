@@ -67,4 +67,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(GrabacionAuditoria::class);
     }
+
+    // Calidad relationship
+    public function calidad(): HasMany
+    {
+        return $this->hasMany(Calidad::class, 'agente', 'id');
+    }
 }

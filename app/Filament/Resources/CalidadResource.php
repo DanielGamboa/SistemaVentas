@@ -98,9 +98,13 @@ class CalidadResource extends Resource
                                 ->afterStateUpdated(function (Set $set, Get $get) {
                                     $set('venta_lineas_id', null); //clears venta_lineas_id field on change
                                     if ($get('motivo_evaluacion') == 'Venta') {
-                                        $set('agente', null);
+                                        // $set('agente', null);
                                         $set('tlf', null);
-                                        }
+                                        } else {
+                                            $set('ventas_telefono', null);
+                                            $set('tlf', null);
+                                            }
+                                        
                                     })
                                 ->required()
                                 // If Venta is selected then this field will be visable and selectable
@@ -114,24 +118,62 @@ class CalidadResource extends Resource
                             ->relationship('user')
                             ->label('Seleccione el Agente')
                             ->live()
-                            ->searchable()
+                            
                             ->visible(fn ($get) => 
                                     $get('motivo_evaluacion') == 'Agente' || 
                                     $get('motivo_evaluacion') == 'Aleatorio' || 
                                     $get('motivo_evaluacion') == 'Gerencia' || 
                                     $get('motivo_evaluacion') == 'Solicitud Liberty' ||
-                                    $get('ventas_telefono') !== null
+                                    // If Venta is selected then this field will be visable and selectable
+                                    // $get('motivo_evaluacion') == 'Venta'
+                                    ($get('ventas_telefono') !== '' && $get('ventas_telefono') !== null && $get('venta_lineas_id') !== '' && $get('venta_lineas_id') !== null) 
+                                    
                                     )
                             // Dinamically populate agente select field with the agentes associated with the selected telefono venta VentaLinea or select from all users
-                            ->options(fn (Get $get) => $get('ventas_telefono') ? User::where('id', VentaLinea::find($get('ventas_telefono'))->user_id)->get()->pluck('name', 'id') : User::all()->pluck('name', 'id'))
+                            ->options(
+                                // function (Get $get, Set $set, $state) {
 
+                                 fn (Get $get) => $get('ventas_telefono') 
+                                    ? User::where('id', VentaLinea::find($get('ventas_telefono'))->user_id)->get()->pluck('name', 'id') 
+                                    : User::all()->pluck('name', 'id')->toArray()
+
+                                // if ($get('motivo_evaluacion') !== 'Venta') {
+                                    // return fn (Get $get) => $get('ventas_telefono') 
+                                    // ? User::where('id', VentaLinea::find($get('ventas_telefono'))->user_id)->get()->pluck('name', 'id') 
+                                    // : User::all()->pluck('name', 'id');
+                                    // dd(User::take(10)->pluck('name', 'id')->toArray());
+                                    // return User::all()->pluck('name', 'id')->toArray();
+                                // }
+                                // If motivo_evaluacion is == venta Kahlua Kalua
+                                // if ($get(('motivo_evaluacion == venta'))) {
+                                    // return VentaLinea::all()->pluck('tlf', 'id');
+                                    // $foo = $get('ventas_telefono')
+                                    // return User::where('id', $state)->pluck('name', 'id')->toArray();
+                                    // $foo = User::where('id', $state)->pluck('name', 'id');
+                                    // return $foo;
+                                    // }
+                                    
+                            ) 
+                            // } )
+                            // ->afterStateUpdated(function(Get $get){
+                            //     if ($get('motivo_evaluacion') == 'Venta') {
+                            //         User::where('id', VentaLinea::find($get('ventas_telefono'))->user_id)->get()->pluck('name', 'id');
+                            //         }
+                            //     })
+                            // }
+                                // fn (Get $get) => $get('ventas_telefono')
+                                // User::where('id', VentaLinea::find($get('ventas_telefono'))->user_id)->get()->pluck('name', 'id')
+                                // )
+                            //         ? User::where('id', VentaLinea::find($get('ventas_telefono'))->user_id)->get()->pluck('name', 'id') 
+                            //         : User::all()->pluck('name', 'id')->toArray()
+                            // )
+                            //
+                            ->searchable()
+                            ->getSearchResultsUsing(fn (string $search): array => User::where('name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
+                            ->getOptionLabelUsing(fn ($value): ?string => User::find($value)?->name)
+                            // Make field disabled if motivo_evaluacion = venta
+                            // ->disabled(fn ($get) => $get('motivo_evaluacion') == 'Venta')
                             
-                            // AfterState updated if set to null and ventas_telefono is not null set agente to the agentes associated with the selected telefono venta VentaLinea
-                            ->afterStateUpdated(function (Set $set, Get $get) {
-                                if ($get('ventas_telefono') !== null) {
-                                    $set('agente', VentaLinea::find($get('ventas_telefono'))->user_id);
-                                    }
-                                })
                             ->required()
                             ->columnSpan(6),
 
@@ -139,12 +181,36 @@ class CalidadResource extends Resource
                         TextInput::make('tlf')
                             ->label('Teléfono')
                             ->live()
-                            ->visible(fn ($get) => 
+                            ->visible(Function (Get $get, Set $set) {
+                                $ventasTelefono = $get('ventas_telefono');
+                                $tlfMarcado = VentaLinea::where('id', $ventasTelefono)->value('tlf_marcado');
+                                
+                                // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
+                                // dd($tlfMarcado);
+                                // Get value from ventas_telefono, this value for the radio button is the VentasLineas ID
+                                if (
                                     $get('motivo_evaluacion') == 'Agente' || 
                                     $get('motivo_evaluacion') == 'Aleatorio' || 
                                     $get('motivo_evaluacion') == 'Gerencia' || 
                                     $get('motivo_evaluacion') == 'Solicitud Liberty'
-                                    )
+                                    
+                                    // ($get('venta_telefono_marcado') !== null && $get('venta_lineas_id') !== null) ||
+                                    // $tlfMarcado !== null 
+                                    // // $tlfMarcado !== ''
+                                    ) {
+                                        // If not Venta it will come back true in order to manually populate
+                                        return true;
+                                    } else {
+                                        // Nested if statement, in order to get the value from venta_lineas_id, if venta_lineas_id is null then return false 
+                                        if ($get('venta_lineas_id') !== null && $get('ventas_telefono') !== null) { 
+                                                return true;
+                                        }
+                                    }
+                                })       
+                                    // $get('venta_telefono_marcado') !== null
+                                    
+                                    // Evaluate if venta_telefono_marcado field is hidden
+                                    
                             // Dinamically make field required if visible
                             ->required(fn ($get) => 
                                     $get('motivo_evaluacion') == 'Agente' || 
@@ -152,6 +218,20 @@ class CalidadResource extends Resource
                                     $get('motivo_evaluacion') == 'Gerencia' || 
                                     $get('motivo_evaluacion') == 'Solicitud Liberty'
                                     )
+                            ->readOnly(function (Get $get, Set $set){
+                                // $ventasTelefono = $get('ventas_telefono');
+                                // $tlfMarcado = VentaLinea::where('id', $ventasTelefono)->value('tlf_marcado');
+                                
+                                // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
+                                // return $ventaLinea && ($ventaLinea->tlf_marcado !== '' &&  $tlfMarcado !== '');
+                                // return $tlfMarcado !== null;
+
+                                if ($get('motivo_evaluacion') == 'Venta')
+                                {
+
+                                    return true;
+                                }
+                            })
                             ->columnSpan(3),
 
 
@@ -162,12 +242,33 @@ class CalidadResource extends Resource
                             ->label('Teléfono Venta')
                             ->live()
                             ->searchable()
-                            ->visible(fn ($get) => $get('motivo_evaluacion') == 'Venta')
+                            // ->visible(fn ($get) => $get('motivo_evaluacion') == 'Venta')
+                            ->visible(function (Get $get, Set $set) {
+                                if ($get('motivo_evaluacion') == 'Venta') {
+                                    // If Venta is selected then this field will be visable and selectable
+                                    // $set('tlf', null);
+                                    return true;
+                                    }
+
+                                    // $set('agente', ''); //clears agente field on change
+                                    $set('venta_lineas_id', ''); //clears venta_lineas_id field on change
+                                    $set('ventas_telefono', null); //clears ventas_telefono field on change
+                                    return false;
+                            }) 
                             ->options(VentaLinea::all()->pluck('tlf', 'id'))
                             // AfterState updated if set to null or value changes clear ventas_telefono field on change
-                            ->afterStateUpdated(function (Set $set, Get $get) {
-                                $set('ventas_telefono', null); //clears ventas_telefono field on change
+                            ->afterStateUpdated(function (Set $set, Get $get, $state) {
+                                if ($get('motivo_evaluacion') !== 'Venta') {
+                                    $set('ventas_telefono', null); //clears ventas_telefono field on change
+                                    $set('venta_lineas_id', ''); //clears ventas_telefono field on change
+
+                                    }
                                 })
+
+                                
+                                // Posible point of error or conflict on state update.
+                                // $set('ventas_telefono', null); //clears ventas_telefono field on change
+                                
                             // make field required if visible
                             ->required(fn ($get) => $get('motivo_evaluacion') == 'Venta')
                             ->columnSpan(3),
@@ -194,10 +295,16 @@ class CalidadResource extends Resource
                                     if ($get('venta_lineas_id')) {
                                         // Fetch data based on the selected value (VentaLinea model or any other logic)
                                         // This will return the selected phone number not ID
-                                            $VentaLinea = VentaLinea::find($get('venta_lineas_id'));
-                                            $cliente = $VentaLinea->clientes_id;
+                                            // $VentaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                            // dd($VentaLinea->clientes_id);
+                                        // Get specific VentaLinea record clientes_id for asosiated Cliente record
+                                            $VentaLinea = VentaLinea::where('id', $get('venta_lineas_id'))->value('clientes_id');
+                                            // dd($dfoo);
+                                            
+                                            // $cliente = $VentaLinea->clientes_id;
                                         // Query the model based on the phone number
-                                            $records = VentaLinea::where('clientes_id', $cliente)->get();
+                                            // $records = VentaLinea::where('clientes_id', $cliente)->get();
+                                            $records = VentaLinea::where('clientes_id', $VentaLinea)->get();
                                         // Generate options array for radio buttons with associated and concatenated data
                                             $options = [];
                                             
@@ -234,27 +341,87 @@ class CalidadResource extends Resource
                                     })
                                 ->visible(function (Get $get) {
                                         // Get value from venta_lineas_id
-                                        $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                        $ventaLinea = VentaLinea::find($get('venta_lineas_id'))->first();
 
                                         // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
-                                        return $ventaLinea && ($ventaLinea->tlf !== '' or $ventaLinea->tlf !== null);
+                                        return $ventaLinea && ($ventaLinea !== '' or $ventaLinea !== null);
                                     })
                                 // AfterState updated populate agente select field with the agentes associated with the selected telefono venta VentaLinea 
                                 // ->options(User::all()->pluck('name', 'id'))
-                                ->afterStateUpdated(fn (Set $set, Get $get) => $set('agente', VentaLinea::find($get('ventas_telefono'))->user_id)),
-                                
+                                // ->afterStateUpdated(fn (Set $set, Get $get) => $set('agente', VentaLinea::find($get('ventas_telefono'))->user_id)),
+                                ->afterStateUpdated(function (Set $set, Get $get) {
+                                    // $set('agente', null); //clears agente field on change
+                                    $set('tlf', ''); // clear tlf field on change
+                                    $ventaLinea = VentaLinea::find($get('ventas_telefono'));
+                                    if ($ventaLinea && $ventaLinea->user_id) {
+                                        $user = User::find($ventaLinea->user_id);
+                                        if ($user) {
+                                            $set('agente', $user->id);
+                                            }
+                                        }
+                                    // On specific sale selected populate tlf field with the phone number associated with the sale
+                                    // If phone number sold is the same from the phone number called then populate tlf field with the phone number sold
+                                    // because its the same as the phone diled.  
+                                    // Make sure ventas_telefono exists.
+                                    // Make sure tlf_marcado is null on selected item. Milka Milka
+                                    if ($ventaLinea->tlf_marcado == null){
+                                        
+                                        $set('tlf', $ventaLinea->tlf);
+                                        }
+                                    
+                                    // if ($ventaLinea && $ventaLinea->tlf_marcado == null) {
+                                    //     $tlf = $get('ventas_telefono');
+                                    //     $tlfVendido = VentaLinea::where('id', $tlf)->pluck('id', 'tlf');
+                                    //     $set('tlf', $tlfVendido);
+                                    //     $set('venta_lineas_id', $tlfVendido);
+                                    //     // $set('ventas_telefono', VentaLinea::where('tlf', $tlfVendido)->value('id'));
+                                    //     }
+                                    }
+                                    
+                                ),
+                                // ->afterStateUpdated(fn (Set $set, Get $get) => {
+                                //     // Your code here
+                                // }); // Add closing parenthesis and semicolon
+                                //     $ventaLinea = VentaLinea::find($get('ventas_telefono'));
+                                //     if ($ventaLinea && $ventaLinea->user_id) {
+                                //         $user = User::find($ventaLinea->user_id);
+                                //         if ($user) {
+                                //             $set('agente', $user->name);
+                                //         }
+                                //     }
+                                // }),
 
 
                             // En of Fieldset Ventas        
                                 ])->columns(1)
                                 ->columnSpan(6)
                                 ->live()
+                                 // Get value from venta_lineas_id
+                                // $ventaLineasId = $get('venta_lineas_id');
+                                // var_dump($ventaLineasId); // Debug line
+
+                                // $ventaLinea = VentaLinea::find($ventaLineasId);
+                                // var_dump($ventaLinea); // Debug line
+
+                                // Check if $ventaLinea exists and tlf is not null or empty on specific VentaLinea record
+                                // return $ventaLinea && ($ventaLinea->tlf !== '' or $ventaLinea->tlf !== null);
                                 ->visible(function (Get $get) {
+                                    
+                                    // Get value from venta_lineas_id
+                                    // $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                    // $ventaTlf = $ventaLinea['tlf'];
+                                    // dd($ventaLinea['tlf']);
+                                    // dd($ventaLinea); // Debug line
+                                    // dd($ventaLinea['tlf']); // Debug line
+                                    // $foo = $ventaLinea['tlf'];
                                     // Get value from venta_lineas_id
                                     $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
-                                    
+
                                     // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
-                                    return $ventaLinea && ($ventaLinea->tlf !== '' or $ventaLinea->tlf !== null);
+                                    return $ventaLinea && ($ventaLinea !== '' or $ventaLinea !== null);
+                                    // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
+                                    // return $ventaLinea && ($ventaLinea->tlf !== '' or $ventaLinea->tlf !== null);
+                                    // return $ventaLinea && ($ventaTlf !== '' or $ventaTlf !== null);
                                 }),
 
                             // Start Fieldset Datos del cliente y la venta
@@ -267,7 +434,10 @@ class CalidadResource extends Resource
                                     ->content(function (Get $get) {
                                         if ($get('venta_lineas_id')) {
                                             // Fetch data based on the selected value (VentaLinea model or any other logic)
-                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                                $mefoo = $get('venta_lineas_id');
+                                                $ventaLinea = VentaLinea::find($mefoo)->first();
+                                                // $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                                // dd($ventaLinea);
                                             // Get specific VentaLinea record clientes_id for asosiated Cliente record
                                                 $cliente = $ventaLinea->clientes_id;
                                             // Query Cliente model for specific client and get their name.
@@ -280,11 +450,13 @@ class CalidadResource extends Resource
                                         return ''; // Return an empty string if no value selected
                                         })
                                     ->visible(function (Get $get) {
+
+                
                                             // Get value from venta_lineas_id
                                             $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
                                             
                                             // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
-                                            return $ventaLinea && ($ventaLinea->tlf !== '' && $ventaLinea->tlf !== null);
+                                            return $ventaLinea && ($ventaLinea !== '' && $ventaLinea !== null);
                                         }),
 
 
@@ -295,7 +467,7 @@ class CalidadResource extends Resource
                                     ->content(function (Get $get) {
                                         if ($get('venta_lineas_id')) {
                                             // Fetch data based on the selected value (VentaLinea model or any other logic)
-                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'))->first();
                                             // Get specific VentaLinea record clientes_id for asosiated Cliente record
                                                 $cliente = $ventaLinea->clientes_id;
                                             // Query Cliente model for specific client and get their name.
@@ -323,7 +495,7 @@ class CalidadResource extends Resource
                                         })
                                     ->visible(function (Get $get) {
                                             // Get value from venta_lineas_id
-                                            $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                            $ventaLinea = VentaLinea::find($get('venta_lineas_id'))->first();
                                             
                                             // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
                                             return $ventaLinea && ($ventaLinea->tlf !== '' && $ventaLinea->tlf !== null);
@@ -352,27 +524,30 @@ class CalidadResource extends Resource
                                         // return $ventaLinea && ($ventaLinea->tlf_marcado !== '' &&  $tlfMarcado !== '');
                                         return $tlfMarcado !== null;
                                         })
-                                    ->content(function (Get $get) {
+                                    ->content(function (Get $get, Set $set) {
                                         if ($get('ventas_telefono')) {
                                             // Fetch data based on the selected value (VentaLinea model or any other logic)
                                                 $ventasTelefono = $get('ventas_telefono');
                                                 // $ventaLinea = VentaLinea::find($get('ventas_telefono'))->id;
                                             // Return the tlf_marcado associated with the selected ID
                                                 $tlfMarcado = VentaLinea::where('id', $ventasTelefono)->value('tlf_marcado');
+                                                // Kahlua
+                                                $set('tlf', $tlfMarcado);
                                                 // VentaLinea::where('id', $get('venta_lineas_id'))->value('clientes_id');
                                             return $ventasTelefono ? $tlfMarcado : '';
                                             }
                                         return ''; // Return an empty string if no value selected
                                         })
-                                        ->inlineLabel(),
-
+                                    ->inlineLabel(),
+                                    //After state update use 'venta_telefono_marcado' value to populate 'tlf' field.
+                                        
                                 Placeholder::make('Dirección')
                                     ->inlineLabel()  // Might want to delete thes for this Placeholder
                                     ->live()
                                     ->content(function (Get $get) {
                                         if ($get('venta_lineas_id')) {
                                             // Fetch data based on the selected value (VentaLinea model or any other logic)
-                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'))->first();
                                             // Get specific VentaLinea record clientes_id for asosiated Cliente record
                                                 $cliente = $ventaLinea->clientes_id;
                                             // Query Cliente model for specific client and get their name.
@@ -389,7 +564,7 @@ class CalidadResource extends Resource
                                             })
                                     ->visible(function (Get $get) {
                                                 // Get value from venta_lineas_id
-                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                                $ventaLinea = VentaLinea::find($get('venta_lineas_id'))->first();
                                                 
                                                 // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
                                                 return $ventaLinea && ($ventaLinea->tlf !== '' && $ventaLinea->tlf !== null);
@@ -419,7 +594,7 @@ class CalidadResource extends Resource
                                         })
                                     ->visible(function (Get $get) {
                                             // Get value from venta_lineas_id
-                                            $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+                                            $ventaLinea = VentaLinea::find($get('venta_lineas_id'))->first();
                                             
                                             // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
                                             return $ventaLinea && ($ventaLinea->tlf !== '' && $ventaLinea->tlf !== null);
@@ -487,9 +662,11 @@ class CalidadResource extends Resource
                             ->visible(function (Get $get) {
                                 // Get value from venta_lineas_id
                                 $ventaLinea = VentaLinea::find($get('venta_lineas_id'));
+
                             
                                 // Check if $ventaLinea exists and tlf_marcado is not null or empty on speficic VentaLinea record
-                                return $ventaLinea && ($ventaLinea->tlf !== '' or $ventaLinea->tlf !== null);
+                                // 
+                                return $ventaLinea && ($ventaLinea !== '' or $ventaLinea !== null);
                                 }),
 
                             // End of Fieldset            
@@ -753,14 +930,27 @@ class CalidadResource extends Resource
     {
         return $table
             ->columns([
+                // Get Auditor ID from user_id in the related User model.
+                // This code makes use of Calidad model relationship with User model user() belongsTo.  This relationship is defined in the Calidad model.
+                // Where 'user.name' --> 'user' is the relationship defined in the Calidad model and 'name' is the field in the User model.
+                // So we pass user_id and return asosiated name.
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Auditor')
                     ->numeric()
                     ->sortable(),
                 // Get user_id from CalidadAuditoria related model to Calidad model and get the name from the User model
-                Tables\Columns\TextColumn::make('calidadauditoria.user_id')
+                // The Agent column is the person who made the phone call that is being audited.
+                // 
+                // Este es el campo de  Vendedor o quien realizo la venta o la llamada
+                Tables\Columns\TextColumn::make('agente')
                     ->label('Agente')
-                    ->numeric()
+                    ->formatStateUsing(Function (Calidad $calidad){
+                        // dd($calidad->agente;
+                        $userId = $calidad->agente;
+                        $user = User::where('id', $userId)->value('name');
+                        return $user;
+                        
+                    })
                     ->sortable(),
                     // ->formatStateUsing(function (Calidad $calidad) {
                     //     dd($calidad->calidadauditoria->first()->user_id);
@@ -778,8 +968,12 @@ class CalidadResource extends Resource
                     ->label('Motivo de la evaluación')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('venta_lineas')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('tlf')
+                    ->label('Telefono')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('VentaLinea.plan')
+                    
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grabacionauditoria.fecha_llamada')
                     ->label('Fecha primera llamada')

@@ -19,50 +19,9 @@ class CreateCalidad extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Need to mutate data on related table
+        // Asign Logged in user to user_id in order to record who did the audit.
         $data['user_id'] = auth()->id();
-        // Lets get loop over the array of data from the repeater "grabaciones" and get the duration of each call and add it to the total duration in seconds
-        // $totalDuration = 0;
-        // $grabaciones = request()->input('grabaciones');
-        
-        // // Create a new Calidad instance record and save it to the databese.
-        // $calidad = Calidad::create($data); 
-
-        // foreach ($data['grabaciones'] as $grabacion) {
-        //     $start = Carbon::parse($grabacion['dia_hora_inicio']);
-        //     $end = Carbon::parse($grabacion['dia_hora_final']);
-        //     $duration = $start->diffInSeconds($end);
-        //     $totalDuration += $duration;
-
-        // $grabacion['duracion'] = $duration;
-        // // Create the related model
-        // $calidad->grabacionauditoria()->create($grabacion);
-            
-        // // Create a new CalidadAuditoria instance record for each call and save it to the databese.
-        // $calidadAuditoria = new \App\Models\CalidadAuditoria([
-        //     'dia_hora_inicio' => $grabacion['dia_hora_inicio'],
-        //     'dia_hora_final' => $grabacion['dia_hora_final'],
-        //     'duracion' => $grabacion['duracion'],
-
-        // ]);
-        
-        // $calidad->grabacionauditoria()->save($calidadAuditoria);
-
-        
-        // }
-
-        
-        
-        // Now we convert the total duration in seconds to hours, minutes and seconds
-        // $hours = floor($totalDuration / 3600);
-        // $minutes = floor(($totalDuration - ($hours * 3600)) / 60);
-        // $seconds = $totalDuration - ($hours * 3600) - ($minutes * 60);
-        // $data['duracion'] = $hours . ':' . $minutes . ':' . $seconds;
-        // $data['hours'] = $hours;
-        // $data['minutes'] = $minutes;
-        // $data['seconds'] = $seconds;
-
-
+        // After mutating the data, return it
         return $data;
     }
 

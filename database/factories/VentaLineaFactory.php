@@ -100,7 +100,27 @@ class VentaLineaFactory extends Factory
             'cantones_id' => $EntregaDistinta ? $cantonesId : null,
             'distritos_id' => $EntregaDistinta ? $distrito : null,
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'user_id' => User::all()->random()->id,
+            // Select random user_id from Users seeded table to generate based on role and distribution %
+            'user_id' => function() {
+                $rolePercentages = [
+                    'Vendedor' => 90, // 88%
+                    'Supervisor' => 9, // 10%
+                    'Gerente' => 1, // 2%
+                ];
+            
+                $totalUsers = User::count();
+                $roleCounts = [];
+            
+                foreach ($rolePercentages as $role => $percentage) {
+                    $roleCounts[$role] = (int) ($totalUsers * ($percentage / 100));
+                }
+            
+                $role = array_rand($roleCounts);
+                $users = User::where('role', $role)->take($roleCounts[$role])->get();
+            
+                return $users->random()->id;
+            },
+    
         ];
     }
 }

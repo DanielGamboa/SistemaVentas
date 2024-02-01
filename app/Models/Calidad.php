@@ -37,10 +37,12 @@ class Calidad extends Model implements HasMedia
      */
     protected $fillable = [
         'user_id',
+        'agente',
         'fecha_llamada',
         'dia_hora_inicio',
         'dia_hora_final',
         'motivo_evaluacion',
+        'tlf', // 'tlf' is the phone number to be audited
         'venta_lineas_id',
         'observaciones',
         'evaluacion_completa',
@@ -51,6 +53,7 @@ class Calidad extends Model implements HasMedia
         'updated_at',
         // Radio
         'ventas_telefono',
+        'venta_lineas_id',
         // test
         'grabacion',
         'fecha_llamada',
@@ -67,12 +70,21 @@ class Calidad extends Model implements HasMedia
      */
     protected $casts = [
         'motivo_evaluacion' => MotivoEvaluacionEnum::class,
-        'bienvenida' => BienvenidaEnum::class,
+        // 'bienvenida' => BienvenidaEnum::class,
+        'bienvenida' => 'array',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function agente(): BelongsTo
+    {
+        // Agente is the user_id from the users table
+        return $this->belongsTo(User::class);
+        // return $this->belongsTo(User::class, 'agente');
+        // return $this->belongsTo(User::class);
     }
     
 

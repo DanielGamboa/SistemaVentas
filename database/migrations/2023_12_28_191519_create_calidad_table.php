@@ -16,18 +16,23 @@ return new class extends Migration
             // Backoffice that made the audit
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             // Agent that was audited
-            $table->unsignedMediumInteger('agente')->constrained(table: 'users', indexName: 'id')->restrictOnDelete();
+            // $table->unsignedMediumInteger('agente')->constrained(table: 'users', indexName: 'id')->restrictOnDelete();
+            $table->unsignedBigInteger('agente');
+            $table->foreign('agente')->references('id')->on('users');
             // Reason for the audit
             $table->string('motivo_evaluacion');
+            // Phone nunmber called, to be audited
+            $table->unsignedBigInteger('tlf')->nullable();
             // In case of sales, related sale Id
-            $table->foreignId('venta_lineas_id')->constrained()->restrictOnDelete();
+            $table->foreignId('venta_lineas_id')->constrained()->restrictOnDelete()->nullable();
+            $table->string('ventas_telefono')->nullable();
             // Was the audit completed
             $table->boolean('evaluacion_completa')->default(0);
             // Obesrvations by backoffice regarding the audit
             $table->text('observaciones');
             
             // Preguntas de evaluacion
-            $table->json('bienvenida')->array();
+            $table->json('bienvenida')->nullable();
             $table->json('empatia')->nullable();
             $table->json('diccion')->nullable();
 
