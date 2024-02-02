@@ -55,9 +55,12 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Tabs;
 use App\Models\CalidadAuditoria;
 use App\Models\CalidadAuditorium;
 use Illuminate\Support\HtmlString;
+
 
 //  filament\Actions\Action
 // use Filament\Actions\Action;
@@ -843,13 +846,144 @@ class CalidadResource extends Resource
 
                 Fieldset::make('Datos de la llamada')
                     ->columns(12)
+                    ->columnSpan(12)
                     ->schema([
-                        Select::make('bienvenida')
-                            ->live()
-                            ->options(BienvenidaEnum::class)
-                            ->enum(BienvenidaEnum::class)
-                            // ->multiple()
-                            ->columnSpan(3),
+                        // Generate nested tabs
+                        Tabs::make('Tabs')
+                            ->contained(false)
+                            ->columns(12)
+                            ->columnSpan(12)
+                            ->tabs([
+                                Tabs\Tab::make('Preventa')
+                                    ->columns(12)
+                                    ->columnSpan(12)
+                                    ->schema([
+                                    Tabs::make('SubTabs-1')
+                                        ->columns(12)
+                                        ->columnSpan(12)
+                                        ->tabs([
+                                            Tabs\Tab::make('SubTab-1-1')
+                                            ->label('Bienvenida')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('bienvenida')
+                                                    ->label('Bienvenida')
+                                                    ->options(BienvenidaEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            Tabs\Tab::make('SubTab-1-2')
+                                            ->label('Genera Empatía')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('empatia')
+                                                    ->label('Empatía')
+                                                    ->options(EmpatiaEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            Tabs\Tab::make('SubTab-1-3')
+                                            ->label('Sondeo')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('sondeo')
+                                                    ->label('Sondeo')
+                                                    ->options(SondeoEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                        ])
+                                    ]),
+                                Tabs\Tab::make('Venta')
+                                    ->columns(12)
+                                    ->columnSpan(12)
+                                    ->schema([
+                                        Tabs::make('SubTabs')
+                                        ->columns(12)
+                                        ->columnSpan(12)
+                                        ->tabs([
+                                            Tabs\Tab::make('SubTab-2-1')
+                                            ->label('Escucha Activa')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('escucha_activa')
+                                                    ->label('Escucha activa')
+                                                    ->options(EscuchaActivaEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            Tabs\Tab::make('SubTab-2-2')
+                                            ->label('Oferta comercial')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('oferta_comercial')
+                                                    ->label('Oferta comercial')
+                                                    ->options(OfertaComercialEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            Tabs\Tab::make('SubTab-2-3')
+                                            ->label('Sondeo')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('sondeo')
+                                                    ->label('Sondeo')
+                                                    ->options(SondeoEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                        ])
+                                        // ...
+                                        // CheckboxList::make('sondeo')
+                                        //     ->live()
+                                        //     ->options(SondeoEnum::class)
+                                        //     ->enum(SondeoEnum::class)
+                                        //     ->columns(2)
+                                        //     ->columnSpan(6),
+                                    ]),
+                                Tabs\Tab::make('Post Venta')
+                                    ->schema([
+                                        // ...
+                                    ]),
+                                
+                                Tabs\Tab::make('Evaluacion del Agente')
+                                    ->schema([
+                                        // ...
+                                    ]),
+                                ]),
+
+
+                        Tabs::make('Tabs')
+                            ->columns(12)
+                            ->columnSpan(12)
+                            ->tabs([
+                                Tabs\Tab::make('bienvenida')
+                                    ->columns(2)
+                                    ->schema([
+                                        // ...
+                                        CheckboxList::make('bienvenida')
+                                            ->label('Bienvenida')
+                                            ->options(BienvenidaEnum::class)
+                                            ->columns(2)
+                                            ->columnSpan(6),
+                                    ]),
+                                Tabs\Tab::make('Tab 2')
+                                    ->columns(2)
+                                    ->schema([
+                                        // ...
+                                        // CheckboxList::make('sondeo')
+                                        //     ->live()
+                                        //     ->options(SondeoEnum::class)
+                                        //     ->enum(SondeoEnum::class)
+                                        //     ->columns(2)
+                                        //     ->columnSpan(6),
+                                    ]),
+                                Tabs\Tab::make('Tab 3')
+                                    ->schema([
+                                        // ...
+                                    ]),
+                                ]),
+                        
                         Select::make('abandono_llamada')
                             ->live()
                             ->options(AbandonoLlamadaEnum::class)

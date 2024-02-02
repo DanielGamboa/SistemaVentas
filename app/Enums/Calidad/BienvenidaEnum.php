@@ -42,4 +42,14 @@ enum BienvenidaEnum: string implements HasLabel
         }
         return $array;
     }
+
+
+    public static function asSelectArray(): array
+    {
+        $array = [];
+        foreach (self::cases() as $case) {
+            $array[$case->value] = $case->getLabel();
+        }
+        return $array;
+    }
 }
