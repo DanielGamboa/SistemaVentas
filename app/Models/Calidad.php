@@ -30,6 +30,31 @@ class Calidad extends Model implements HasMedia
     use Notifiable;
     use SoftDeletes;
 
+            /**
+             *  Define as fillable field
+             * 
+             * bienvenida
+             * empatia
+             * sondeo
+             * escucha_activa
+             * oferta_comercial
+             * numero_alternativo
+             * aclara_dudas_cliente
+             * manejo_objeciones
+             * genera_ventas_irregulares
+             * aceptacion_servicio
+             * tecnicas_cierre
+             * utiliza_tecnicas_cierre
+             * validacion_venta
+             * diccion
+             * empatia_evalucion_agente
+             * espera_vacios
+             * escucha_activa
+             * evita_maltrato
+             * abandono_llamada
+             * liberty_negativo 
+            */
+    /**
     /**
      * Write code on Method
      *
@@ -46,9 +71,29 @@ class Calidad extends Model implements HasMedia
         'venta_lineas_id',
         'observaciones',
         'evaluacion_completa',
+        // Calidad Evaluation
         'bienvenida',
         'empatia',
+        'sondeo',
+        'escucha_activa',
+        'oferta_comercial',
+        'numero_alternativo',
+        'aclara_dudas_cliente',
+        'manejo_objeciones',
+        'genera_ventas_irregulares',
+        'aceptacion_servicio',
+        'tecnicas_cierre',
+        'utiliza_tecnicas_cierre',
+        'validacion_venta',
         'diccion',
+        'empatia_evalucion_agente',
+        'espera_vacios',
+        'escucha_activa',
+        'evita_maltrato',
+        'abandono_llamada',
+        'liberty_negativo',
+        'calificacion',
+        
         'created_at',
         'updated_at',
         // Radio
@@ -61,6 +106,30 @@ class Calidad extends Model implements HasMedia
 
     ];
 
+        /**
+             * Cast as array for each field
+             * 
+             * bienvenida
+             * empatia
+             * sondeo
+             * escucha_activa
+             * oferta_comercial
+             * numero_alternativo
+             * aclara_dudas_cliente
+             * manejo_objeciones
+             * genera_ventas_irregulares
+             * aceptacion_servicio
+             * tecnicas_cierre
+             * utiliza_tecnicas_cierre
+             * validacion_venta
+             * diccion
+             * empatia_evalucion_agente
+             * espera_vacios
+             * escucha_activa
+             * evita_maltrato
+             * abandono_llamada
+             * liberty_negativo 
+            */
     /**
      * Write code on Method
      *
@@ -70,8 +139,27 @@ class Calidad extends Model implements HasMedia
      */
     protected $casts = [
         'motivo_evaluacion' => MotivoEvaluacionEnum::class,
-        // 'bienvenida' => BienvenidaEnum::class,
         'bienvenida' => 'array',
+        'empatia' => 'array',
+        'sondeo' => 'array',
+        'escucha_activa' => 'array',
+        'oferta_comercial' => 'array',
+        'numero_alternativo' => 'array',
+        'aclara_dudas_cliente' => 'array',
+        'manejo_objeciones' => 'array',
+        'genera_ventas_irregulares' => 'array',
+        'aceptacion_servicio' => 'array',
+        'tecnicas_cierre' => 'array',
+        'utiliza_tecnicas_cierre' => 'array',
+        'validacion_venta' => 'array',
+        'diccion' => 'array',
+        'empatia_evalucion_agente' => 'array',
+        'espera_vacios' => 'array',
+        'escucha_activa' => 'array',
+        'evita_maltrato' => 'array',
+        'abandono_llamada' => 'array',
+        'liberty_negativo' => 'array',
+
     ];
 
     public function user(): BelongsTo

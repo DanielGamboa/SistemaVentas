@@ -32,9 +32,53 @@ return new class extends Migration
             $table->text('observaciones');
             
             // Preguntas de evaluacion
+            /**
+             * Create a json column for each question
+             * 
+             * bienvenida
+             * empatia
+             * sondeo
+             * escucha_activa
+             * oferta_comercial
+             * numero_alternativo
+             * aclara_dudas_cliente
+             * manejo_objeciones
+             * genera_ventas_irregulares
+             * aceptacion_servicio
+             * tecnicas_cierre
+             * utiliza_tecnicas_cierre
+             * validacion_venta
+             * diccion
+             * empatia_evalucion_agente
+             * espera_vacios
+             * escucha_activa
+             * evita_maltrato
+             * abandono_llamada
+             * liberty_negativo 
+            */
             $table->json('bienvenida')->nullable();
             $table->json('empatia')->nullable();
+            $table->json('sondeo')->nullable();
+            $table->json('escucha_activa')->nullable();
+            $table->json('oferta_comercial')->nullable();
+            $table->json('numero_alternativo')->nullable();
+            $table->json('aclara_dudas_cliente')->nullable();
+            $table->json('manejo_objeciones')->nullable();
+            $table->json('genera_ventas_irregulares')->nullable();
+            $table->json('aceptacion_servicio')->nullable();
+            $table->json('tecnicas_cierre')->nullable();
+            $table->json('utiliza_tecnicas_cierre')->nullable();
+            $table->json('validacion_venta')->nullable();
             $table->json('diccion')->nullable();
+            $table->json('empatia_evalucion_agente')->nullable();
+            $table->json('espera_vacios')->nullable();
+            $table->json('escucha_activa')->nullable();
+            $table->json('evita_maltrato')->nullable();
+            $table->json('abandono_llamada')->nullable();
+            $table->json('liberty_negativo')->nullable();
+
+            $table->string('calificacion')->nullable();
+
 
             $table->timestamps();
             $table->softDeletes();
