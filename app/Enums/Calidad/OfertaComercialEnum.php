@@ -32,14 +32,14 @@ enum OfertaComercialEnum: string implements HasLabel
     case NoMencionaPlan = 'No menciona el plan a contratar';
     case NoMencionaCosto = 'No menciona el costo del plan';
     case NoMencionaCantidadGB = 'No menciona la cantidad de GB';
-    case NoMencionaRSS = 'No menciona las RRSS';
+    case NoMencionaRSS = 'No menciona las redes sociales';
     case NoMencionaSMS = 'No menciona los SMS a Liberty';
     case NoMencionaMinutos = 'No menciona los minutos a Liberty';
     case MinutosOtrasOperadoras = 'No menciona los minutos a todas las redes CR, Tigo Nicaragua, USA y Canadá';
     case NoMencionaLibertySinFronteras = 'No menciona el beneficio Liberty Sin Fronteras';
     case NoMencionaPasaGB = 'No menciona beneficios de pasar GB';
     case NoMencionaAcumulaGB = 'No menciona la acumulación de los GB';
-    case NoMencionaSMSLiberty = 'No menciona SMS a Liberty';
+    case NoMencionaSMSLiberty = 'No menciona SMS a othas operadoras';
     case NoMencionaImpuestoCruzRoja = 'No menciona el impuesto de cruz roja';
     case NoMencionaImpuestoNineOneOne = 'No menciona el impuesto de 911';
 
@@ -55,14 +55,14 @@ enum OfertaComercialEnum: string implements HasLabel
             self::NoMencionaPlan => 'No menciona el plan a contratar',
             self::NoMencionaCosto => 'No menciona el costo del plan',
             self::NoMencionaCantidadGB => 'No menciona la cantidad de GB',
-            self::NoMencionaRSS => 'No menciona las RRSS',
+            self::NoMencionaRSS => 'No menciona las redes sociales',
             self::NoMencionaSMS => 'No menciona los SMS a Liberty',
             self::NoMencionaMinutos => 'No menciona los minutos a Liberty',
             self::MinutosOtrasOperadoras => 'No menciona los minutos a todas las redes CR, Tigo Nicaragua, USA y Canadá',
             self::NoMencionaLibertySinFronteras => 'No menciona el beneficio Liberty Sin Fronteras',
             self::NoMencionaPasaGB => 'No menciona beneficios de pasar GB',
             self::NoMencionaAcumulaGB => 'No menciona la acumulación de los GB',
-            self::NoMencionaSMSLiberty => 'No menciona SMS a Liberty',
+            self::NoMencionaSMSLiberty => 'No menciona SMS a otras operadoras',
             self::NoMencionaImpuestoCruzRoja => 'No menciona el impuesto de cruz roja',
             self::NoMencionaImpuestoNineOneOne => 'No menciona el impuesto de 911',
         };

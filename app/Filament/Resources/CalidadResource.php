@@ -894,6 +894,7 @@ class CalidadResource extends Resource
                                                 ]),
                                         ])
                                     ]),
+                                // Start de Tabs Venta + SubTabs
                                 Tabs\Tab::make('Venta')
                                     ->columns(12)
                                     ->columnSpan(12)
@@ -903,7 +904,7 @@ class CalidadResource extends Resource
                                         ->columnSpan(12)
                                         ->tabs([
                                             Tabs\Tab::make('SubTab-2-1')
-                                            ->label('Escucha Activa')
+                                            ->label('Escucha activa')
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('escucha_activa')
@@ -923,28 +924,109 @@ class CalidadResource extends Resource
                                                     ->columnSpan(6),
                                                 ]),
                                             Tabs\Tab::make('SubTab-2-3')
-                                            ->label('Sondeo')
+                                            ->label('Número alternativo')
                                             ->columns(2)
                                             ->schema([
-                                                CheckboxList::make('sondeo')
-                                                    ->label('Sondeo')
-                                                    ->options(SondeoEnum::class)
+                                                CheckboxList::make('numero_alternativo')
+                                                    ->label('Número alternativo')
+                                                    ->options(SolicitudNumeroAlternativoEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+
+                                            Tabs\Tab::make('SubTab-2-4')
+                                            ->label('Aclara dudas cliente')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('aclara_dudas_cliente')
+                                                    ->label('Aclara dudas cliente')
+                                                    ->options(AclaraDudasClienteEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            
+                                            Tabs\Tab::make('SubTab-2-5')
+                                            ->label('Manejo de objeciones')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('manejo_objeciones')
+                                                    ->label('Manejo de objeciones')
+                                                    ->options(ManejoObjecionesEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            Tabs\Tab::make('SubTab-2-6')
+                                            ->label('Ventas irregulares')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('genera_ventas_irregulares')
+                                                    ->label('Genera ventas irregulares')
+                                                    ->options(GenerarVentasIrregularesEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
                                                 ]),
                                         ])
-                                        // ...
-                                        // CheckboxList::make('sondeo')
-                                        //     ->live()
-                                        //     ->options(SondeoEnum::class)
-                                        //     ->enum(SondeoEnum::class)
-                                        //     ->columns(2)
-                                        //     ->columnSpan(6),
+                                    // End de Tabs Venta + SubTabs
                                     ]),
                                 Tabs\Tab::make('Post Venta')
+                                    ->columns(12)
+                                    ->columnSpan(12)
                                     ->schema([
+                                        Tabs::make('SubTabs-3')
+                                        ->columns(12)
+                                        ->columnSpan(12)
+                                        ->tabs([
+                                            Tabs\Tab::make('SubTab-3-1')
+                                            ->label('Aceptación del servicio')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('aceptacion_servicio')
+                                                    ->label('Aceptación del servicio')
+                                                    ->options(AceptacionServicioEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+
+                                            Tabs\Tab::make('SubTab-3-2')
+                                            ->label('Técnicas de cierre')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('tecnicas_cierre')
+                                                    ->label('Técnicas de cierre')
+                                                    ->options(TecnicasDeCierreVentasEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+
+                                            Tabs\Tab::make('SubTab-3-3')
+                                            ->label('Utiliza técnicas de cierre')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('utiliza_tecnicas_cierre')
+                                                    ->label('Utiliza técnicas de cierre')
+                                                    ->options(UtilizaTecnicasCierreEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+
+                                            Tabs\Tab::make('SubTab-3-4')
+                                            ->label('Validación de venta')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('validacion_venta')
+                                                    ->label('Validación de venta')
+                                                    ->options(ValidacionVentaEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                        ])
+
+
+                
                                         // ...
+
                                     ]),
+                                
                                 
                                 Tabs\Tab::make('Evaluacion del Agente')
                                     ->schema([
