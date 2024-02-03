@@ -26,7 +26,7 @@ enum EscuchaActivaEnum: string implements HasLabel
 
         // or
         return match ($this) {
-            self::RepetirInformacionnInnecesaria => 'No utiliza protocolo para colocar al cliente en espera',
+            self::RepetirInformacionnInnecesaria => 'Hace que el cliente repita información de manera innecesaria',
             self::Distraido => 'Se encuentra distraído en la llamada',
 
         };

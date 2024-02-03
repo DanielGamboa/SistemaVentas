@@ -23,6 +23,7 @@ use App\Enums\Calidad\SondeoEnum;
 use App\Enums\Calidad\TecnicasDeCierreVentasEnum;
 use App\Enums\Calidad\UtilizaTecnicasCierreEnum;
 use App\Enums\Calidad\ValidacionVentaEnum;
+use App\Enums\Calidad\LibertyNegativoEnum;
 
 use Filament\Forms\Components\Repeater;
 use App\Filament\Resources\CalidadResource\Pages;
@@ -867,27 +868,29 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('bienvenida')
-                                                    ->label('Bienvenida')
+                                                    ->label('')
                                                     ->options(BienvenidaEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
                                                 ]),
+
                                             Tabs\Tab::make('SubTab-1-2')
-                                            ->label('Genera Empatía')
+                                            ->label('Genera empatía')
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('empatia')
-                                                    ->label('Empatía')
+                                                    ->label('')
                                                     ->options(EmpatiaEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
                                                 ]),
+
                                             Tabs\Tab::make('SubTab-1-3')
                                             ->label('Sondeo')
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('sondeo')
-                                                    ->label('Sondeo')
+                                                    ->label('')
                                                     ->options(SondeoEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -908,7 +911,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('escucha_activa')
-                                                    ->label('Escucha activa')
+                                                    ->label('')
                                                     ->options(EscuchaActivaEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -918,7 +921,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('oferta_comercial')
-                                                    ->label('Oferta comercial')
+                                                    ->label('')
                                                     ->options(OfertaComercialEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -928,7 +931,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('numero_alternativo')
-                                                    ->label('Número alternativo')
+                                                    ->label('')
                                                     ->options(SolicitudNumeroAlternativoEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -939,7 +942,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('aclara_dudas_cliente')
-                                                    ->label('Aclara dudas cliente')
+                                                    ->label('')
                                                     ->options(AclaraDudasClienteEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -950,7 +953,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('manejo_objeciones')
-                                                    ->label('Manejo de objeciones')
+                                                    ->label('')
                                                     ->options(ManejoObjecionesEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -960,7 +963,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('genera_ventas_irregulares')
-                                                    ->label('Genera ventas irregulares')
+                                                    ->label('')
                                                     ->options(GenerarVentasIrregularesEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -968,6 +971,7 @@ class CalidadResource extends Resource
                                         ])
                                     // End de Tabs Venta + SubTabs
                                     ]),
+                                // Start Post Venta
                                 Tabs\Tab::make('Post Venta')
                                     ->columns(12)
                                     ->columnSpan(12)
@@ -981,7 +985,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('aceptacion_servicio')
-                                                    ->label('Aceptación del servicio')
+                                                    ->label('')
                                                     ->options(AceptacionServicioEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -992,7 +996,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('tecnicas_cierre')
-                                                    ->label('Técnicas de cierre')
+                                                    ->label('')
                                                     ->options(TecnicasDeCierreVentasEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -1003,7 +1007,7 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('utiliza_tecnicas_cierre')
-                                                    ->label('Utiliza técnicas de cierre')
+                                                    ->label('')
                                                     ->options(UtilizaTecnicasCierreEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
@@ -1014,128 +1018,131 @@ class CalidadResource extends Resource
                                             ->columns(2)
                                             ->schema([
                                                 CheckboxList::make('validacion_venta')
-                                                    ->label('Validación de venta')
+                                                    ->label('')
                                                     ->options(ValidacionVentaEnum::class)
                                                     ->columns(2)
                                                     ->columnSpan(6),
                                                 ]),
                                         ])
 
-
-                
-                                        // ...
-
+                                    // End Post Venta
                                     ]),
                                 
-                                
+                                // Start Evaluacion del Agente tab
                                 Tabs\Tab::make('Evaluacion del Agente')
+                                    ->columns(12)
+                                    ->columnSpan(12)
                                     ->schema([
                                         // ...
-                                    ]),
-                                ]),
-
-
-                        Tabs::make('Tabs')
-                            ->columns(12)
-                            ->columnSpan(12)
-                            ->tabs([
-                                Tabs\Tab::make('bienvenida')
-                                    ->columns(2)
-                                    ->schema([
-                                        // ...
-                                        CheckboxList::make('bienvenida')
-                                            ->label('Bienvenida')
-                                            ->options(BienvenidaEnum::class)
+                                        Tabs::make('SubTabs-4')
+                                        ->columns(12)
+                                        ->columnSpan(12)
+                                        ->tabs([
+                                            Tabs\Tab::make('SubTab-4-1')
+                                            ->label('Dicción')
                                             ->columns(2)
-                                            ->columnSpan(6),
+                                            ->schema([
+                                                CheckboxList::make('diccion')
+                                                    ->label('Dicción, tono y volumen de voz')
+                                                    ->options(DiccionEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            
+                                            Tabs\Tab::make('SubTab-4-2')
+                                            ->label('Empatia')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('empatia_evalucion_agente')
+                                                    ->label('Empatía:  Tambien se encuentra en Preventa => Empatia')
+                                                    ->options(EmpatiaEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+
+                                            Tabs\Tab::make('SubTab-4-3')
+                                            ->label('Cliente en espera')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('espera_vacios')
+                                                    ->label('Cliente en espera, uso de espacios vacios')
+                                                    ->options(EsperaVaciosEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            
+                                            Tabs\Tab::make('SubTab-4-4')
+                                            ->label('Escucha activa')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('escucha_activa')
+                                                    ->label('')
+                                                    ->options(EscuchaActivaEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            
+                                            Tabs\Tab::make('SubTab-4-5')
+                                            ->label('Evita maltrato al cliente')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('evita_maltrato')
+                                                    ->label('')
+                                                    ->options(EvitaMaltratoAlClienteEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                            
+                                            Tabs\Tab::make('SubTab-4-6')
+                                            ->label('Evita abandono llamada')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('abandono_llamada')
+                                                    ->label('')
+                                                    ->options(AbandonoLlamadaEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                                
+                                            Tabs\Tab::make('SubTab-4-7')
+                                            ->label('Defensa Liberty')
+                                            ->columns(2)
+                                            ->schema([
+                                                CheckboxList::make('liberty_negativo')
+                                                    ->label('')
+                                                    ->options(LibertyNegativoEnum::class)
+                                                    ->columns(2)
+                                                    ->columnSpan(6),
+                                                ]),
+                                        // End of sub-tabs for evaluacion del agente tab
+                                        ])
+                                    // End Evaluacion del agente tab
                                     ]),
-                                Tabs\Tab::make('Tab 2')
-                                    ->columns(2)
-                                    ->schema([
-                                        // ...
-                                        // CheckboxList::make('sondeo')
-                                        //     ->live()
-                                        //     ->options(SondeoEnum::class)
-                                        //     ->enum(SondeoEnum::class)
-                                        //     ->columns(2)
-                                        //     ->columnSpan(6),
-                                    ]),
-                                Tabs\Tab::make('Tab 3')
-                                    ->schema([
-                                        // ...
-                                    ]),
-                                ]),
-                        
-                        Select::make('abandono_llamada')
-                            ->live()
-                            ->options(AbandonoLlamadaEnum::class)
-                            ->enum(AbandonoLlamadaEnum::class)
-                            ->columnSpan(3),
-                        Select::make('sondeo')
-                            ->live()
-                            ->options(SondeoEnum::class)
-                            ->enum(SondeoEnum::class)
-                            ->columnSpan(3),
-                        Select::make('aclara_dudas_cliente')
-                            ->live()
-                            ->options(AclaraDudasClienteEnum::class)
-                            ->enum(AclaraDudasClienteEnum::class)
-                            ->columnSpan(3),
-                        Select::make('espera_vacios')
-                            ->live()
-                            ->options(EsperaVaciosEnum::class)
-                            ->enum(EsperaVaciosEnum::class)
-                            ->columnSpan(3),
-                        Select::make('escucha_activa')
-                            ->live()
-                            ->options(EscuchaActivaEnum::class)
-                            ->enum(EscuchaActivaEnum::class)
-                            ->columnSpan(3),
-                        Select::make('empatia')
-                            ->live()
-                            ->options(EmpatiaEnum::class)
-                            ->enum(EmpatiaEnum::class)
-                            ->columnSpan(3),
-                        Select::make('evita_maltrato_al_cliente')
-                            ->live()
-                            ->options(EvitaMaltratoAlClienteEnum::class)
-                            ->enum(EvitaMaltratoAlClienteEnum::class)
-                            ->columnSpan(3),
-                        Select::make('diccion')
-                            ->live()
-                            ->options(DiccionEnum::class)
-                            ->enum(DiccionEnum::class)
-                            ->columnSpan(3),
-                        Select::make('utiliza_tecnicas_cierre')
-                            ->live()
-                            ->options(UtilizaTecnicasCierreEnum::class)
-                            ->enum(UtilizaTecnicasCierreEnum::class)
-                            ->columnSpan(3),
-                        Select::make('tecnicas_de_cierre_ventas')
-                            ->live()
-                            ->options(TecnicasDeCierreVentasEnum::class)
-                            ->enum(TecnicasDeCierreVentasEnum::class)
-                            ->columnSpan(3),
+                            //  End of evaluacion de calidad tabs
+                            ]),
+// ================================================================================== End Datos de la llamada ===================================================================================
                     ]), 
 
 // ================================================================================== End Datos de la llamada ===================================================================================
             
 
-
-                Forms\Components\Textarea::make('observaciones')
+                Forms\Components\RichEditor::make('observaciones')
                     ->required()
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                // Forms\Components\Toggle::make('evaluacion_completa')
-                //     ->required(),
-
-                // Forms\Components\TextInput::make('bienvenida')
-                //     ->required(),
-                // Forms\Components\TextInput::make('empatia')
-                //     ->required(),
-                // Forms\Components\TextInput::make('diccion')
-                //     ->required(),
-
+                    ->columnSpan(12)
+                    ->disableToolbarButtons([
+                        'blockquote',
+                        'strike',
+                        'link',
+                        'codeBlock',
+                        'attachFiles',
+                    ]),
+                Forms\Components\Toggle::make('evaluacion_completa')
+                    // ->required()
+                    ->inline()
+                    ->live()
+                    ->onIcon('heroicon-o-document-check')
+                    ->offIcon('heroicon-o-document-minus')
+                    ->offColor('gray'),
                 // End of Fieldset Datos de la llamada
                 ]),
 

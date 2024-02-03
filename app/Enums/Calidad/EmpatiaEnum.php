@@ -21,9 +21,9 @@ enum EmpatiaEnum: string implements HasLabel
 
         // or
         return match ($this) {
-            self::EmpatiaCliente => 'No utiliza protocolo de bienvenida',
-            self::LugarCliente => 'No se identifica con nombre y apellido',
-            self::Terceros => 'No identifica la compañía a la que pertenece',
+            self::EmpatiaCliente => 'No genera empatía con el cliente',
+            self::LugarCliente => 'No se pone en lugar del cliente ni compreden su situación',
+            self::Terceros => 'Trata temas con terceros fuera de la gestión',
 
         };
     }

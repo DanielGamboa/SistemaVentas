@@ -20,11 +20,11 @@ enum EvitaMaltratoAlClienteEnum: string implements HasLabel
     // No utiliza protocolo de despedida
 
     case LenguajeSoez = 'Utiliza lenguaje soez';
-    case TratoIrrespetuoso = 'Mantiene un trato irrespetuoso utilizando expresiones o gestos que denoten burla';
+    case TratoIrrespetuoso = 'Mantiene un trato irrespetuoso utilizando expresiones o gestos que denoten burla o tedio';
     case DominaGrosero = 'Intenta dominar la situación de forma grosera o impositiva';
     case InterrumpeCliente = 'Interrumpe al cliente de manera grosera';
     case ImpideCliente = 'No permite que el cliente se exprese';
-    case TratoTedioso = 'Mantiene un trato irrespetuoso utilizando expresiones o gestos que denoten tedio ';
+    
 
     public function getLabel(): ?string
     {
@@ -37,7 +37,7 @@ enum EvitaMaltratoAlClienteEnum: string implements HasLabel
             self::DominaGrosero => 'Intenta dominar la situación de forma grosera o impositiva',
             self::InterrumpeCliente => 'Interrumpe al cliente de manera grosera',
             self::ImpideCliente => 'No permite que el cliente se exprese',
-            self::TratoTedioso => 'Mantiene un trato irrespetuoso utilizando expresiones o gestos que denoten tedio ',
+            
         };
     }
     public static function toArray(): array
