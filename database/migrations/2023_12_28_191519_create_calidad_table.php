@@ -51,7 +51,7 @@ return new class extends Migration
              * diccion
              * empatia_evalucion_agente
              * espera_vacios
-             * escucha_activa
+             * escucha_activa_evaluacion_agente
              * evita_maltrato
              * abandono_llamada
              * liberty_negativo 
@@ -72,7 +72,7 @@ return new class extends Migration
             $table->json('diccion')->nullable();
             $table->json('empatia_evalucion_agente')->nullable();
             $table->json('espera_vacios')->nullable();
-            $table->json('escucha_activa')->nullable();
+            $table->json('escucha_activa_evaluacion_agente')->nullable();
             $table->json('evita_maltrato')->nullable();
             $table->json('abandono_llamada')->nullable();
             $table->json('liberty_negativo')->nullable();

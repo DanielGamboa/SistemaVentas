@@ -1075,7 +1075,7 @@ class CalidadResource extends Resource
                                             ->label('Escucha activa')
                                             ->columns(2)
                                             ->schema([
-                                                CheckboxList::make('escucha_activa')
+                                                CheckboxList::make('escucha_activa_evaluacion_agente')
                                                     ->label('')
                                                     ->options(EscuchaActivaEnum::class)
                                                     ->columns(2)

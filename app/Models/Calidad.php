@@ -49,7 +49,7 @@ class Calidad extends Model implements HasMedia
              * diccion
              * empatia_evalucion_agente
              * espera_vacios
-             * escucha_activa
+             * escucha_activa_evaluacion_agente
              * evita_maltrato
              * abandono_llamada
              * liberty_negativo 
@@ -88,7 +88,7 @@ class Calidad extends Model implements HasMedia
         'diccion',
         'empatia_evalucion_agente',
         'espera_vacios',
-        'escucha_activa',
+        'escucha_activa_evaluacion_agente',
         'evita_maltrato',
         'abandono_llamada',
         'liberty_negativo',
@@ -155,7 +155,7 @@ class Calidad extends Model implements HasMedia
         'diccion' => 'array',
         'empatia_evalucion_agente' => 'array',
         'espera_vacios' => 'array',
-        'escucha_activa' => 'array',
+        'escucha_activa_evaluacion_agente' => 'array',
         'evita_maltrato' => 'array',
         'abandono_llamada' => 'array',
         'liberty_negativo' => 'array',
