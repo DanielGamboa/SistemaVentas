@@ -1195,8 +1195,14 @@ class CalidadResource extends Resource
                     ->label('Telefono')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('VentaLinea.plan')
-                    
+                // Tables\Columns\TextColumn::make('VentaLinea.plan')
+                Tables\Columns\TextColumn::make('ventas_telefono')
+                    ->formatStateUsing(function (Calidad $calidad) {
+                        // dd($calidad->ventas_telefono);
+                        $ventasTelefono = $calidad->ventas_telefono;
+                        $plan = VentaLinea::where('id', $ventasTelefono)->value('plan');
+                        return $plan;
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grabacionauditoria.fecha_llamada')
                     ->label('Fecha primera llamada')
