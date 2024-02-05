@@ -46,6 +46,12 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 
+// Import CSV to client table
+use App\Filament\Imports\ClienteImporter;
+use Filament\Tables\Actions\ImportAction;
+// CSV Importer
+
+
 
 class ClienteResource extends Resource
 {
@@ -358,6 +364,10 @@ class ClienteResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->headerActions([
+            ImportAction::make()
+                ->importer(ClienteImporter::class)
+                ->label('Importar')])
             ->columns([
                 TextColumn::make('user.name')
                     ->label('Vendedor')
