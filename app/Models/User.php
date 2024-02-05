@@ -73,4 +73,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Calidad::class, 'agente', 'id');
     }
+
+    //Calidad user relation
+    public function calidadUser(): HasMany
+    {
+        return $this->hasMany(Calidad::class, 'user_id', 'id');
+    }
 }
