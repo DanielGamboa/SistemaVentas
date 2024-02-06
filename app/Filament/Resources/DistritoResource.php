@@ -57,14 +57,6 @@ class DistritoResource extends Resource
             ])
             ->filters([
                 //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -78,9 +70,10 @@ class DistritoResource extends Resource
     public static function getPages(): array
     {
         return [
+            // Distritos cant be created or edited only exported
             'index' => Pages\ListDistritos::route('/'),
-            'create' => Pages\CreateDistrito::route('/create'),
-            'edit' => Pages\EditDistrito::route('/{record}/edit'),
+            // 'create' => Pages\CreateDistrito::route('/create'),
+            // 'edit' => Pages\EditDistrito::route('/{record}/edit'),
         ];
     }
 }

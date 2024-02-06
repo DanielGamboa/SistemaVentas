@@ -13,7 +13,9 @@ class ListCalidads extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Crear')
+                ->icon('heroicon-o-plus'),
         ];
     }
 }

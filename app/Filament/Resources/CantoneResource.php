@@ -40,10 +40,16 @@ class CantoneResource extends Resource
     {
         return $table
             ->columns([
+                // Tables\Columns\TextColumn::make('id_provincias')
+                //     ->label('Provincia Id')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('provincias.provincia')
+                    ->label('Provincia')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('CantonNumber')
+                    ->label('Cantón Id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('canton')
@@ -51,14 +57,6 @@ class CantoneResource extends Resource
             ])
             ->filters([
                 //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -72,9 +70,10 @@ class CantoneResource extends Resource
     public static function getPages(): array
     {
         return [
+            //  Contones records canot be created or edited
             'index' => Pages\ListCantones::route('/'),
-            'create' => Pages\CreateCantone::route('/create'),
-            'edit' => Pages\EditCantone::route('/{record}/edit'),
+            // 'create' => Pages\CreateCantone::route('/create'),
+            // 'edit' => Pages\EditCantone::route('/{record}/edit'),
         ];
     }
 }

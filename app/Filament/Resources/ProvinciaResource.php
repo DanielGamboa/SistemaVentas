@@ -41,14 +41,6 @@ class ProvinciaResource extends Resource
             ])
             ->filters([
                 //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -62,9 +54,10 @@ class ProvinciaResource extends Resource
     public static function getPages(): array
     {
         return [
+            // Provincia cannot be created or edited
             'index' => Pages\ListProvincias::route('/'),
-            'create' => Pages\CreateProvincia::route('/create'),
-            'edit' => Pages\EditProvincia::route('/{record}/edit'),
+            // 'create' => Pages\CreateProvincia::route('/create'),
+            // 'edit' => Pages\EditProvincia::route('/{record}/edit'),
         ];
     }
 }
