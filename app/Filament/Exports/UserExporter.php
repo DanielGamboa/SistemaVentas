@@ -6,6 +6,7 @@ use App\Models\User;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
+use Filament\Actions\Exports\Downloaders\Enums\DownloadFileFormat;
 
 class UserExporter extends Exporter
 {
@@ -40,4 +41,11 @@ class UserExporter extends Exporter
 
         return $body;
     }
+
+    public function getFormats(): array
+{
+    return [
+        DownloadFileFormat::Csv => 'CSV',
+    ];
+}
 }

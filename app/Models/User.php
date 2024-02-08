@@ -79,4 +79,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Calidad::class, 'user_id', 'id');
     }
+
+    // Live wire component test --> app/Livewire/DatabaseNotifications.php and resources/views/notifications/database_notifications-trigger.blade.php
+    public function myfoo(): void
+{
+        User::create($this->form->getState());
+}
 }

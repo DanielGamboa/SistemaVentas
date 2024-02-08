@@ -9,7 +9,7 @@ namespace App\Filament\Resources\ClienteResource\Pages;
 use App\Filament\Imports\ClienteImporter;
 use App\Filament\Exports\ClienteExporter;
 use Filament\Actions\ExportAction;
-use Filament\Actions\Exports\Enums\ExportFormat;
+// use Filament\Actions\Exports\Enums\ExportFormat;
 use App\Filament\Resources\ClienteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
@@ -26,11 +26,11 @@ class ListClientes extends ListRecords
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('primary')
                 
-                ->exporter(ClienteExporter::class)
-                ->formats([
-                    ExportFormat::CSV,
-                    ExportFormat::XLSX,
-                ]),
+                ->exporter(ClienteExporter::class),
+                // ->formats([
+                //     ExportFormat::CSV,
+                //     ExportFormat::XLSX,
+                // ]),
             Actions\ImportAction::make()
                 ->label('Importar')
                 ->color('primary')
