@@ -5,12 +5,13 @@ namespace App\Filament\Resources\VentaLineaResource\Pages;
 use App\Filament\Resources\VentaLineaResource;
 use Filament\Resources\Pages\CreateRecord;
 
+
 // Add actions, notification
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 
 // Add the following line
-use App\Filment\Resources\CalidadResource;
+use App\Filament\Resources\CalidadResource;
 use Illuminate\Support\Str;
 use App\Models\Cliente;
 
@@ -45,11 +46,11 @@ class CreateVentaLinea extends CreateRecord
         //  $NombreCompletoCliente = $cliente->primer_nombre.' '.$cliente->segundo_nombre.' '.$cliente->primer_apellido.' '.$cliente->segundo_apellido;
         //  // Remove extra spaces
         //  $Nombre = Str::squish($NombreCompletoCliente);
- 
+        
          return Notification::make()
              ->success()
              ->title('Cliente creado')
-             ->body("El cliente $Nombre, solicito un plan {$venta->tipo_documento->value} y ha sido registrado exitosamente.")
+             ->body("El cliente $Nombre, solicito un plan {$venta->plan->value} y ha sido registrado exitosamente.")
              ->actions([
                  // Mark the notification as read
                  Action::make('Leido')
@@ -59,10 +60,10 @@ class CreateVentaLinea extends CreateRecord
                  Action::make('edit')
                      ->label('Editar')
                      ->button()
-                     ->url(VentaLineaResource::getUrl('edit', ['record' => $cliente->id])),
+                     ->url(VentaLineaResource::getUrl('edit', ['record' => $venta->id])),
                  // Create a new venta for the current client
-                 Action::make('Venta')
-                     ->label('Nueva Venta')
+                 Action::make('Calidad')
+                     ->label('Auditar Venta')
                      ->button()
                      ->url(CalidadResource::getUrl('create')),
              ])
