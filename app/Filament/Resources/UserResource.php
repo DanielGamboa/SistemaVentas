@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class UserResource extends Resource
 {
@@ -25,6 +26,14 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $navigationLabel = 'Usuarios';
+
+    public static function retrieveRecords($request, $model)
+    {
+        return Cache::remember('users', 60 * 24 * 45, function () use ($model) {
+            return $model::query()->get();
+        });
+    }
+
 
     public static function form(Form $form): Form
     {

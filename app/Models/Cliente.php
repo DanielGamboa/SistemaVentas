@@ -106,15 +106,9 @@ class Cliente extends Model implements HasMedia
 
     public function cantona(): BelongsTo
     {
-        // $provincia = $this->provincias_id;
-        // dd($provincia);
-        // return $this->belongsTo(Cantone::class, 'cantones_id', 'CantonNumber',);
+
         return $this->belongsTo(Cantone::class, 'cantones_id');
 
-        // ->where('id_provincias', $provincia)->value('canton');
-
-        // ->where('provincia_id', 'id_provincias');
-        // return $this->belongsTo(Cantone::class, 'CantonNumber');
     }
 
     public function distrito(): BelongsTo

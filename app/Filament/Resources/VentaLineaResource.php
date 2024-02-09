@@ -32,6 +32,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class VentaLineaResource extends Resource
 {
@@ -151,7 +152,10 @@ class VentaLineaResource extends Resource
                     //
                     Select::make('provincias_id')
                         ->label('Provincia')
-                        ->options(Provincia::all()->pluck('provincia', 'id'))
+                        // ->options(Provincia::all()->pluck('provincia', 'id'))
+                        ->options(Cache::remember('provincias', 525600, function () {
+                            return Provincia::all()->pluck('provincia', 'id');
+                        }))
                         ->searchable()
                         ->columnSpan(2)
                         ->preload()
@@ -164,12 +168,17 @@ class VentaLineaResource extends Resource
                     // Donde dice CantonNumber tenia "id" anteriormente
                     Select::make('cantones_id')
                         ->label('Canton')
-                        ->options(fn (Get $get): Collection => Cantone::query()
-                        ->where('id_provincias', $get('provincias_id'))
-                        ->pluck('canton', 'CantonNumber')
-                        )
+                        // ->options(fn (Get $get): Collection => Cantone::query()
+                        // ->where('id_provincias', $get('provincias_id'))
+                        // ->pluck('canton', 'CantonNumber')
+                        // )
+                        ->options(fn (Get $get): Collection => Cache::remember("cantones-{$get('provincias_id')}", 525600, function () use ($get) {
+                            return Cantone::query()
+                                ->where('id_provincias', $get('provincias_id'))
+                                ->pluck('canton', 'CantonNumber');
+                        }))
                         ->searchable()
-                        ->preload()
+                        // ->preload()
                         ->live()
                         ->afterStateUpdated(function (Set $set) {
                             $set('distritos_id', null);
@@ -178,14 +187,20 @@ class VentaLineaResource extends Resource
                         ->required(),
                     Select::make('distritos_id')
                         ->label('Distrito')
-                        ->options(fn (Get $get): Collection => Distrito::query()
-                            ->where('provincias_id', $get('provincias_id'))
-                            ->where('cantones_id', $get('cantones_id'))
-                            ->pluck('distrito', 'id')
-                        )
+                        // ->options(fn (Get $get): Collection => Distrito::query()
+                        //     ->where('provincias_id', $get('provincias_id'))
+                        //     ->where('cantones_id', $get('cantones_id'))
+                        //     ->pluck('distrito', 'id')
+                        // )
+                        ->options(fn (Get $get): Collection => Cache::remember("distritos-{$get('provincias_id')}-{$get('cantones_id')}", 525600, function () use ($get) {
+                            return Distrito::query()
+                                ->where('provincias_id', '=', $get('provincias_id'))
+                                ->where('cantones_id', $get('cantones_id').'CantonNumber')
+                                ->pluck('distrito', 'id');
+                        }))
                         ->searchable()
                         ->columnSpan(2)
-                        ->preload()
+                        // ->preload()
                         ->live()
                         ->required(),
                 ])->columnSpan(6)->visible(fn (Get $get): bool => $get('entrega_distinta')),

@@ -17,6 +17,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            'eloquent.created: App\User' => [
+                'App\Listeners\ClearUserCache',
+            ],
+            'eloquent.updated: App\User' => [
+                'App\Listeners\ClearUserCache',
+            ],
         ],
     ];
 
