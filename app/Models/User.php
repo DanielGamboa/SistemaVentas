@@ -11,10 +11,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\VentaLinea;
 use App\Models\GrabacionAuditoria;
 
-class User extends Authenticatable
+// Add for production
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+
+
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+        return filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+    
     /**
      * The attributes that are mass assignable.
      *
