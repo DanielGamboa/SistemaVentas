@@ -32,7 +32,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-// use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cache;
 
 class VentaLineaResource extends Resource
 {
