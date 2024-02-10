@@ -50,6 +50,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Filament\Imports\ClienteImporter;
 use Filament\Tables\Actions\ImportAction;
 // CSV Importer
+// Register Cache
+use Illuminate\Support\Facades\Cache;
 
 
 
@@ -58,6 +60,14 @@ class ClienteResource extends Resource
     protected static ?string $model = Cliente::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-identification';
+
+    // Cache Cliente
+    public static function retrieveRecords($request, $model)
+    {
+        return Cache::remember('clientes', 60 * 24 * 3, function () use ($model) {
+            return $model::query()->get();
+        });
+    }
 
     public static function form(Form $form): Form
     {
@@ -364,6 +374,7 @@ class ClienteResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->defaultSort('created_at', 'desc') // Sort Newest to oldest
         ->headerActions([
             ImportAction::make()
                 ->importer(ClienteImporter::class)

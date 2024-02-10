@@ -58,6 +58,14 @@ class ClienteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-identification';
 
+    // Cache Cliente
+    public static function retrieveRecords($request, $model)
+    {
+        return Cache::remember('clientes', 60 * 24 * 3, function () use ($model) {
+            return $model::query()->get();
+        });
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -400,10 +408,7 @@ class ClienteResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            // ->headerActions([
-            //     ImportAction::make()
-            //     ->importer(ClienteImporter::class)
-            //     ->label('Importar')])
+            ->defaultSort('created_at', 'desc') // Sort Newest to oldest
             ->columns([
                 TextColumn::make('user.name')
                     ->label('Vendedor')

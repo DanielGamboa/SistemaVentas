@@ -62,6 +62,8 @@ use App\Models\CalidadAuditoria;
 use App\Models\CalidadAuditorium;
 use Illuminate\Support\HtmlString;
 
+// Cache
+use Illuminate\Support\Facades\Cache;
 
 //  filament\Actions\Action
 // use Filament\Actions\Action;
@@ -77,6 +79,14 @@ class CalidadResource extends Resource
     protected static ?string $navigationLabel = 'Calidad';
 
     protected static ?string $navigationIcon = 'heroicon-o-scale';
+
+    // Cache Calidad
+    public static function retrieveRecords($request, $model)
+    {
+        return Cache::remember('calidads', 60 * 24 * 3, function () use ($model) {
+            return $model::query()->get();
+        });
+    }
 
     public static function form(Form $form): Form
     {
@@ -1152,6 +1162,7 @@ class CalidadResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc') // Sort Newest to oldest
             ->columns([
                 // Get Auditor ID from user_id in the related User model.
                 // This code makes use of Calidad model relationship with User model user() belongsTo.  This relationship is defined in the Calidad model.

@@ -9,6 +9,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+// Cache
+use Illuminate\Support\Facades\Cache;
+// Query Builder
+use Illuminate\Database\Eloquent\Builder;
 
 class ProvinciaResource extends Resource
 {
@@ -19,6 +23,13 @@ class ProvinciaResource extends Resource
     protected static ?string $model = Provincia::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map';
+
+    public static function query(): Builder
+{
+    return Cache::rememberForever('provincias', function () {
+        return Provincia::query();
+    });
+}
 
     public static function form(Form $form): Form
     {

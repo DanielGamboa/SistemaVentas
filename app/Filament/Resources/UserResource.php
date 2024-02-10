@@ -95,6 +95,7 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc') // Sort Newest to oldest
             ->columns([
                 //
                 TextColumn::make('id')
@@ -104,12 +105,16 @@ class UserResource extends Resource
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('tlf')
+                    ->icon('heroicon-m-phone')
+                    ->iconColor('primary')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('usuario')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
+                    ->icon('heroicon-m-envelope')
+                    ->iconColor('primary')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('role')

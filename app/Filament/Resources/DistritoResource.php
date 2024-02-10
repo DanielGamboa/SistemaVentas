@@ -9,6 +9,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+// Cache
+use Illuminate\Support\Facades\Cache;
+// Query Builder
+use Illuminate\Database\Eloquent\Builder;
 
 class DistritoResource extends Resource
 {
@@ -17,6 +21,13 @@ class DistritoResource extends Resource
     protected static ?int $navigationSort = 3;
 
     protected static ?string $model = Distrito::class;
+
+    public static function query(): Builder
+    {
+        return Cache::rememberForever('distritos', function () {
+            return Distrito::query();
+        });
+    }    
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 

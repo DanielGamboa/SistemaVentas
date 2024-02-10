@@ -50,7 +50,7 @@ class CreateVentaLinea extends CreateRecord
          return Notification::make()
              ->success()
              ->title('Cliente creado')
-             ->body("El cliente $Nombre, solicito un plan {$venta->plan->value} y ha sido registrado exitosamente.")
+             ->body("El cliente $Nombre, solicito un plan {$venta->plan->value} para el télefono ($venta->tlf) ha sido registrado exitosamente. ")
              ->actions([
                  // Mark the notification as read
                  Action::make('Leido')

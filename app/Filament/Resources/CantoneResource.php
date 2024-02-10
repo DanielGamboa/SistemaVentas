@@ -9,6 +9,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+// Cache
+use Illuminate\Support\Facades\Cache;
+// Query Builder
+use Illuminate\Database\Eloquent\Builder;
 
 class CantoneResource extends Resource
 {
@@ -17,6 +21,13 @@ class CantoneResource extends Resource
     protected static ?int $navigationSort = 2;
 
     protected static ?string $model = Cantone::class;
+
+    public static function query(): Builder
+{
+    return Cache::rememberForever('cantones', function () {
+        return Cantone::query();
+    });
+}
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
 

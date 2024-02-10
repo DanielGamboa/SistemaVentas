@@ -32,7 +32,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
+// use Illuminate\Support\Facades\Cache;
 
 class VentaLineaResource extends Resource
 {
@@ -215,6 +215,7 @@ class VentaLineaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc') // Sorts the table by the created_at column in descending order
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Vendedor')
