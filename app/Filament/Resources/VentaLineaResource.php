@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 //Resources
 use App\Enums\EstatusVentaLineaEnum;
 use App\Enums\PlanesLibertyLineasEnum;
+use App\Enums\TipoDocumentoEnum;
 // Models
 use App\Enums\PreciosPlanesLibertyLineasEnum;
 use App\Enums\VentaLineasEnum;
@@ -33,6 +34,10 @@ use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+
+// WhatsApp Logo Convert HtmlString And align img to center
+use Illuminate\Support\HtmlString;
+use Filament\Support\Enums\Alignment;
 
 class VentaLineaResource extends Resource
 {
@@ -217,6 +222,68 @@ class VentaLineaResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc') // Sorts the table by the created_at column in descending order
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('WhatsApp')
+                    ->formatStateUsing(function($record):HTMLString {
+                        return new HtmlString('<img src="/images/svg/whatsapp.svg" alt="WhatsApp" class="w-6 h-6" />');
+                    })
+                    ->alignment(Alignment::Center)
+                    ->copyable()
+                    ->copyableState(function (VentaLinea $record) {
+                        $UserName = $record->user->name;
+
+                        // Get Client related record from VentaLinea record --> $cliente will get the related record row on Clientes table.
+                        $cliente = $record->cliente;
+                        // Get Client from Cliente model and concatenate the full name
+                        $NombreCompletoCliente = $cliente->primer_nombre.' '.$cliente->segundo_nombre.' '.$cliente->primer_apellido.' '.$cliente->segundo_apellido;
+                        $Nombre = Str::squish($NombreCompletoCliente);
+
+                        // Convert EstatusVentaLineaEnum to a string
+                        $Estatus = $record->Estatus->name;
+                        // dd($Estatus);
+                        // Convert VentaLineasEnum to a string
+                        $VentaLineas = $record->VentaLinea->name;
+                        
+                        // Convert TipoDocumentoEnum to a string
+                        $tipoDocumento = $cliente->tipo_documento->name;
+                        
+                        // Convert PlanesLibertyLineasEnum to a string
+                        $PlanesLiberty = $record->plan->name; 
+                        
+                        // Get the creation date and time
+                        $creationDateTime = $record->created_at;
+                        // Format the date and time
+                        $date = $creationDateTime->format('d/m/Y');
+                        $time = $creationDateTime->format('H:i:s');
+
+                        return "*DTS:* Global Axis\n*Vendedor:* $UserName\n*Codigo de Vendedor:* $record->user_id\n*Canal:* Televentas\n*Status de la venta:* $Estatus\n\n*Nombre del cliente:* $Nombre\n*Numero de $tipoDocumento:* $cliente->documento\n
+                                **Numero a portar:** \n
+                                **Numero de la llamada:** \n\n
+                                **Proveedor:**\n
+                                **Tipo de Venta: $VentaLineas:**\n
+                                \n
+                                **Direccion:**\n
+                                \n
+                                **Provincia:**\n
+                                **Canton:**\n
+                                **Distrito:**\n
+                                \n
+                                *Correo: $cliente->email*\n
+
+                                *Numero de Referencia:*\n
+                                **1.**\n
+                                **2.**\n
+                                **3.**\n
+
+                                **Plan:** $PlanesLiberty\n
+
+                                *Comentario:*\n
+
+                                **Hora venta:** $time\n
+                                **Fecha:** $date";
+
+
+                    }),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Vendedor')
                     ->sortable()

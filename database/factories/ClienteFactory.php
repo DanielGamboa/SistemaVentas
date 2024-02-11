@@ -49,6 +49,8 @@ class ClienteFactory extends Factory
             // Random Last Names
             'primer_apellido' => $this->faker->lastName(),
             'segundo_apellido' => $this->faker->lastName(),
+            // Random email
+            'email' => $this->faker->unique()->safeEmail(),
             // Random addresses.
             'direccion' => $this->faker->address(),
             // Random Document Tipe basen on TipoDocumentoEnum

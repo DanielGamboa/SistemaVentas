@@ -4,6 +4,7 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
+
 /**
  * Nombre de los Planes de liberty.
  */
@@ -27,4 +28,5 @@ enum TipoDocumentoEnum: string implements HasLabel
             self::Refugiado => 'Refugiado',
         };
     }
+
 }

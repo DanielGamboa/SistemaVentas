@@ -44,3 +44,96 @@ Installed Spatie Media Library plugin for filament.
     // Currently the correct comand is
     php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="migrations"
 
+
+Server side:
+    Get latest version of Sistema Ventas from GitHub
+    In workind directory /var/www/SistemaVentas/SistemaVentas
+                sudo git fetch https://github.com/DanielGamboa/SistemaVentas.git
+    
+    Merge to server files and updates
+                sudo git reset --hard FETCH_HEAD
+    Get latest commit from log on local server
+                git log -1
+    Get latest commit from log on GitHub
+     git ls-remote  https://github.com/DanielGamboa/SistemaVentas.git
+    Confirm same commit number to ensure they are on the same version.
+
+Server side / Local development
+    On server side "sudo" privilages must be used in the root directory /var/www/SistemaVentas/SistemaVentas
+    Cache:
+                composer dump-autoload
+                php artisan config:cache
+                php artisan route:cache
+                php artisan view:cache
+                
+    Note if cache was implemented caching will resume automatically after cache is cleared.
+    Each command clears part of the cache.  None of these clear all cache on their own
+                php artisan cache:clear
+                php artisan route:clear
+                php artisan config:clear
+                php artisan view:clear
+
+Implementing Cache:
+    There are two main ways to implement "cache" in a laravel filament proyect.  The simple one is to add caching to the ModelResource file
+    and adding:
+            Cache::forget('table_name');
+    On the Filament\Resource\Page for CreateModel and EditModel.
+    The problem with this aproach is that if the Model record is modified or created by another part of the the APP or manually.
+    it will not clear the cache.
+
+    Therefore i have implemented laravel App\Listeners\ and hooked it into App\Providers\EventServiceProvider.php
+        php artisan make:listener ClearModelCache ---> Ej: ClearUserCache
+
+        Navigate to App\Listeners\ClearModelCache 
+
+        Import:
+            use Illuminate\Support\Facades\Cache;
+
+        Add:
+            This code will excecute a cache clear comand for the corresponding db table
+            In this case the model is User, the db table is "users" (plural).
+            We will now execute this code from the event service provider for each event that requieres a cache clear in order for the program
+            to operate properly.
+ 
+
+                    public function handle(object $event): void
+                {
+                    //
+                    Cache::forget('users');
+                }
+        Once this file is edited and Facades Cahce is imported.  Open the EventServiceProvider:
+                ---> Important, because in this example we will be calling the ClearModelCache when a User model record is created or edited.
+                        Because we are using the full relative path it does not need to be imported.
+                        'App\Listeners\ClearModelCache'
+                        The listener event is targeting the 'eloquent.created'
+                        For App\User model
+                        And it accepts and array of values. 
+
+                protected $listen = [
+                        Registered::class => [
+                            SendEmailVerificationNotification::class,
+                            // Created a listener for the User model
+                            'eloquent.created: App\User' => [
+                                'App\Listeners\ClearUserCache',
+                            ],
+                            // Updated a listener for the User model
+                            'eloquent.updated: App\User' => [
+                                'App\Listeners\ClearUserCache',
+                            ],
+                        ],
+                ];`
+            
+    The benefit of this aproach is that any update to the database will clear and update the cache with any DB modification.  Further more it 
+    will not clear all cache.  It will only target specific a specific cache when needed.
+                    https://www.youtube.com/watch?v=-NOOqIYEFwc  might be outdated --- need to research
+
+    NEXT STEPS FOR PERFORMANCE OPTIMIZATION ---> Install and configure Redis Server, MUST   HARDEN WARNING MUST HARDEN EXPLOITABLE + FIERWALL CONFIGURATION
+            https://redis.io/docs/install/install-redis/ --> INSTALL
+            https://redis.io/docs/management/  -----> CONFIGURE AND MANAGE
+
+        
+
+
+
+
+

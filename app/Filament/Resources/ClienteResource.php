@@ -76,83 +76,95 @@ class ClienteResource extends Resource
                             ->schema([
                                 // Datos
                                 // Datos personales del cliente
-                                Select::make('tipo_documento')
-                                    ->options(TipoDocumentoEnum::class)
-                                    ->enum(TipoDocumentoEnum::class)
-                                    ->columnSpan(2)
-                                    ->required(),
-                                TextInput::make('documento')
-                                    ->columnSpan(2)
-                                    ->required()
-                                    ->maxLength(30)
-                                    ->unique(ignoreRecord: true),
-                                TextInput::make('primer_nombre')
-                                    ->autocapitalize()
-                                    ->live(onBlur: true) // Will re-render and execute LiveWire componant after the user leaves the field
-                                    // ->dehydrateStateUsing(fn (string $state): string => ucwords($state)) // Will capitalize the first letter of every word
-                                    // ->dehydrateStateUsing(fn (string $state): string => ucwords($state))
-                                    // ->afterStateUpdated(function (Set $set, $state) {
-                                        // Set: is a built in function that takes two parameters
-                                        // $PrimerNombre is the retrived value in this case the 'primer_nombre' value
-                                        // Str::title() will make the first letter of every word capitalized and the rest lower case
-                                        // $PrimerNombre = Str::title($state);
-                                        // $set('primer_nombre', $PrimerNombre);
-                                    // })
-                                    ->afterStateUpdated((fn (string $state): string => ucwords($state)))
-                                    ->columnSpan(2)
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('segundo_nombre')
-                                    ->autocapitalize('words')
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function (Set $set, $state) {
-                                        // Set: is a built in function that takes two parameters
-                                        // $SegundoNombre is the retrived value in this case the 'segundo_nombre' value
-                                        // Str::title() will make the first letter of every word capitalized and the rest lower case
-                                        // $SegundoNombre = Str::title($state);
-                                        // $set('segundo_nombre', $SegundoNombre);
-                                    })
-                                    ->columnSpan(2)
-                                    ->columnSpan(2)
-                                    ->maxLength(255),
-                                TextInput::make('primer_apellido')
-                                    ->autocapitalize('words')
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function (Set $set, $state) {
-                                        // Set: is a built in function that takes two parameters
-                                        // $PrimerApellido is the retrived value in this case the 'primer_apellido' value
-                                        // Str::title() will make the first letter of every word capitalized and the rest lower case
-                                        // $PrimerApellido = Str::title($state);
-                                        // $set('primer_apellido', $PrimerApellido);
-                                    })
-                                    ->columnSpan(2)
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('segundo_apellido')
-                                    ->autocapitalize('words')
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
-                                        //Primer nombre
-                                        $primer_nombre = $get('primer_nombre');
-                                        $PrimerNombre = Str::title($primer_nombre);
-                                        $set('primer_nombre', $PrimerNombre);
-                                        // Segundo Nombre
-                                        $segundo_nombre = $get('segundo_nombre');
-                                        $SegundoNombre = Str::title($segundo_nombre);
-                                        $set('segundo_nombre', $SegundoNombre);
-                                        //Primer Apellido
-                                        $primer_apellido = $get('primer_apellido');
-                                        $PrimerApellido = Str::title($primer_apellido);
-                                        $set('primer_apellido', $PrimerApellido);
-                                        // Set: is a built in function that takes two parameters
-                                        // $SegundoApellido is the retrived value in this case the 'segundo_apellido' value
-                                        // Str::title() will make the first letter of every word capitalized and the rest lower case
-                                        $SegundoApellido = Str::title($state);
-                                        $set('segundo_apellido', $SegundoApellido);
 
-                                    })
-                                    ->columnSpan(2)
-                                    ->maxLength(255),
+                                Section::make()
+                                    ->id('datos_cliente')
+                                    ->schema([
+                                        Select::make('tipo_documento')
+                                        ->options(TipoDocumentoEnum::class)
+                                        ->enum(TipoDocumentoEnum::class)
+                                        ->columnSpan(2)
+                                        ->required(),
+                                        TextInput::make('documento')
+                                            ->columnSpan(2)
+                                            ->required()
+                                            ->maxLength(30)
+                                            ->unique(ignoreRecord: true),
+                                        TextInput::make('primer_nombre')
+                                            ->autocapitalize()
+                                            ->live(onBlur: true) // Will re-render and execute LiveWire componant after the user leaves the field
+                                            // ->dehydrateStateUsing(fn (string $state): string => ucwords($state)) // Will capitalize the first letter of every word
+                                            // ->dehydrateStateUsing(fn (string $state): string => ucwords($state))
+                                            // ->afterStateUpdated(function (Set $set, $state) {
+                                                // Set: is a built in function that takes two parameters
+                                                // $PrimerNombre is the retrived value in this case the 'primer_nombre' value
+                                                // Str::title() will make the first letter of every word capitalized and the rest lower case
+                                                // $PrimerNombre = Str::title($state);
+                                                // $set('primer_nombre', $PrimerNombre);
+                                            // })
+                                            ->afterStateUpdated((fn (string $state): string => ucwords($state)))
+                                            ->columnSpan(2)
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('segundo_nombre')
+                                            ->autocapitalize('words')
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(function (Set $set, $state) {
+                                                // Set: is a built in function that takes two parameters
+                                                // $SegundoNombre is the retrived value in this case the 'segundo_nombre' value
+                                                // Str::title() will make the first letter of every word capitalized and the rest lower case
+                                                // $SegundoNombre = Str::title($state);
+                                                // $set('segundo_nombre', $SegundoNombre);
+                                            })
+                                            ->columnSpan(2)
+                                            ->columnSpan(2)
+                                            ->maxLength(255),
+                                        TextInput::make('primer_apellido')
+                                            ->autocapitalize('words')
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(function (Set $set, $state) {
+                                                // Set: is a built in function that takes two parameters
+                                                // $PrimerApellido is the retrived value in this case the 'primer_apellido' value
+                                                // Str::title() will make the first letter of every word capitalized and the rest lower case
+                                                // $PrimerApellido = Str::title($state);
+                                                // $set('primer_apellido', $PrimerApellido);
+                                            })
+                                            ->columnSpan(2)
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('segundo_apellido')
+                                            ->autocapitalize('words')
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(function (Get $get, Set $set, $state) {
+                                                //Primer nombre
+                                                $primer_nombre = $get('primer_nombre');
+                                                $PrimerNombre = Str::title($primer_nombre);
+                                                $set('primer_nombre', $PrimerNombre);
+                                                // Segundo Nombre
+                                                $segundo_nombre = $get('segundo_nombre');
+                                                $SegundoNombre = Str::title($segundo_nombre);
+                                                $set('segundo_nombre', $SegundoNombre);
+                                                //Primer Apellido
+                                                $primer_apellido = $get('primer_apellido');
+                                                $PrimerApellido = Str::title($primer_apellido);
+                                                $set('primer_apellido', $PrimerApellido);
+                                                // Set: is a built in function that takes two parameters
+                                                // $SegundoApellido is the retrived value in this case the 'segundo_apellido' value
+                                                // Str::title() will make the first letter of every word capitalized and the rest lower case
+                                                $SegundoApellido = Str::title($state);
+                                                $set('segundo_apellido', $SegundoApellido);
+        
+                                            })
+                                            ->columnSpan(2)
+                                            ->maxLength(255),
+                                        TextInput::make('email')
+                                            ->label('Correo Electrónico')
+                                            ->type('email')
+                                            ->prefixIcon('heroicon-o-envelope')
+                                            ->columnSpan(4)
+                                            ->required()
+                                            ->unique(ignoreRecord: true),
+                                    ])->columns(12)->columnSpan(12),
 
                                 Section::make()->schema([
                                     // Direccion de facturación
@@ -434,7 +446,11 @@ class ClienteResource extends Resource
 
                         return $Nombre;
                     })
+                    ->copyable()
                     ->searchable(),
+                TextColumn::make('email')
+                    ->searchable()
+                    ->copyable(),
                 TextColumn::make('segundo_nombre')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -447,7 +463,8 @@ class ClienteResource extends Resource
                 IconColumn::make('documento_completo')
                     ->label('Imagenes'),
                 TextColumn::make('provincias.provincia')
-                    ->sortable(),
+                    ->sortable()
+                    ->copyable(),
                 TextColumn::make('cantones_id')
                     ->formatStateUsing(function (Cliente $client) {
                         $canton = Cantone::where('id_provincias', $client->provincias_id)
@@ -458,12 +475,15 @@ class ClienteResource extends Resource
 
                     })
                     ->label('Canton')
+                    ->copyable()
                     ->sortable(),
 
                 TextColumn::make('distrito.distrito')
+                    ->copyable()
                     ->sortable(),
                 TextColumn::make('direccion')
                     ->html()
+                    ->copyable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Creado')

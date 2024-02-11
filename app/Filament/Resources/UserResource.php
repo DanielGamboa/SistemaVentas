@@ -14,7 +14,12 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+// Necesary for password hashing
+use Illuminate\Support\Facades\Hash;
+// Used for cache
 use Illuminate\Support\Facades\Cache;
+
+
 
 class UserResource extends Resource
 {
@@ -68,6 +73,7 @@ class UserResource extends Resource
                         $usuario = Str::lower($removed);
                         $set('usuario', $usuario);
                     })
+                    ->unique()
                     ->columnSpan(2),
                 DatePicker::make('fecha_ingreso')
                     ->native(false)
@@ -87,7 +93,12 @@ class UserResource extends Resource
                     ->required(),
 
                 TextInput::make('role'),
-                TextInput::make('password')->required()->password(),
+                TextInput::make('password')
+                    // Required if creating a new record
+                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->required(fn (string $context): bool => $context === 'create')
+                    ->password(),
 
             ])->columns(5);
     }
@@ -98,10 +109,8 @@ class UserResource extends Resource
             ->defaultSort('created_at', 'desc') // Sort Newest to oldest
             ->columns([
                 //
-                TextColumn::make('id')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('tlf')
@@ -128,7 +137,12 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                // Tables\Actions\Action::make('Copy')
+                //     ->label('Copiar')
+                //     ->icon('heroicon-m-clipboard-document-list')
+                //     ->copyableState(fn (User $record): string => "URL: {$record->name}"),
                 Tables\Actions\EditAction::make(),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
