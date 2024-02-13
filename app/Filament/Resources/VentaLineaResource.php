@@ -39,6 +39,9 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\HtmlString;
 use Filament\Support\Enums\Alignment;
 
+// Add relationship
+use App\Filament\Resources\VentaLineaResource\RelationManagers\NumeroReferenciasRelationManager;
+
 class VentaLineaResource extends Resource
 {
     protected static ?string $model = VentaLinea::class;
@@ -374,7 +377,8 @@ class VentaLineaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // Add NumeroReferenciasRelationManager to the VentaLineaResource
+            NumeroReferenciasRelationManager::class,
         ];
     }
 

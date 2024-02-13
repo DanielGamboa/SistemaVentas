@@ -13,6 +13,9 @@ use App\Models\Cliente;
 use App\Models\Provincia;
 use App\Models\Cantone;
 use App\Models\Distrito;
+use App\Models\NumeroReferencia;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class VentaLinea extends Model
 {
@@ -86,4 +89,11 @@ class VentaLinea extends Model
     {
         return $this->belongsTo(Distrito::class, 'distritos_id');
     }
+
+    // Set up relationship to NumeroReferencia
+    public function numeroReferencias(): BelongsToMany
+    {
+        return $this->belongsToMany(NumeroReferencia::class);
+    }
+
 }
