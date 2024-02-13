@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Hash;
 // Used for cache
 use Illuminate\Support\Facades\Cache;
 
+// use App\Filament\Resources\Page;
+
+
 
 
 class UserResource extends Resource
@@ -55,16 +58,16 @@ class UserResource extends Resource
                         $name = Str::title($state);
                         $set('name', $name);
                     })
-                    // Validation rules for name
-                    ->alpha()
                     ->required()
                     ->columnSpan(2),
                 TextInput::make('cedula')->required(),
                 TextInput::make('tlf')
                     ->numeric()
                     ->columnSpan(1),
-                TextInput::make('email')->unique('users','email', ignoreRecord: true)->required()->email()->columnSpan(2),
+                TextInput::make('email')->required()->email()->columnSpan(2),
                 Textinput::make('usuario')
+                    ->unique('user_table', 'user_column',  fn($form) => $form->record)
+                    ->disabled(fn (string $context): bool => $context === 'edit')
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (Set $set, $state) {
                         // Set: is a built in function that takes two parameters
@@ -74,10 +77,7 @@ class UserResource extends Resource
                         $usuario = Str::lower($removed);
                         $set('usuario', $usuario);
                     })
-                    ->unique('users', 'usuario', ignoreRecord: true)
-                    ->disabled(fn (string $context): bool => $context === 'edit')
                     ->required(fn (string $context): bool => $context === 'create')
-                    ->alphaDash()
                     ->columnSpan(2),
                     DatePicker::make('fecha_ingreso')
                     ->native(false)
@@ -105,11 +105,9 @@ class UserResource extends Resource
                     ->password(),
 
             ])->columns(5);
-}
+    }
 
-// how can i auto indent file?
-
-public static function table(Table $table): Table
+    public static function table(Table $table): Table
     {
         return $table
             ->defaultSort('created_at', 'desc') // Sort Newest to oldest

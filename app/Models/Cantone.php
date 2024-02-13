@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Apo\Models\Distrito;
+use App\Models\Distrito;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Provincia;
+use App\Models\Cliente;
+
 
 class Cantone extends Model
 {

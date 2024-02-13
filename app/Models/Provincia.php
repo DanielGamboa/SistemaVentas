@@ -30,4 +30,11 @@ class Provincia extends Model
     protected $casts = [
 
     ];
+
+    // Relationships to other tables, remember to import the model in order to use the class
+    // Provincia belongsTo VentaLinea (one to many)
+    public function ventaLinea()
+    {
+        return $this->belongsTo(VentaLinea::class);
+    }
 }

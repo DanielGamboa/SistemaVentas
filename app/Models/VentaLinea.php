@@ -8,6 +8,11 @@ use App\Enums\VentaLineasEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
+use App\Models\Cliente;
+use App\Models\Provincia;
+use App\Models\Cantone;
+use App\Models\Distrito;
 
 class VentaLinea extends Model
 {

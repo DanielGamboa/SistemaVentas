@@ -239,16 +239,16 @@ class VentaLineaResource extends Resource
                         $Nombre = Str::squish($NombreCompletoCliente);
 
                         // Convert EstatusVentaLineaEnum to a string
-                        $Estatus = $record->Estatus->name;
+                        $Estatus = $record->Estatus->value;
                         // dd($Estatus);
                         // Convert VentaLineasEnum to a string
-                        $VentaLineas = $record->VentaLinea->name;
+                        $VentaLineas = $record->VentaLinea->value;
                         
                         // Convert TipoDocumentoEnum to a string
-                        $tipoDocumento = $cliente->tipo_documento->name;
+                        $tipoDocumento = $cliente->tipo_documento->value;
                         
                         // Convert PlanesLibertyLineasEnum to a string
-                        $PlanesLiberty = $record->plan->name; 
+                        $PlanesLiberty = $record->plan->value; 
                         
                         // Get the creation date and time
                         $creationDateTime = $record->created_at;
@@ -256,31 +256,38 @@ class VentaLineaResource extends Resource
                         $date = $creationDateTime->format('d/m/Y');
                         $time = $creationDateTime->format('H:i:s');
 
-                        return "*DTS:* Global Axis\n*Vendedor:* $UserName\n*Codigo de Vendedor:* $record->user_id\n*Canal:* Televentas\n*Status de la venta:* $Estatus\n\n*Nombre del cliente:* $Nombre\n*Numero de $tipoDocumento:* $cliente->documento\n
-                                **Numero a portar:** \n
-                                **Numero de la llamada:** \n\n
-                                **Proveedor:**\n
-                                **Tipo de Venta: $VentaLineas:**\n
-                                \n
-                                **Direccion:**\n
-                                \n
-                                **Provincia:**\n
-                                **Canton:**\n
-                                **Distrito:**\n
-                                \n
-                                *Correo: $cliente->email*\n
+                        // Check if entrega_distinta is true or false  if true get record direccion_entrega if false get cliente direccion
+                        if ($record->entrega_distinta) {
+                            // Get the direccion_entrega from the record
+                            $DireccionEntrega = $record->direccion_entrega;
+                            // Get provincia, canton and distrito from the related record on the table.  Chip delivery direction
+                            $provincia = $record->provincias->provincia;
+                            $canton = $record->cantona->where('id_provincias', $record->provincias_id)->where('CantonNumber', $record->cantones_id)->first()->canton;
+                            $distrito = $record->distrito->distrito;
+                        } else {
+                            $DireccionEntrega = $cliente->direccion;
+                            $provincia = $cliente->provincias->provincia;
+                            $canton = $cliente->cantona->where('id_provincias', $cliente->provincias_id)->where('CantonNumber', $cliente->cantones_id)->first()->canton;
+                            $distrito = $cliente->distrito->distrito;
+    
+                        }
 
-                                *Numero de Referencia:*\n
-                                **1.**\n
-                                **2.**\n
-                                **3.**\n
+                        // Number to be ported is the same as the record tlf if tlf_venta_distinto is false and $VentaLineas == Portabilidad
+                        if ($VentaLineas == 'Portabilidad') {
+                            $NumeroPortar = $record->tlf;
+                        } else {
+                            $NumeroPortar = 'No aplica';
+                        }
+                        $Referencia = '';
+                        // Number of the call is tlf_marcado if tlf_venta_distinto is true els tlf
+                        if ($record->tlf_venta_distinto) {
+                            $NumeroLlamada = $record->tlf_marcado;
+                            $Referencia = $record->tlf;
+                        } else {
+                            $NumeroLlamada = $record->tlf;
+                        }
 
-                                **Plan:** $PlanesLiberty\n
-
-                                *Comentario:*\n
-
-                                **Hora venta:** $time\n
-                                **Fecha:** $date";
+                        return "*DTS:* Global Axis\n*Vendedor:* $UserName\n*Codigo de Vendedor:* $record->user_id\n*Canal:* Televentas\n*Status de la venta:* $Estatus\n\n*Nombre del cliente:* $Nombre\n*Numero de $tipoDocumento:* $cliente->documento\n*Numero a portar:* $NumeroPortar\n*Tipo de Venta:* $VentaLineas\n*Numero de la llamada:* $NumeroLlamada\n\n*Direccion Entrega:* $DireccionEntrega\n\n*Provincia:* $provincia\n*Canton:* $canton\n*Distrito:* $distrito\n\n*Correo: $cliente->email*\n*Numero de Referencia:*\n*1.* $Referencia\n*Plan:* $PlanesLiberty\n*Comentario:*\n*Hora venta:* $time\n*Fecha:* $date";
 
 
                     }),

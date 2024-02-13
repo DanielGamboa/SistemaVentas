@@ -131,6 +131,8 @@ Implementing Cache:
             https://redis.io/docs/install/install-redis/ --> INSTALL
             https://redis.io/docs/management/  -----> CONFIGURE AND MANAGE
 
+
+Finished WhatsApp template.  Needs to be polished befor cache is implemented.  Moving on for now
         
 
 
