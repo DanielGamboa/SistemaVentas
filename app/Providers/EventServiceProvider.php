@@ -65,6 +65,22 @@ class EventServiceProvider extends ServiceProvider
             'eloquent.updated: App\Models\Distrito' => [
                 'App\Listeners\ClearDistritoCache',
             ],
+            // Create a listener for NumeroReferencia model
+            'eloquent.created: App\Models\NumeroReferencia' => [
+                'App\Listeners\ClearNumeroReferenciaCache',
+            ],
+            // Updated a listener for NumeroReferencia model
+            'eloquent.updated: App\Models\NumeroReferencia' => [
+                'App\Listeners\ClearNumeroReferenciaCache',
+            ],
+            // Create a listener for VentaLinea model
+            'eloquent.created: App\Models\VentaLinea' => [
+                'App\Listeners\ClearVentaLineaCache',
+            ],
+            // Updated a listener for VentaLinea model
+            'eloquent.updated: App\Models\VentaLinea' => [
+                'App\Listeners\ClearVentaLineaCache',
+            ],
         ],
     ];
 

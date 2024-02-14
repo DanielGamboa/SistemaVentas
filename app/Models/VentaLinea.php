@@ -16,6 +16,7 @@ use App\Models\Distrito;
 use App\Models\NumeroReferencia;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 class VentaLinea extends Model
 {
@@ -93,7 +94,12 @@ class VentaLinea extends Model
     // Set up relationship to NumeroReferencia
     public function numeroReferencias(): BelongsToMany
     {
-        return $this->belongsToMany(NumeroReferencia::class);
+        return Cache::remember('numeroReferencias', 60*60*24*30*6, function() {
+            return $this->belongsToMany(NumeroReferencia::class)->get();
+        });
+
+        
+        // return $this->belongsToMany(NumeroReferencia::class);
     }
 
 }
