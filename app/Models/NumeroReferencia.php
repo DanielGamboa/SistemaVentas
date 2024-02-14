@@ -24,11 +24,11 @@ class NumeroReferencia extends Model
     public function ventasLineas(): BelongsToMany
 
     {
-        $ventasLineas = Cache::remember('ventasLineas', 60*60*24*30*6, function() {
-            return $this->belongsToMany(VentaLinea::class);
-        });
+        // $ventasLineas = Cache::remember('ventasLineas', 60*60*24*30*6, function() {
+        //     return $this->belongsToMany(VentaLinea::class);
+        // });
 
-        return $ventasLineas;
-        // return $this->belongsToMany(VentaLinea::class);
+        // return $ventasLineas;
+        return $this->belongsToMany(VentaLinea::class);
     }
 }

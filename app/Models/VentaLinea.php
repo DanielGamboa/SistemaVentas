@@ -94,12 +94,24 @@ class VentaLinea extends Model
     // Set up relationship to NumeroReferencia
     public function numeroReferencias(): BelongsToMany
     {
-        return Cache::remember('numeroReferencias', 60*60*24*30*6, function() {
-            return $this->belongsToMany(NumeroReferencia::class)->get();
-        });
+        // $numeroReferencia = Cache::remember('numeroReferencias', 60*60*24*30*6, function() {
+        //     return $this->belongsToMany(NumeroReferencia::class)->get();
+        // });
+
+        // return $numeroReferencia;
+        // return Cache::remember('numeroReferencias', 60*60*24*30*6, function() {
+            // return $this->belongsToMany(NumeroReferencia::class)->get();
+        // });
 
         
-        // return $this->belongsToMany(NumeroReferencia::class);
+        return $this->belongsToMany(NumeroReferencia::class);
     }
 
 }
+
+
+// $ventasLineas = Cache::remember('ventasLineas', 60*60*24*30*6, function() {
+    // return $this->belongsToMany(VentaLinea::class);
+// });
+
+// return $ventasLineas;
