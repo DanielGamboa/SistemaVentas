@@ -19,6 +19,13 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Notifications\Livewire\DatabaseNotifications;
 
+// Adding Widgets
+// use App\Filament\Resources\VentaLineaResource\Widgets\StatsOverviewWidget;
+use App\Filament\Resources\VentaLineaResource\Widgets\StatsOverview;
+// use App\Filament\Widgets\StatsOverviewWidget;
+// use App\Filament\Widgets\StatsOverviewWidget;
+
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -43,6 +50,8 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 // Daniel Gamboa -- "Welcome Daniel Gamboa" on admin dashboard
                 Widgets\AccountWidget::class,
+                StatsOverview::class,
+                // Daniel Gamboa -- "Stats Overview" on admin dashboard
             ])
             ->middleware([
                 EncryptCookies::class,

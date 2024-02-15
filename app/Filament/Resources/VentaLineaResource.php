@@ -42,6 +42,11 @@ use Filament\Support\Enums\Alignment;
 // Add relationship
 use App\Filament\Resources\VentaLineaResource\RelationManagers\NumeroReferenciasRelationManager;
 
+// Add Widgets
+use App\Filament\Resources\VentaLineaResource\Widgets\StatsOverview;
+
+use Illuminate\Database\Eloquent\Builder;
+
 class VentaLineaResource extends Resource
 {
     protected static ?string $model = VentaLinea::class;
@@ -379,6 +384,14 @@ class VentaLineaResource extends Resource
         return [
             // Add NumeroReferenciasRelationManager to the VentaLineaResource
             NumeroReferenciasRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            StatsOverview::class,
+            
         ];
     }
 
