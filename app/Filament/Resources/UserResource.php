@@ -63,7 +63,8 @@ class UserResource extends Resource
                 TextInput::make('tlf')
                     ->numeric()
                     ->columnSpan(1),
-                TextInput::make('email')->unique('users','email', ignoreRecord: true)->required()->email()->columnSpan(2),
+                // TextInput::make('email')->unique('users','email', ignoreRecord: true)->required()->email()->columnSpan(2),
+                TextInput::make('email')->required()->email()->columnSpan(2),
                 Textinput::make('usuario')
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (Set $set, $state) {

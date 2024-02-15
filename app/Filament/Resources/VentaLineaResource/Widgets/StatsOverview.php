@@ -8,6 +8,8 @@ use App\Models\VentaLinea;
 use Filament\Widgets\Concerns\InteractsWithPageTable;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Flowframe\Trend\Trend;
+use Flowframe\Trend\TrendValue;
 
 
 // use App\Filament\Resources\VentaLineaResource;
@@ -31,6 +33,14 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
 
+        $ventaData = Trend::model(VentaLinea::class)
+            ->between(
+                start: now()->subYear(),
+                end: now(),
+            )
+            ->perMonth()
+            ->count();
+
         // Current month
         $thisMonth = VentaLinea::where('created_at', '>=', now()->startOfMonth())
                         ->where('created_at', '<=', now())
@@ -38,9 +48,15 @@ class StatsOverview extends BaseWidget
         return [
             //
             Stat::make('Ventas Mes', $thisMonth),
-            Stat::make('Unique views', '100.1k'),
-            Stat::make('Bounce rate', '1%'),
-            Stat::make('Average time on page', '1:11'),
+            Stat::make('VentaLinea', $this->getPageTableQuery()->count())
+                ->chart(
+                    $ventaData
+                        ->map(fn (TrendValue $value) => $value->aggregate)
+                        ->toArray()
+                )
+                ->color('primary'),
+            Stat::make('Requiere Entrega', $this->getPageTableQuery()->whereIn('VentaLinea', ['Linea Nueva', 'Portabilidad'])->count()),
+            Stat::make('Migracion', $this->getPageTableQuery()->whereIn('VentaLinea', ['Migracion'])->count()),
         ];
     }
 }
