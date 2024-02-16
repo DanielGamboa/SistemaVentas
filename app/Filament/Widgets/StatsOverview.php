@@ -47,6 +47,8 @@ class StatsOverview extends BaseWidget
             return 'heroicon-m-arrow-long-right'; // Replace with the actual icon for no change
         }
     };
+    // Calculate % change
+    $percentageChangeValue = $percentageChange($currentCount, $thisMonth);
 
     $counts = collect(range(5, 0))->map(function ($monthsAgo) {
         $month = now()->subMonths($monthsAgo);
@@ -77,7 +79,7 @@ class StatsOverview extends BaseWidget
         // Count total customers from Cliente Model
         Stat::make('Total Clientes', $currentCount)
             // Description calculate percent change with regard to previos month
-            ->description('Cambio respecto al mes anterior: ' . number_format($percentageChange, 2) . '%')
+            ->description('Cambio respecto al mes anterior: ' . number_format($percentageChangeValue, 2) . '%')
             ->descriptionIcon($descriptionResultIcon())
             ->chart($counts),
 
