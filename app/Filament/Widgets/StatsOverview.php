@@ -37,18 +37,20 @@ class StatsOverview extends BaseWidget
         return (($thisMonth / $difference) * 100);
     }};
 
+    $percentageChangeValue = $percentageChange($currentCount, $thisMonth);
+
     // Evaluate $percentageChange if positive, it grew if negative it decresed
-    $descriptionResultIcon = function () use ($percentageChange) {
-        if ($percentageChange > 0) {
+    $descriptionResultIcon = function () use ($percentageChangeValue) {
+        if ($percentageChangeValue > 0) {
             return 'heroicon-m-arrow-trending-up'; // Replace with the actual icon for growth
-        } elseif ($percentageChange < 0) {
+        } elseif ($percentageChangeValue < 0) {
             return 'heroicon-m-arrow-trending-down'; // Replace with the actual icon for decrease
         } else {
             return 'heroicon-m-arrow-long-right'; // Replace with the actual icon for no change
         }
     };
     // Calculate % change
-    $percentageChangeValue = $percentageChange($currentCount, $thisMonth);
+    
 
     $counts = collect(range(5, 0))->map(function ($monthsAgo) {
         $month = now()->subMonths($monthsAgo);
