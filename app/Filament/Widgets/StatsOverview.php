@@ -28,7 +28,14 @@ class StatsOverview extends BaseWidget
     // dd($currentCount); // 815 clients
     // $percentageChange = (($currentCount - $previousMonthCount) / $previousMonthCount) * 100;
     // Growth
-    $percentageChange = (($thisMonth / ($currentCount - $thisMonth)) * 100);
+
+    $percentageChange = function($currentCount, $thisMonth) {
+        if (($currentCount - $thisMonth) == 0){
+        return 0.00;
+    }else {
+        return (($thisMonth / ($currentCount - $thisMonth)) * 100);
+    }};
+
     // Evaluate $percentageChange if positive, it grew if negative it decresed
     $descriptionResultIcon = function () use ($percentageChange) {
         if ($percentageChange > 0) {
