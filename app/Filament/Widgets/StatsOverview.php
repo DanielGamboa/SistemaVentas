@@ -30,10 +30,11 @@ class StatsOverview extends BaseWidget
     // Growth
 
     $percentageChange = function($currentCount, $thisMonth) {
-        if (($currentCount - $thisMonth) == 0){
-        return 0.00;
+        $difference = $currentCount - $thisMonth;
+        if ($difference == 0){
+        return 0;
     }else {
-        return (($thisMonth / ($currentCount - $thisMonth)) * 100);
+        return (($thisMonth / $difference) * 100);
     }};
 
     // Evaluate $percentageChange if positive, it grew if negative it decresed
