@@ -111,7 +111,7 @@ class VentaLineaResource extends Resource
                                 // $PlanLiberty takes the @ from the value for PlanesLibertyLineasEnum::class
                                 // Not the key that does not have the @ in its name.
                                 'Plan@1' => PreciosPlanesLibertyLineasEnum::Plan1,
-                                'Plan@1Pluss' => PreciosPlanesLibertyLineasEnum::Plan1Pluss,
+                                'Plan@1Plus' => PreciosPlanesLibertyLineasEnum::Plan1Plus,
                                 'Plan@2' => PreciosPlanesLibertyLineasEnum::Plan2,
                                 'Plan@3' => PreciosPlanesLibertyLineasEnum::Plan3,
                                 'Plan@4' => PreciosPlanesLibertyLineasEnum::Plan4,

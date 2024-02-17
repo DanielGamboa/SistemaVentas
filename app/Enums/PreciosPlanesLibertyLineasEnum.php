@@ -8,7 +8,7 @@ namespace App\Enums;
 enum PreciosPlanesLibertyLineasEnum: string
 {
     case Plan1 = '10700';
-    case Plan1Pluss = '13700';
+    case Plan1Plus = '13700';
     case Plan2 = '16000';
     case Plan3 = '22000';
     case Plan4 = '27200';
@@ -23,7 +23,6 @@ enum PreciosPlanesLibertyLineasEnum: string
 
         return match ($this) {
             self::Plan1 => '10700',
-            self::Plan1Pluss => '13700',
             self::Plan2 => '16000',
             self::Plan3 => '22000',
             self::Plan4 => '27200',

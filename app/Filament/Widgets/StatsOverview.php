@@ -37,7 +37,7 @@ class StatsOverview extends BaseWidget
         return (($thisMonth / $difference) * 100);
     }};
 
-    $percentageChangeValue = $percentageChange($currentCount, $thisMonth);
+    $percentageChangeValue = $percentageChange($currentCount, $thisMonth);  
 
     // Evaluate $percentageChange if positive, it grew if negative it decresed
     $descriptionResultIcon = function () use ($percentageChangeValue) {
@@ -60,24 +60,7 @@ class StatsOverview extends BaseWidget
     })->toArray();
     
         return [
-            //
-            Stat::make('Unique views', '192.1k')
-            ->description('32k increase')
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->color('success'),
-        Stat::make('Bounce rate', '21%')
-            ->description('7% increase')
-            ->descriptionIcon('heroicon-m-arrow-trending-down')
-            ->color('danger'),
-        Stat::make('Average time on page', '3:12')
-            ->description('3% increase')
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->color('success'),
-            Stat::make('Unique views', '192.1k')
-            ->description('32k increase')
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->chart([7, 2, 10, 3, 15, 4, 17])
-            ->color('success'),
+        // HeroIcon list for Stat heroicon-m-arrow-trending-up, heroicon-m-arrow-trending-down, heroicon-m-arrow-long-right
         // Count total customers from Cliente Model
         Stat::make('Total Clientes', $currentCount)
             // Description calculate percent change with regard to previos month

@@ -10,7 +10,7 @@ use Filament\Support\Contracts\HasLabel;
 enum PlanesLibertyLineasEnum: string implements HasLabel
 {
     case Plan1 = 'Plan @1';
-    case Plan1Pluss = 'Plan @1 Pluss';
+    case Plan1Plus = 'Plan @1 Plus';
     case Plan2 = 'Plan @2';
     case Plan3 = 'Plan @3';
     case Plan4 = 'Plan @4';
@@ -25,13 +25,22 @@ enum PlanesLibertyLineasEnum: string implements HasLabel
 
         return match ($this) {
             self::Plan1 => 'Plan @1',
-            self::Plan1Pluss => 'Plan @1 Pluss',
+            self::Plan1Plus => 'Plan @1 Plus',
             self::Plan2 => 'Plan @2',
             self::Plan3 => 'Plan @3',
             self::Plan4 => 'Plan @4',
             self::Plan5 => 'Plan @5',
             self::Plan6 => 'Plan @6',
         };
+    }
+    // convert enum to array
+    public static function toArray(): array
+    {
+        $array = [];
+        foreach (self::cases() as $case) {
+            $array[$case->name] = $case->value;
+        }
+        return $array;
     }
 }
 

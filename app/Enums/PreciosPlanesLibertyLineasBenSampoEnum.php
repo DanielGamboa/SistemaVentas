@@ -15,7 +15,7 @@ final class PreciosPlanesLibertyLineasBenSampoEnum extends Enum
 {
     const Plan1 = 10700;
 
-    const Plan1Pluss = 13700;
+    const Plan1Plus = 13700;
 
     const Plan2 = 16000;
 
