@@ -224,3 +224,56 @@ DB::unprepared('
     END
 ');
 
+----------------------------------------------------  Troubleshooting  ----------------------------------------------------
+
+-- If you're having trouble with your triggers, you can use the SHOW TRIGGERS command to view all triggers in the database.
+-- This command will show you the name of the trigger, the table it's associated with, the event that triggers the action (INSERT, UPDATE, DELETE),
+-- the timing of the trigger (BEFORE, AFTER), and the action that the trigger performs.
+
+SHOW TRIGGERS;
+
+-- If you need to remove a trigger, you can use the DROP TRIGGER command.
+-- This command will remove the trigger from the database.
+
+DROP TRIGGER trigger_name;
+
+-- For example, to remove the update_estatus_count_after_insert trigger, you would use the following command:
+
+DROP TRIGGER update_estatus_count_after_insert;
+
+-- Aditional SQL commands
+
+SELECT COLUMN_NAME, COLLATION_NAME 
+FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_SCHEMA = 'sistemaventasdb' 
+AND TABLE_NAME = 'estatus_count';
+
+SELECT DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME 
+FROM INFORMATION_SCHEMA.SCHEMATA 
+WHERE SCHEMA_NAME = 'sistemaventasdb';
+
+SELECT * FROM INFORMATION_SCHEMA.COLLATIONS WHERE CHARACTER_SET_NAME = 'utf8mb4';
+
+SELECT DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME 
+FROM INFORMATION_SCHEMA.SCHEMATA 
+WHERE SCHEMA_NAME = 'sistemaventasdb';
+
+SELECT TABLE_NAME, TABLE_COLLATION 
+FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_SCHEMA = 'sistemaventasdb';
+
+
+ALTER DATABASE sistemaventasdb COLLATE utf8mb4_unicode_ci;
+
+
+ALTER DATABASE sistemaventasdb COLLATE utf8mb4_0900_ai_ci;
+
+USE sistemaventasdb;
+DROP TRIGGER IF EXISTS update_estatus_count_after_insert;
+DROP TRIGGER IF EXISTS update_estatus_count_after_update;
+DROP TRIGGER IF EXISTS update_estatus_count_after_delete;
+
+ALTER TABLE `sistemaventasdb`.`venta_lineas` 
+COLLATE = utf8mb4_unicode_ci;
+
+

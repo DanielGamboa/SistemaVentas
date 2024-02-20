@@ -29,7 +29,7 @@ class VentaLineaFactory extends Factory
         $PlanesLibertyLineasValue =
             [
                 'Plan1' => 'Plan @1',
-                'Plan1Pluss' => 'Plan @1 Pluss',
+                'Plan1Plus' => 'Plan @1 Plus',
                 'Plan2' => 'Plan @2',
                 'Plan3' => 'Plan @3',
                 'Plan4' => 'Plan @4',

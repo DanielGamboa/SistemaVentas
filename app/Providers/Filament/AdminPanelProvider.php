@@ -49,7 +49,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 // Daniel Gamboa -- "Welcome Daniel Gamboa" on admin dashboard
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
                 StatsOverview::class,
                 // Daniel Gamboa -- "Stats Overview" on admin dashboard
             ])

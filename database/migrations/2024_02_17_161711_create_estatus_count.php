@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('estatus_count', function (Blueprint $table) {
             $table->id();
-            $table->string('estatus');
+            $table->string('estatus', 50);
             $table->unsignedBigInteger('count')->default(0);
             $table->unsignedBigInteger('count_week')->default(0);
             $table->unsignedBigInteger('count_month')->default(0);

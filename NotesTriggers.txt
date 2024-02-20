@@ -1,1 +1,79 @@
 NotesTriggers
+
+
+
+
+
+Mysql trigger syntax
+
+CREATE TRIGGER name
+	[BEFORE, AFTER] [INSERT, UPDATE, DELETE] ON TableName
+	FOR EACH ROW (this can be one or more rows)
+	SET NEW.salary = (NEW.hourly_pay * 2080);
+
+SHOW TRIGGERS;
+
+# Modify one record on this table
+UPDATE employees
+SET hourly_pay = 50
+WHERE employee_id = 1;
+SELECT * FROM employees;
+
+# Modify all records on this table by adding 1 to each row
+UPDATE employees
+SET hourly_pay = hourly_pay + 1
+SELECT * FROM employees;
+
+# Before insert when creating a new record
+CREATE TRIGGER before_hourly_pay_insert
+BEFORE INSERT ON employees
+FOR EACH ROW
+SET NEW.salary = (NEW.hourly_pay * 2080);
+
+========================================================
+Example:
+
+CREATE TABLE expenses (
+	expense_id int primary key,
+	expense_name varchar(50),
+	expense_total decimal (10, 2);
+
+INSERT INTO expenses 
+VALUE   (1, "salaries", 0),
+	(2, "supplies", 0),
+	(3, "taxed", 0);
+
+# Add total for column salary from employees table
+UPDATE expenses
+SET expense_total = (SELECT SUM(salary) FROM employees)
+WHERE expense_name = "salaries";
+
+# Turn this function into a trigger for Create, Update and delete
+# This updates on delete
+CREATE TRIGGER after_salary_delete
+AFTER DELETE ON employees
+FOR EACH ROW
+UPDATE expenses 
+SET expense_total = expense_total - OLD.salary
+WHERE expense_namme = "salaries";
+
+# This updates on create
+CREATE TRIGGER after_salary_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+UPDATE expenses
+SET expense_total = expense_total + NEW.salary
+WHERE expense_name = "salaries"
+
+# This will update expense salaries on update 
+CREATE TRIGGER after_salary_update
+AFTER UPDATE ON employees
+FOR EACH ROW
+UPDATE expenses
+SET expense_total = expense_total + (NEW.salary - OLD.salary)
+WHERE expense_name = "salaries";
+
+
+
+
+

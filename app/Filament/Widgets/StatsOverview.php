@@ -67,8 +67,6 @@ class StatsOverview extends BaseWidget
             ->description('Cambio respecto al mes anterior: ' . number_format($percentageChangeValue, 2) . '%')
             ->descriptionIcon($descriptionResultIcon())
             ->chart($counts),
-
-
         ];
 
 

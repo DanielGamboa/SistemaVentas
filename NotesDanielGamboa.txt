@@ -135,6 +135,31 @@ Implementing Cache:
 Finished WhatsApp template.  Needs to be polished befor cache is implemented.  Moving on for now
         
 
+In order to improve DB responses  each Instance should be about 1 gb because of overhead.
+In my use case this should not be a problem as DB should not be very large in general.
+I feel if mysql is provisioned to hold a max of 500 Mb creating pools with 600 Mb of ram should be ok for each instance.
+Also, a thread should be available to mysql for each instance of the innodb_buffer_pool_instances.
+
+So, for 30 users we could think about 5 threads (vcores) and about 5 * 600 Mb = 3 Gb of ram at least.  Preferably 4
+Plus added server cores and or threads.
+
+ou can set the innodb_buffer_pool_size and innodb_buffer_pool_instances in your MySQL configuration file (usually my.cnf or my.ini), which is typically located in the MySQL installation directory.
+
+For mysql on ubuntu:
+
+On Ubuntu, the MySQL configuration file is typically named my.cnf and can be found at one of the following locations:
+
+/etc/mysql/my.cnf
+/etc/my.cnf
+~/.my.cnf
+
+
+[mysqld]
+innodb_buffer_pool_size = 6G
+innodb_buffer_pool_instances = 4
+
+sudo service mysql restart
+
 
 
 
