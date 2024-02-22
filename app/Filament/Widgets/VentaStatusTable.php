@@ -27,6 +27,7 @@ class VentaStatusTable extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
+        
         ->poll('10s')
         ->heading('Ventas por estatus')
         ->hiddenFilterIndicators()
@@ -45,7 +46,7 @@ class VentaStatusTable extends BaseWidget
         })
         ->query(
             // Query EstausCount model and return the "estatus" column as "Estatus" count and group by "estatus"
-            \App\Models\EstatusCount::query()->select('ID', 'estatus', 'count_week', 'count_month', 'count')
+            \App\Models\EstatusCount::query()->select('ID', 'estatus', 'count_week', 'count_month', 'count', 'week_sale', 'month_sale', 'total_sale')
         )
             ->columns([
                 // ...
@@ -100,6 +101,50 @@ class VentaStatusTable extends BaseWidget
                             thousandsSeparator: ',',
                         ))
                     ->sortable(),
+                    TextColumn::make('week_sale')
+                    ->label('Semana')
+                    ->numeric(
+                        decimalPlaces: 0,
+                        decimalSeparator: '.',
+                        thousandsSeparator: ',',
+                    )
+                    ->summarize(Sum::make()
+                        ->numeric(
+                            decimalPlaces: 0,
+                            decimalSeparator: '.',
+                            thousandsSeparator: ',',
+                        ))
+                    ->sortable(),
+                    TextColumn::make('month_sale')
+                    ->label('Mes')
+                    ->numeric(
+                        decimalPlaces: 0,
+                        decimalSeparator: '.',
+                        thousandsSeparator: ',',
+                    )
+                    ->summarize(Sum::make()
+                        ->numeric(
+                            decimalPlaces: 0,
+                            decimalSeparator: '.',
+                            thousandsSeparator: ',',
+                        ))
+                    ->sortable(),
+                    TextColumn::make('total_sale')
+                    ->label('Histórico')
+                    ->numeric(
+                        decimalPlaces: 0,
+                        decimalSeparator: '.',
+                        thousandsSeparator: ',',
+                    )
+                    ->summarize(Sum::make()
+                        ->numeric(
+                            decimalPlaces: 0,
+                            decimalSeparator: '.',
+                            thousandsSeparator: ',',
+                        ))
+                    ->sortable(),
+
+                    
 
                 // TextColumn::make('Estatus')
                 //     ->label('Status')

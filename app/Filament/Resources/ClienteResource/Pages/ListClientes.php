@@ -37,7 +37,9 @@ class ListClientes extends ListRecords
                 ->icon('heroicon-o-arrow-up-tray')
                 ->importer(ClienteImporter::class),
             
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Crear')
+                ->icon('heroicon-o-plus'),
         ];
     }
 }

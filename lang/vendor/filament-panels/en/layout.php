@@ -11,25 +11,25 @@ return [
         ],
 
         'logout' => [
-            'label' => 'Sign out',
+            'label' => 'Salir',
         ],
 
         'open_database_notifications' => [
-            'label' => 'Open notifications',
+            'label' => 'Abrir notificaciones',
         ],
 
         'open_user_menu' => [
-            'label' => 'User menu',
+            'label' => 'Menú del Usuario',
         ],
 
         'sidebar' => [
 
             'collapse' => [
-                'label' => 'Collapse sidebar',
+                'label' => 'Contraer barra lateral',
             ],
 
             'expand' => [
-                'label' => 'Expand sidebar',
+                'label' => 'Expandir barra lateral',
             ],
 
         ],
@@ -37,15 +37,15 @@ return [
         'theme_switcher' => [
 
             'dark' => [
-                'label' => 'Enable dark theme',
+                'label' => 'Modo oscuro',
             ],
 
             'light' => [
-                'label' => 'Enable light theme',
+                'label' => 'Modo claro',
             ],
 
             'system' => [
-                'label' => 'Enable system theme',
+                'label' => 'Modo del sistema',
             ],
 
         ],

@@ -2,19 +2,19 @@
 
 return [
 
-    'title' => 'Login',
+    'title' => 'Acceso',
 
-    'heading' => 'Sign in',
+    'heading' => '',
 
     'actions' => [
 
         'register' => [
-            'before' => 'or',
-            'label' => 'sign up for an account',
+            'before' => 'o',
+            'label' => 'Abrir una cuenta',
         ],
 
         'request_password_reset' => [
-            'label' => 'Forgotten your password?',
+            'label' => '¿Ha olvidado su contraseña?',
         ],
 
     ],
@@ -22,21 +22,21 @@ return [
     'form' => [
 
         'email' => [
-            'label' => 'Email address',
+            'label' => 'Correo electrónico',
         ],
 
         'password' => [
-            'label' => 'Password',
+            'label' => 'Contraseña',
         ],
 
         'remember' => [
-            'label' => 'Remember me',
+            'label' => 'Recordarme',
         ],
 
         'actions' => [
 
             'authenticate' => [
-                'label' => 'Sign in',
+                'label' => 'Entrar',
             ],
 
         ],
@@ -45,15 +45,15 @@ return [
 
     'messages' => [
 
-        'failed' => 'These credentials do not match our records.',
+        'failed' => 'Estas credenciales no coinciden con nuestros registros.',
 
     ],
 
     'notifications' => [
 
         'throttled' => [
-            'title' => 'Too many login attempts',
-            'body' => 'Please try again in :seconds seconds.',
+            'title' => 'Demasiados intentos. Intente de nuevo en :seconds segundos.',
+            'body' => 'Intente de nuevo en :seconds segundos.',
         ],
 
     ],

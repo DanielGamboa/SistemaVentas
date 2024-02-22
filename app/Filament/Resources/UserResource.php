@@ -148,7 +148,7 @@ public static function table(Table $table): Table
                 //     ->label('Copiar')
                 //     ->icon('heroicon-m-clipboard-document-list')
                 //     ->copyableState(fn (User $record): string => "URL: {$record->name}"),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar')->icon('heroicon-o-pencil'),
                 
             ])
             ->bulkActions([

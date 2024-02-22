@@ -29,4 +29,6 @@ class CreateCalidad extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    
 }

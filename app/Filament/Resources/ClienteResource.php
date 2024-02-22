@@ -56,6 +56,8 @@ class ClienteResource extends Resource
 {
     protected static ?string $model = Cliente::class;
 
+    // protected static ?string $title = 'Custom Page Title';
+
     protected static ?string $navigationIcon = 'heroicon-o-identification';
 
     // Cache Cliente
@@ -507,7 +509,7 @@ class ClienteResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar')->icon('heroicon-o-pencil'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

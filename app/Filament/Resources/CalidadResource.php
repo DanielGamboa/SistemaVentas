@@ -78,6 +78,8 @@ class CalidadResource extends Resource
 
     protected static ?string $navigationLabel = 'Calidad';
 
+    protected static ?string $slug = 'calidad';
+
     protected static ?string $navigationIcon = 'heroicon-o-scale';
 
     // Cache Calidad
@@ -1302,7 +1304,7 @@ class CalidadResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar')->icon('heroicon-o-pencil'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

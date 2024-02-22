@@ -23,7 +23,9 @@ class ListVentaLineas extends ListRecords
             Actions\ImportAction::make()
                 ->color('primary')
                 ->importer(VentaLineaImporter::class),
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Crear')
+                ->icon('heroicon-o-plus'),
         ];
     }
 

@@ -49,11 +49,11 @@ class NumeroReferenciasRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->label('Agregar')->icon('heroicon-o-plus'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar')->icon('heroicon-o-pencil'),
+                Tables\Actions\DeleteAction::make()->label('Eliminar')->icon('heroicon-o-trash'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
