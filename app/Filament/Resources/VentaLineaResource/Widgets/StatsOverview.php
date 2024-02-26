@@ -56,7 +56,7 @@ class StatsOverview extends BaseWidget
                 )
                 ->color('primary'),
             Stat::make('Requiere Entrega', $this->getPageTableQuery()->whereIn('VentaLinea', ['Linea Nueva', 'Portabilidad'])->count()),
-            Stat::make('Migracion', $this->getPageTableQuery()->whereIn('VentaLinea', ['Migracion'])->count()),
+            Stat::make('Migración', $this->getPageTableQuery()->whereIn('VentaLinea', ['Migracion'])->count()),
         ];
     }
 }

@@ -121,6 +121,8 @@ public static function table(Table $table): Table
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('tlf')
+                    ->label('Telefono')
+                    ->copyable()
                     ->icon('heroicon-m-phone')
                     ->iconColor('primary')
                     ->searchable()
@@ -129,6 +131,7 @@ public static function table(Table $table): Table
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
+                    ->copyable()
                     ->icon('heroicon-m-envelope')
                     ->iconColor('primary')
                     ->searchable()

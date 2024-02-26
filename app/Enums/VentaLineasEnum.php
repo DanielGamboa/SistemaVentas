@@ -22,4 +22,13 @@ enum VentaLineasEnum: string implements HasLabel
             self::Portabilidad => 'Portabilidad',
         };
     }
+
+    public static function toArray(): array
+    {
+        $array = [];
+        foreach (self::cases() as $case) {
+            $array[$case->name] = $case->value;
+        }
+        return $array;
+    }
 }

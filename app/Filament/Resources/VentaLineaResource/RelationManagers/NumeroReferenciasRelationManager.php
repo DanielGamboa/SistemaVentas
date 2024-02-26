@@ -9,10 +9,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+// use Filament\Forms\Components\Actions;
+// use Filament\Forms\Form\Actions\CreateAction;
 
 class NumeroReferenciasRelationManager extends RelationManager
 {
     protected static string $relationship = 'numeroReferencias';
+
 
     // Disable default behavior in order to enable, create and edit.
     public function isReadOnly(): bool
@@ -28,9 +31,10 @@ class NumeroReferenciasRelationManager extends RelationManager
                 //     ->required()
                 //     ->maxLength(255),
                 Forms\Components\TextInput::make('numeroreferencia')
+                    ->label('Número de referencia')
                     ->numeric()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(10),
                 Forms\Components\TextInput::make('contacto')
                     ->maxLength(255),
             ]);

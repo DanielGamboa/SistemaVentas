@@ -41,7 +41,7 @@ class ListVentaLineas extends ListRecords
             'requiere_entrega' => Tab::make()->query(fn ($query) => $query->where('VentaLinea', 'Linea Nueva')->orWhere('VentaLinea', 'Portabilidad')),
             'portabilidad' => Tab::make()->query(fn ($query) => $query->where('VentaLinea', 'Portabilidad')),
             'linea_nueva' => Tab::make()->query(fn ($query) => $query->where('VentaLinea', 'Linea Nueva')),
-            'migracion' => Tab::make()->query(fn ($query) => $query->where('VentaLinea', 'Migration')),
+            'migracion' => Tab::make()->label('Migración')->query(fn ($query) => $query->where('VentaLinea', 'Migracion')),
             // 'cancelled' => Tab::make()->query(fn ($query) => $query->where('status', 'cancelled')),
         ];
     }

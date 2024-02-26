@@ -436,10 +436,12 @@ class ClienteResource extends Resource
                 TextColumn::make('tipo_documento')
                     ->label('Documento')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('documento')
                     ->label('#')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('primer_nombre')
                     ->label('Cliente')
                     ->formatStateUsing(function (string $state, Cliente $cliente) {
@@ -457,10 +459,10 @@ class ClienteResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('primer_apellido')
-                    ->searchable()
+                    // Remove the problematic code ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('segundo_apellido')
-                    ->searchable()
+                    // ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('documento_completo')
                     ->label('Imagenes'),

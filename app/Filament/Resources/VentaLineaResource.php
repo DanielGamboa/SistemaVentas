@@ -12,6 +12,7 @@ use App\Enums\VentaLineasEnum;
 use App\Filament\Resources\VentaLineaResource\Pages;
 use App\Models\Cantone;
 use App\Models\Cliente;
+use App\Models\User;
 // Forms
 use App\Models\Distrito;
 use App\Models\Provincia;
@@ -230,6 +231,81 @@ class VentaLineaResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc') // Sorts the table by the created_at column in descending order
             ->columns([
+// ---------------------------------------------------------------------------- Telegram --------------------------------------------------------------
+
+
+Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Telegram')
+                    ->formatStateUsing(function($record):HTMLString {
+                        return new HtmlString('<img src="/images/svg/telegram.svg" alt="WhatsApp" class="w-6 h-6" />');
+                    })
+                    ->alignment(Alignment::Center)
+                    ->copyable()
+                    ->copyableState(function (VentaLinea $record) {
+                        $UserName = $record->user->name;
+
+                        // Get Client related record from VentaLinea record --> $cliente will get the related record row on Clientes table.
+                        $cliente = $record->cliente;
+                        // Get Client from Cliente model and concatenate the full name
+                        $NombreCompletoCliente = $cliente->primer_nombre.' '.$cliente->segundo_nombre.' '.$cliente->primer_apellido.' '.$cliente->segundo_apellido;
+                        $Nombre = Str::squish($NombreCompletoCliente);
+
+                        // Convert EstatusVentaLineaEnum to a string
+                        $Estatus = $record->Estatus->value;
+                        // dd($Estatus);
+                        // Convert VentaLineasEnum to a string
+                        $VentaLineas = $record->VentaLinea->value;
+                        
+                        // Convert TipoDocumentoEnum to a string
+                        $tipoDocumento = $cliente->tipo_documento->value;
+                        
+                        // Convert PlanesLibertyLineasEnum to a string
+                        $PlanesLiberty = $record->plan->value; 
+                        
+                        // Get the creation date and time
+                        $creationDateTime = $record->created_at;
+                        // Format the date and time
+                        $date = $creationDateTime->format('d/m/Y');
+                        $time = $creationDateTime->format('H:i:s');
+
+                        // Check if entrega_distinta is true or false  if true get record direccion_entrega if false get cliente direccion
+                        if ($record->entrega_distinta) {
+                            // Get the direccion_entrega from the record
+                            $DireccionEntrega = $record->direccion_entrega;
+                            // Get provincia, canton and distrito from the related record on the table.  Chip delivery direction
+                            $provincia = $record->provincias->provincia;
+                            $canton = $record->cantona->where('id_provincias', $record->provincias_id)->where('CantonNumber', $record->cantones_id)->first()->canton;
+                            $distrito = $record->distrito->distrito;
+                        } else {
+                            $DireccionEntrega = $cliente->direccion;
+                            $provincia = $cliente->provincias->provincia;
+                            $canton = $cliente->cantona->where('id_provincias', $cliente->provincias_id)->where('CantonNumber', $cliente->cantones_id)->first()->canton;
+                            $distrito = $cliente->distrito->distrito;
+    
+                        }
+
+                        // Number to be ported is the same as the record tlf if tlf_venta_distinto is false and $VentaLineas == Portabilidad
+                        if ($VentaLineas == 'Portabilidad') {
+                            $NumeroPortar = $record->tlf;
+                        } else {
+                            $NumeroPortar = 'No aplica';
+                        }
+                        $Referencia = '';
+                        // Number of the call is tlf_marcado if tlf_venta_distinto is true els tlf
+                        if ($record->tlf_venta_distinto) {
+                            $NumeroLlamada = $record->tlf_marcado;
+                            $Referencia = $record->tlf;
+                        } else {
+                            $NumeroLlamada = $record->tlf;
+                        }
+
+                        return "*DTS:* Global Axis\n*Vendedor:* $UserName\n*Codigo de Vendedor:* $record->user_id\n*Status de la venta:* $Estatus\n\n*Nombre del cliente:* $Nombre\n*Numero de $tipoDocumento:* $cliente->documento";
+
+
+                    }),
+
+
+// ---------------------------------------------------------------------------- Telegram -------------------------------------------------------------
                 Tables\Columns\TextColumn::make('id')
                     ->label('WhatsApp')
                     ->formatStateUsing(function($record):HTMLString {
@@ -308,12 +384,12 @@ class VentaLineaResource extends Resource
                     ->label('Documento')
                     ->sortable()
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('cliente.documento')
                     ->label('#')
                     ->sortable()
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('cliente.primer_nombre')
                     ->formatStateUsing(function ($state, VentaLinea $cliente) {
                         $NombreCompletoCliente = $cliente->cliente->primer_nombre.' '.$cliente->cliente->segundo_nombre.' '.$cliente->cliente->primer_apellido.' '.$cliente->cliente->segundo_apellido;
@@ -361,13 +437,33 @@ class VentaLineaResource extends Resource
                     ->dateTime(now())
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(now())
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime(now())
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
+                Tables\Filters\SelectFilter::make('Estatus')
+                    ->options(EstatusVentaLineaEnum::toArray())
+                    ->multiple()
+                    ->label('Estatus')
+                    ->placeholder('Todos'),
+                Tables\Filters\SelectFilter::make('VentaLinea')
+                    ->options(VentaLineasEnum::toArray())
+                    ->label('Tipo de Venta')
+                    ->placeholder('Todos'),
+                Tables\Filters\SelectFilter::make('plan')
+                    ->options(PlanesLibertyLineasEnum::toArray())
+                    ->multiple()
+                    ->label('Plan')
+                    ->placeholder('Todos'),
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->options(fn () => User::pluck('name', 'id'))
+                    ->searchable()
+                    ->label('Vendedor')
+                    ->placeholder('Todos'),
+                
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->label('Editar')->icon('heroicon-o-pencil'),
