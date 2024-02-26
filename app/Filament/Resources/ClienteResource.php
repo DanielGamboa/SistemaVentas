@@ -314,6 +314,8 @@ class ClienteResource extends Resource
                                     ->multiple()
                                     ->responsiveImages()
                                     ->reorderable()
+                                    ->downloadable()
+                                    ->deletable()
                                     // ->customProperties(fn (Get $get): array => [
                                     //     'cliente_id' => $get('cliente_id'),
                                     // ])

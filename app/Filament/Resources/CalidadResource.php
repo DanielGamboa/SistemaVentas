@@ -65,6 +65,7 @@ use Illuminate\Support\HtmlString;
 // Cache
 use Illuminate\Support\Facades\Cache;
 
+
 //  filament\Actions\Action
 // use Filament\Actions\Action;
 //  Filament\Forms\Components\Actions\Action
@@ -708,6 +709,9 @@ class CalidadResource extends Resource
                                         ->label('Grabación')
                                         ->acceptedFileTypes(['audio/wav', 'audio/webm', 'audio/aac', 'audio/mpeg', 'video/mp4', 'audio/mp4', 'audio/MP4A-LATM', 'audio/mp3', 'audio/ogg', 'audio/x-wav', 'audio/x-m4a', 'audio/x-mpeg',])
                                         ->storeFileNamesIn('original_filename')
+                                        ->downloadable()
+                                        ->openable()
+                                        ->previewable()
                                         ->required()
                                         ->columnSpan(3),
                                     DatePicker::make('fecha_llamada')
