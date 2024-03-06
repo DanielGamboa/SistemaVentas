@@ -33,6 +33,7 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
 
+        // Last year
         $ventaData = Trend::model(VentaLinea::class)
             ->between(
                 start: now()->subYear(),

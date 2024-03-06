@@ -54,6 +54,7 @@ class Cliente extends Model implements HasMedia
     protected $fillable = [
         //Cliente
         'documento',
+        'email',
         'primer_nombre',
         'segundo_nombre',
         'primer_apellido',

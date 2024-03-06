@@ -531,6 +531,15 @@ class ClienteResource extends Resource
         ];
     }
 
+    public static function getWidgets(): array
+    {
+        return [
+            // Widgets\ClienteStatsWidget::class,
+            ClienteResource\Widgets\ClienteStatsWidget::class,
+            
+        ];
+    }
+
     public static function getPages(): array
     {
         return [

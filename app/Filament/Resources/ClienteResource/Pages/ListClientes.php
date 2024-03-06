@@ -13,10 +13,22 @@ use Filament\Actions\ExportAction;
 use App\Filament\Resources\ClienteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+// use App\Filament\Resources\ClienteResource\Widgets\ClienteStatsWidget;
+// use App\Filament\Resources\ClienteResource;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
+
 
 class ListClientes extends ListRecords
 {
+    use ExposesTableToWidgets;
+    
     protected static string $resource = ClienteResource::class;
+
+    protected function getHeaderWidgets(): array
+    {
+        return ClienteResource::getWidgets();
+        
+    }
 
     protected function getHeaderActions(): array
     {
