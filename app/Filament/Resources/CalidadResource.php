@@ -1322,10 +1322,19 @@ class CalidadResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            
         ];
     }
     
+    public static function getWidgets(): array
+    {
+        return [
+            // CalidadStatsWidget is a custom widget that is defined in the CalidadStatsWidget class
+            CalidadResource\Widgets\CalidadStatsWidget::class,
+            
+        ];
+    }
+
     public static function getPages(): array
     {
         return [

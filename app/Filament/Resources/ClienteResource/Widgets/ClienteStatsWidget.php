@@ -20,7 +20,6 @@ class ClienteStatsWidget extends BaseWidget
     {
         return ListClientes::class;
     }
-
     
 
     protected function getStats(): array
@@ -54,7 +53,7 @@ class ClienteStatsWidget extends BaseWidget
         $dayOfWeek = min($dayOfWeek, 5); // Limit to 5 (Friday)
         
 
-        // $countToday = $this->getPageTableQuery()->where('created_at', '>=', now()->startOfDay())->count();
+        // Monthly Goal
         $MonthlyGoal = 144;
         // MonthlyGoal devided by days of the week monday - friday for the current month
         $dailyGoal = ceil($MonthlyGoal / $weekDays);
@@ -145,7 +144,7 @@ class ClienteStatsWidget extends BaseWidget
                     ($countMonth < $adjustedMonthGoal ? 'heroicon-m-arrow-trending-down' :
                     ($countMonth >= $adjustedMonthGoal && $countMonth < $weeklyGoal ? 'heroicon-m-arrow-trending-down' : 'heroicon-m-arrow-trending-up'))))),
             // Total clients
-            Stat::make('Clientes', $this->getPageTableQuery()->count()),
+            Stat::make('Total', $this->getPageTableQuery()->count()),
         ];
     }
 }

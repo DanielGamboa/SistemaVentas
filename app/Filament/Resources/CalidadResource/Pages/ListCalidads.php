@@ -5,14 +5,21 @@ namespace App\Filament\Resources\CalidadResource\Pages;
 use App\Filament\Resources\CalidadResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
 
 class ListCalidads extends ListRecords
 {
+    use ExposesTableToWidgets;
+
     protected static string $resource = CalidadResource::class;
 
     protected static ?string $title = 'Calidad';
 
-    
+        protected function getHeaderWidgets(): array
+    {
+        return CalidadResource::getWidgets();
+        
+    }
 
     protected function getHeaderActions(): array
     {
