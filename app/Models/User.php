@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\VentaLinea;
 use App\Models\GrabacionAuditoria;
+// Add spatie/laravel-permission
+use Spatie\Permission\Traits\HasRoles;
 
 // Add for production
 use Filament\Models\Contracts\FilamentUser;
@@ -18,6 +20,9 @@ use Filament\Panel;
 
 class User extends Authenticatable implements FilamentUser
 {
+    // Spatie Laravel Permission
+    use HasRoles;
+    // Laravel Sanctum
     use HasApiTokens, HasFactory, Notifiable;
 
     public function canAccessPanel(Panel $panel): bool
