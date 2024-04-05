@@ -16,6 +16,8 @@ use Filament\Resources\Pages\ListRecords;
 // use App\Filament\Resources\ClienteResource\Widgets\ClienteStatsWidget;
 // use App\Filament\Resources\ClienteResource;
 use Filament\Pages\Concerns\ExposesTableToWidgets;
+use Illuminate\Support\Facades\Gate;
+
 
 
 class ListClientes extends ListRecords
@@ -37,6 +39,11 @@ class ListClientes extends ListRecords
                 ->label('Exportar')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('primary')
+                ->visible(fn() => Gate::allows('exportClientes', auth()->user()))
+
+                // ->visible(fn () => exportClient('exportClient'))
+                // ->visible(fn () => Gate::allows('exportClient'))
+                // ->visible(fn () => $this->authorizedTo('export-client'))
                 
                 ->exporter(ClienteExporter::class),
                 // ->formats([
@@ -47,6 +54,9 @@ class ListClientes extends ListRecords
                 ->label('Importar')
                 ->color('primary')
                 ->icon('heroicon-o-arrow-up-tray')
+                ->visible(fn() => Gate::allows('importClientes', auth()->user()))
+                
+                // ->visible(fn () => Gate::allows('exportClient'))
                 ->importer(ClienteImporter::class),
             
             Actions\CreateAction::make()

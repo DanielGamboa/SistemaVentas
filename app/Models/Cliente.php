@@ -20,6 +20,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Manipulations;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Traits\HasRoles;
 
 
 
@@ -27,6 +28,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Cliente extends Model implements HasMedia
 // class Cliente extends Model
 {
+        // Spatie Laravel Permission
+        use HasRoles;
     //Spatie Media Library
     use InteractsWithMedia;
     // Factory

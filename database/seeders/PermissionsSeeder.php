@@ -22,6 +22,8 @@ class PermissionsSeeder extends Seeder
             ['name' => 'Borrar usuarios', 'gard_name' => 'web'],
             ['name' => 'Restaurar usuarios', 'gard_name' => 'web'],
             ['name' => 'Eliminar usuarios', 'gard_name' => 'web'],
+            ['name' => 'Exportar usuarios', 'gard_name' => 'web'],
+            ['name' => 'Importar usuarios', 'gard_name' => 'web'],
             // Roles Model Policy
             ['name' => 'Ver roles', 'gard_name' => 'web'],
             ['name' => 'Crear roles', 'gard_name' => 'web'],
@@ -44,6 +46,16 @@ class PermissionsSeeder extends Seeder
 
             // Cantone Model Policy
             ['name' => 'Ver cantones', 'gard_name' => 'web'],
+            
+            // Cliente Model Policy
+            ['name' => 'Ver cliente', 'gard_name' => 'web'],
+            ['name' => 'Crear cliente', 'gard_name' => 'web'],
+            ['name' => 'Editar cliente', 'gard_name' => 'web'],
+            ['name' => 'Borrar cliente', 'gard_name' => 'web'],
+            ['name' => 'Restaurar cliente', 'gard_name' => 'web'],
+            ['name' => 'Eliminar cliente', 'gard_name' => 'web'],
+            ['name' => 'Exportar cliente', 'gard_name' => 'web'],
+            ['name' => 'Importar cliente', 'gard_name' => 'web'],
             
 
 

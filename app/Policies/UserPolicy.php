@@ -83,4 +83,27 @@ class UserPolicy
         //
         return $user->hasRole('Eliminar usuarios') || $user->email === 'dgamboa@test.com';
     }
+
+    public function exportUsers(User $user)
+    {
+        return $user->hasRole('Exportar usuarios') || $user->email === 'dgamboa@test.com';
+    }
+
+    public function importUsers(User $user)
+    {
+        return $user->hasRole('Importar usuarios') || $user->email === 'dgamboa@test.com';  
+    }
+
+    public function exportClientes(User $user): bool
+    {
+        //
+        return $user->hasRole('Exportar cliente') || $user->email === 'dgamboa@test.com';
+    }
+
+    public function importClientes(User $user): bool
+    {
+        //
+        // return true;
+        return $user->hasRole('Importar cliente') || $user->email === 'dgamboa@test.com';
+    }
 }

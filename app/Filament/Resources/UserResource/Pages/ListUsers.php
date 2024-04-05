@@ -13,6 +13,8 @@ use Filament\Resources\Pages\ListRecords;
 // use Filament\Actions\CreateAction;
 use Filament\Actions\Exports\Enums\DownloadFileFormat;
 use Filament\Actions\Exports\Enums\ExportFormat;
+use Illuminate\Support\Facades\Gate;
+// use Illuminate\Support\Facades\Auth;
 
 
 
@@ -30,6 +32,7 @@ class ListUsers extends ListRecords
                 ->color('primary')
                 ->label('Exportar')
                 ->icon('heroicon-o-arrow-down-tray')
+                ->visible(fn() => Gate::allows('exportUsers', auth()->user()))
                 ->exporter(UserExporter::class),
                 // ->formats([
                 //     ExportFormat::Csv, //=> 'CSV',
@@ -44,6 +47,7 @@ class ListUsers extends ListRecords
                 ->label('Importar')
                 ->icon('heroicon-o-arrow-up-tray')
                 ->color('primary')
+                ->visible(fn() => Gate::allows('importUsers', auth()->user()))
                 ->importer(UserImporter::class),
             Actions\CreateAction::make()
                 ->label('Crear')
