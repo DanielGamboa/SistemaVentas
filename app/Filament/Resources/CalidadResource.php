@@ -707,7 +707,7 @@ class CalidadResource extends Resource
                                     FileUpload::make('grabacion')
                                         ->live()
                                         ->label('Grabación')
-                                        ->acceptedFileTypes(['audio/wav', 'audio/webm', 'audio/aac', 'audio/mpeg', 'video/mp4', 'audio/mp4', 'audio/MP4A-LATM', 'audio/mp3', 'audio/ogg', 'audio/x-wav', 'audio/x-m4a', 'audio/x-mpeg',])
+                                        ->acceptedFileTypes(['audio/wav', 'audio/webm', 'audio/aac', 'audio/mpeg', 'audio/mp4', 'audio/MP4A-LATM', 'audio/mp3', 'audio/ogg', 'audio/x-wav', 'audio/x-m4a', 'audio/x-mpeg',])
                                         ->storeFileNamesIn('original_filename')
                                         ->downloadable()
                                         ->openable()
