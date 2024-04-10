@@ -37,6 +37,10 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->colors([
                 'primary' => Color::Orange,
+                'warning' => Color::Yellow,
+                'danger' => Color::Red,
+                'success' => Color::Green,
+                'info' => Color::Blue,
             ])
             ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight('3rem')

@@ -27,6 +27,15 @@ enum EmpatiaEnum: string implements HasLabel
 
         };
     }
+
+    public static function toValues(): array
+    {
+        return [
+            self::EmpatiaCliente->value => 10,
+            self::LugarCliente->value => 5,
+            self::Terceros->value => 20,
+        ];
+    }
     public static function toArray(): array
     {
         $array = [];

@@ -1170,6 +1170,43 @@ class CalidadResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc') // Sort Newest to oldest
             ->columns([
+                // Get bool value for 'evaluacion_completa' and return icon, color and label
+                Tables\Columns\IconColumn::make('evaluacion_completa')
+                    ->label('Completa')
+                    ->icon(fn (string $state): string => match ($state) {
+                        '0' => 'heroicon-o-x-circle',
+                        '1' => 'heroicon-o-check-circle',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        '0' => 'gray',
+                        '1' => 'success',
+                        default => 'gray',
+                    })
+                    ->sortable()
+                    ->searchable(),
+                // Get calificacion from CalidadAuditoria related model to Calidad model
+                // depending on the score return the color of the text: default, success, warning, danger.
+                // Scores with 95% or better are green, 85% to 94% are yellow, 75% to 84% are orange, and 74% or less are red.
+                    // if 95 or better green, 85 to 94 yellow, 75 to 84 orange, 74 or less red
+                    Tables\Columns\TextColumn::make('calificacion')
+                    ->badge()
+                    ->label('Calificación')
+                    ->color(function ($record) {
+                        
+                        $calificacion = $record->calificacion;
+                        if ($calificacion >= 95) {
+                            return 'green';
+                        } elseif ($calificacion >= 85) {
+                            return 'warning';
+                        } elseif ($calificacion >= 75) {
+                            return 'danger';
+                        } else {
+                            return 'danger';
+                        }
+                    }),
+                    // if 95 or better green, 85 to 94 yellow, 75 to 84 orange, 74 or less red
+                    
+                
                 // Get Auditor ID from user_id in the related User model.
                 // This code makes use of Calidad model relationship with User model user() belongsTo.  This relationship is defined in the Calidad model.
                 // Where 'user.name' --> 'user' is the relationship defined in the Calidad model and 'name' is the field in the User model.
@@ -1177,7 +1214,9 @@ class CalidadResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Auditor')
                     ->numeric()
-                    ->sortable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 // Get user_id from CalidadAuditoria related model to Calidad model and get the name from the User model
                 // The Agent column is the person who made the phone call that is being audited.
                 // 
@@ -1191,7 +1230,9 @@ class CalidadResource extends Resource
                         return $user;
                         
                     })
-                    ->sortable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                     // ->formatStateUsing(function (Calidad $calidad) {
                     //     dd($calidad->calidadauditoria->first()->user_id);
                     //     // dd($calidad->grabacionauditoria->first()->fecha_llamada);
@@ -1207,7 +1248,8 @@ class CalidadResource extends Resource
                 Tables\Columns\TextColumn::make('motivo_evaluacion')
                     ->label('Motivo de la evaluación')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('tlf')
                     ->label('Telefono')
                     ->searchable()
@@ -1220,7 +1262,9 @@ class CalidadResource extends Resource
                         $plan = VentaLinea::where('id', $ventasTelefono)->value('plan');
                         return $plan;
                     })
-                    ->sortable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('grabacionauditoria.fecha_llamada')
                     ->label('Fecha primera llamada')
                     ->formatStateUsing(function (Calidad $calidad) {
@@ -1230,6 +1274,7 @@ class CalidadResource extends Resource
                         $date = Carbon::createFromFormat('Y-m-d', $date)->format('d/m/Y');
                         return $date;
                     })
+                    ->searchable()
                     ->sortable(),
                 // Tables\Columns\TextColumn::make('grabacionauditoria.dia_hora_inicio')
                     // ->label('Hora Inicio'),

@@ -34,6 +34,19 @@ enum BienvenidaEnum: string implements HasLabel
 
         };
     }
+
+    public static function toValues(): array
+{
+    return [
+        self::ProtocoloBienvenida->value => 5,
+        self::IdentificaNombre->value => 5,
+        self::IdentificaEmpresa->value => 10,
+        self::SaludoRobotizado->value => 20,
+        self::PresonalizarLlamada->value => 5,
+        self::SaludoTarde->value => 2,
+    ];
+}
+
     public static function toArray(): array
     {
         $array = [];
