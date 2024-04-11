@@ -61,6 +61,7 @@ use Filament\Forms\Components\Tabs;
 use App\Models\CalidadAuditoria;
 use App\Models\CalidadAuditorium;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Gate;
 
 // Cache
 use Illuminate\Support\Facades\Cache;
@@ -1350,7 +1351,53 @@ class CalidadResource extends Resource
             ])
             ->filters([
                 // Filter by deleted records
-                Tables\Filters\TrashedFilter::make(),
+                // Visible if user has permission to view trashed records or if the user is dgamboa@test.com
+                Tables\Filters\TrashedFilter::make()
+                    ->visible(fn() => Gate::allows('trashFilter', auth()->user())),
+                    // ->visible(fn (Get $get) => $get('user')->hasPermissionTo('view trashed calidads') || $get('user')->email === 'dgamboa@test.com'),
+                // Filter by the user who created the record
+                Tables\Filters\SelectFilter::make('evaluacion_completa')
+                    ->label('Completa')
+                    ->options([
+                        '1' => 'Completa',
+                        '0' => 'Incompleta',
+                    ]),
+                // Filter by the user_id from table calidads and then get name and id from related user model 
+                
+                Tables\Filters\SelectFilter::make('user_id')
+                ->label('Auditor')
+                ->searchable()
+                ->options(function () {
+                    return User::select('id', 'name')
+                        ->whereIn('id', function ($query) {
+                            $query->select('user_id')->from('calidads')->distinct();
+                        })
+                        ->pluck('name', 'id')
+                        ->toArray();
+                }),
+                // Filter by Agente
+                Tables\Filters\SelectFilter::make('agente')
+                    ->label('Agente')
+                    ->searchable()
+                    ->options(function () {
+                        return User::select('id', 'name')
+                            ->whereIn('id', function ($query) {
+                                $query->select('agente')->from('calidads')->distinct();
+                            })
+                            ->pluck('name', 'id')
+                            ->toArray();
+                    }),
+                // Filter by MotivoEvaluacionEnum
+                Tables\Filters\SelectFilter::make('motivo_evaluacion')
+                    ->label('Motivo de la evaluación')
+                    ->options(MotivoEvaluacionEnum::class)
+                    ->multiple(),
+                // Tables\Filters\SelectFilter::make('user_id')
+                //     ->label('Auditor')
+                //     ->options(function () {
+                //         return User::pluck('name', 'id');
+                //     }),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->label('Editar')->icon('heroicon-o-pencil'),

@@ -106,4 +106,11 @@ class UserPolicy
         // return true;
         return $user->hasRole('Importar cliente') || $user->email === 'dgamboa@test.com';
     }
+
+    // User policy trashFilter for Calidad Resource:
+    public function trashFilter(User $user): bool
+    {
+        return $user->hasRole('Filtro de papelera para calidad')|| $user->email === 'dgamboa@test.com';
+    }
+
 }
