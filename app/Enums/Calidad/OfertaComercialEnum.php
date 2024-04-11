@@ -75,4 +75,27 @@ enum OfertaComercialEnum: string implements HasLabel
         }
         return $array;
     }
+
+    // To Value
+    public static function toValues(): array
+    {
+        return [
+            self::NoPromocion->value => 10,
+            self::PromocionIncompleta->value => 10,
+            self::PromocionIncorrecta->value => 20,
+            self::NoMencionaPlan->value => 15,
+            self::NoMencionaCosto->value => 100,
+            self::NoMencionaCantidadGB->value => 100,
+            self::NoMencionaRSS->value => 100,
+            self::NoMencionaSMS->value => 100,
+            self::NoMencionaMinutos->value => 100,
+            self::MinutosOtrasOperadoras->value => 100,
+            self::NoMencionaLibertySinFronteras->value => 20,
+            self::NoMencionaPasaGB->value => 20,
+            self::NoMencionaAcumulaGB->value => 50,
+            self::NoMencionaSMSLiberty->value => 50,
+            self::NoMencionaImpuestoCruzRoja->value => 100,
+            self::NoMencionaImpuestoNineOneOne->value => 100,
+        ];
+    }
 }

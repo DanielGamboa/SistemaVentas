@@ -37,6 +37,18 @@ enum EsperaVaciosEnum: string implements HasLabel
 
         };
     }
+
+    // To values
+    public static function toValues(): array
+    {
+        return [
+            self::ProtocoloEspera->value => 10,
+            self::ExcedeEspera->value => 10,
+            self::Terceros->value => 10,
+            self::Vacios->value => 20,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

@@ -30,6 +30,17 @@ enum AbandonoLlamadaEnum: string implements HasLabel
             self::ExcedeTiempoEspera => 'Excede el tiempo de espera y el cliente finaliza la llamada',
         };
     }
+
+    // To value
+    public static function toValues(): array
+    {
+        return [
+            self::AbandonoLlamada->value => 10,
+            self::LiberaLlamada->value => 10,
+            self::ExcedeTiempoEspera->value => 20,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

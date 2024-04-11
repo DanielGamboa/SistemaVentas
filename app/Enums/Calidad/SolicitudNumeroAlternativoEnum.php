@@ -37,4 +37,14 @@ enum SolicitudNumeroAlternativoEnum: string implements HasLabel
         }
         return $array;
     }
+
+    // To value
+    public static function toValues(): array
+    {
+        return [
+            self::SegundoNumeroContacto->value => 20,
+            self::NoSolicitaNumeroPortar->value => 20,
+            self::NoValidaNumeroPortar->value => 20,
+        ];
+    }
 }

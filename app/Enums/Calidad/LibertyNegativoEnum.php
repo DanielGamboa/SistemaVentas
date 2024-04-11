@@ -26,6 +26,15 @@ enum LibertyNegativoEnum: string implements HasLabel
             self::PersuadirOpinionNegativa => 'No busca cambiar la opinion negativa del cliente con respecto del servicio o la compañía',
         };
     }
+
+    // To value
+    public static function toValues(): array
+    {
+        return [
+            self::PersuadirOpinionNegativa->value => 20,
+        ];
+    }
+    
     public static function toArray(): array
     {
         $array = [];

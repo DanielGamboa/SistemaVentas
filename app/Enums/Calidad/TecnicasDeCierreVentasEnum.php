@@ -39,6 +39,20 @@ enum TecnicasDeCierreVentasEnum: string implements HasLabel
             self::CierreFraudulento => 'Realiza cierre con oferta engañosa',
         };
     }
+
+    // To values
+    public static function toValues(): array
+    {
+        return [
+            self::NoCierraOportunamente->value => 20,
+            self::ActitudNegativa->value => 30,
+            self::NoCierraFirme->value => 30,
+            self::PreguntasAbiertas->value => 20,
+            self::PreguntaNegativa->value => 20,
+            self::CierreFraudulento->value => 100,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

@@ -31,6 +31,16 @@ enum AceptacionServicioEnum: string implements HasLabel
 
         };
     }
+
+    // To values
+    public static function toValues(): array
+    {
+        return [
+            self::NoConfirmaAceptacion->value => 20,
+            self::TitularNoValidaAceptacion->value => 100,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

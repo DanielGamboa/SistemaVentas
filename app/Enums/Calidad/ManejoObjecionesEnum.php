@@ -35,6 +35,19 @@ enum ManejoObjecionesEnum: string implements HasLabel
             self::AceptaObjecion => 'Se rinde aceptando la objeción del cliente a la primera de cambio ',
         };
     }
+
+    // To value
+    public static function toValues(): array
+    {
+        return [
+            self::NoUsaHerramientasObjeciones->value => 20,
+            self::NoIntentaRebatir->value => 20,
+            self::ContraatacaCliente->value => 20,
+            self::InventaRespuestaFalsa->value => 100,
+            self::AceptaObjecion->value => 20,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

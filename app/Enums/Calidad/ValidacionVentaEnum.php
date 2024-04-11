@@ -28,6 +28,16 @@ enum ValidacionVentaEnum: string implements HasLabel
             self::ValidacionIncompleta => 'No genera la validación de la venta de forma completa',
         };
     }
+
+    // To values
+    public static function toValues(): array
+    {
+        return [
+            self::NoValidaVenta->value => 100,
+            self::ValidacionIncompleta->value => 100,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

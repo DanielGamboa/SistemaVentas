@@ -42,4 +42,16 @@ enum SondeoEnum: string implements HasLabel
         }
         return $array;
     }
+
+    // To value
+    public static function toValues(): array
+    {
+        return [
+            self::NoSondea->value => 20,
+            self::MalaArgumentacion->value => 20,
+            self::FaltaConfianza->value => 20,
+            self::SondeoDudas->value => 20,
+            self::SondeoHorario->value => 20,
+        ];
+    }
 }

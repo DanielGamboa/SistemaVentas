@@ -36,6 +36,19 @@ enum AclaraDudasClienteEnum: string implements HasLabel
             self::InformacionIncompletaIncorrecta => 'Brinda información incompleta/incorrecta',
         };
     }
+
+    // To Values
+    public static function toValues(): array
+    {
+        return [
+            self::IndispuestoAyudar->value => 100,
+            self::NoAclaraDudas->value => 100,
+            self::NoDaInformacionCorrecta->value => 100,
+            self::NoExplicaFacturacion->value => 100,
+            self::InformacionIncompletaIncorrecta->value => 100,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

@@ -8,6 +8,29 @@ use Filament\Resources\Pages\EditRecord;
 use App\Models\User;
 // List Enums
 use App\Enums\Calidad\BienvenidaEnum;
+use App\Enums\Calidad\EmpatiaEnum;
+use App\Enums\Calidad\SondeoEnum;
+
+use App\Enums\Calidad\EscuchaActivaEnum;
+use App\Enums\Calidad\OfertaComercialEnum;
+use App\Enums\Calidad\SolicitudNumeroAlternativoEnum;
+use App\Enums\Calidad\AclaraDudasClienteEnum;
+use App\Enums\Calidad\ManejoObjecionesEnum;
+use App\Enums\Calidad\GenerarVentasIrregularesEnum;
+
+use App\Enums\Calidad\AceptacionServicioEnum;
+use App\Enums\Calidad\TecnicasDeCierreVentasEnum;
+use App\Enums\Calidad\UtilizaTecnicasCierreEnum;
+use App\Enums\Calidad\ValidacionVentaEnum;
+
+use App\Enums\Calidad\DiccionEnum;
+use App\Enums\Calidad\EsperaVaciosEnum;
+use App\Enums\Calidad\EvitaMaltratoAlClienteEnum;
+use App\Enums\Calidad\AbandonoLlamadaEnum;
+use App\Enums\Calidad\LibertyNegativoEnum;
+
+
+
 
 class EditCalidad extends EditRecord
 {
@@ -34,9 +57,36 @@ class EditCalidad extends EditRecord
         // Define the deduction values for each possible response selected for the Calidad audit
         // Tab Preventa
         $bienvenidaDeductions = BienvenidaEnum::toValues();
+        $empatiaDeductions = EmpatiaEnum::toValues();
+        $sondeoDeductions = SondeoEnum::toValues();
+
+        // Tab Venta
+        $escuchaActivaDeductions = EscuchaActivaEnum::toValues();
+        $ofertaComercialDeductions = OfertaComercialEnum::toValues();
+        $solicitudNumeroAlternativoDeductions = SolicitudNumeroAlternativoEnum::toValues();
+        $aclaraDudasClienteDeductions = AclaraDudasClienteEnum::toValues();
+        $manejoObjecionesDeductions = ManejoObjecionesEnum::toValues();
+        $generarVentasIrregularesDeductions = GenerarVentasIrregularesEnum::toValues();
+
+        // Tab Postventa
+        $aceptacionServiciosDeductions = AceptacionServicioEnum::toValues();
+        $tecnicasDeCierreVentasDeductions = TecnicasDeCierreVentasEnum::toValues();
+        $utilizaTecnicasDeCierreDeductions = UtilizaTecnicasCierreEnum::toValues();
+        $validacionVentaDeductions = ValidacionVentaEnum::toValues();
         
+        // Tab evaluacion del agente
+        $diccionDeductions = DiccionEnum::toValues();
+        $empatiaEvaluacionDeductions = EmpatiaEnum::toValues();
+        $escuchaVaciosDeductions = EsperaVaciosEnum::toValues();
+        $escuchaActivaDeductions = EscuchaActivaEnum::toValues();
+        $evitaMaltratoAlClienteDeductions = EvitaMaltratoAlClienteEnum::toValues();
+        $abandonoLlamadaDeductions = AbandonoLlamadaEnum::toValues();
+        $libertyNegativoDeductions = LibertyNegativoEnum::toValues();
+        
+        // Preventa
         // Assuming the checkbox responses are in the $data array
         $bienvenidaResponses = $data['bienvenida'];
+        $empatiaResponses = $data['empatia'];
 
         // Deduct the values for the 'bienvenida' responses
         foreach ($bienvenidaResponses as $response) {
@@ -45,6 +95,15 @@ class EditCalidad extends EditRecord
                 $totalScore -= $bienvenidaDeductions[$response];
                 }
             }
+        
+            // Deduct the values for the 'empatia' responses
+        foreach ($empatiaResponses as $response) {
+            // Deduct the value for this response from the total score
+            if (isset($empatiaDeductions[$response])) {
+                $totalScore -= $empatiaDeductions[$response];
+                }
+            }
+
         // If the total score is less than 0, set it to 0
         if ($totalScore < 0) {
             $totalScore = 0;

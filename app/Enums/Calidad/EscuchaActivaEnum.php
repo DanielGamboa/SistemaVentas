@@ -39,4 +39,13 @@ enum EscuchaActivaEnum: string implements HasLabel
         }
         return $array;
     }
+
+    // To value
+    public static function toValues(): array
+    {
+        return [
+            self::RepetirInformacionnInnecesaria->value => 20,
+            self::Distraido->value => 20,
+        ];
+    }
 }

@@ -34,6 +34,19 @@ enum GenerarVentasIrregularesEnum: string implements HasLabel
             self::NoSondeaDudas => 'No sondea dudas referente al servicio ofrecido o contratado',
         };
     }
+
+    // To Values
+    public static function toValues(): array
+    {
+        return [
+            self::VentaIncompleta->value => 100,
+            self::VentaImpuesta->value => 100,
+            self::VentaFraudulenta->value => 100,
+            self::ManipulaInformacion->value => 100,
+            self::NoSondeaDudas->value => 30,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

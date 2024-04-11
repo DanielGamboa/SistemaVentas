@@ -40,6 +40,19 @@ enum EvitaMaltratoAlClienteEnum: string implements HasLabel
             
         };
     }
+
+    // To values
+    public static function toValues(): array
+    {
+        return [
+            self::LenguajeSoez->value => 20,
+            self::TratoIrrespetuoso->value => 100,
+            self::DominaGrosero->value => 100,
+            self::InterrumpeCliente->value => 50,
+            self::ImpideCliente->value => 100,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

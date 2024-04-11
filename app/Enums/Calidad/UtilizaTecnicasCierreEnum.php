@@ -31,6 +31,17 @@ enum UtilizaTecnicasCierreEnum: string implements HasLabel
             self::NoRegistraDatos => 'No realiza registro de los datos',
         };
     }
+
+    // To values
+    public static function toValues(): array
+    {
+        return [
+            self::RegistraDatosIncompletos->value => 20,
+            self::DatosIncorrectosFalsos->value => 100,
+            self::NoRegistraDatos->value => 100,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];

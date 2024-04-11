@@ -34,6 +34,22 @@ enum DiccionEnum: string implements HasLabel
             self::Inseguridad => 'Muestra inseguridad al momento de brindar la información',
         };
     }
+
+    // To Values
+    public static function toValues(): array
+    {
+        return [
+            self::Pronunciacion->value => 20,
+            self::Muletillas->value => 10,
+            self::Monotono->value => 15,
+            self::LecturaFluida->value => 20,
+            self::LenguajeColoquial->value => 10,
+            self::GestionRobotizada->value => 25,
+            self::Disculpas->value => 50,
+            self::Inseguridad->value => 15,
+        ];
+    }
+
     public static function toArray(): array
     {
         $array = [];
