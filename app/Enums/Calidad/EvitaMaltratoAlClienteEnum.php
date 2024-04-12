@@ -53,6 +53,7 @@ enum EvitaMaltratoAlClienteEnum: string implements HasLabel
         ];
     }
 
+    // to array
     public static function toArray(): array
     {
         $array = [];

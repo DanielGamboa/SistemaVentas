@@ -1196,7 +1196,7 @@ class CalidadResource extends Resource
                         
                         $calificacion = $record->calificacion;
                         if ($calificacion >= 95) {
-                            return 'green';
+                            return 'success';
                         } elseif ($calificacion >= 85) {
                             return 'warning';
                         } elseif ($calificacion >= 75) {
