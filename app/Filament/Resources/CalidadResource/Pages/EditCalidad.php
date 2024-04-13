@@ -52,7 +52,6 @@ class EditCalidad extends EditRecord
         // Start with a total score of 100
         // If evaluacion_completo it's true, then the total score is 100, otherwise it's 0
         $totalScore = $data['evaluacion_completa'] ? 100 : 0;
-        // $totalScore = 100;
 
         // Define the deduction values for each possible response selected for the Calidad audit
         // Tab Preventa
@@ -121,7 +120,7 @@ class EditCalidad extends EditRecord
                 }
             }
         
-            // Deduct the values for the 'empatia' responses
+        // Deduct the values for the 'empatia' responses
         foreach ($empatiaResponses as $response) {
             // Deduct the value for this response from the total score
             if (isset($empatiaDeductions[$response])) {
