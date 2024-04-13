@@ -68,6 +68,10 @@ class PermissionsSeeder extends Seeder
             ['name' => 'Borrar calidad', 'gard_name' => 'web'],
             ['name' => 'Restaurar calidad', 'gard_name' => 'web'],
             ['name' => 'Eliminar calidad', 'gard_name' => 'web'],
+
+            // This policy is for Calidad model but its defined under UserPolicy
+            ['name' => 'Filtro de papelera para calidad', 'gard_name' => 'web'],
+            ['name' => 'createCalidad', 'gard_name' => 'web'],
             
         ]);
     }

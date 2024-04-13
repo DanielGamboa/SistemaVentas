@@ -1252,11 +1252,12 @@ class CalidadResource extends Resource
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('tlf')
-                    ->label('Telefono')
+                    ->label('Teléfono')
                     ->searchable()
                     ->sortable(),
                 // Tables\Columns\TextColumn::make('VentaLinea.plan')
                 Tables\Columns\TextColumn::make('ventas_telefono')
+                    ->label('Plan')
                     ->formatStateUsing(function (Calidad $calidad) {
                         // dd($calidad->ventas_telefono);
                         $ventasTelefono = $calidad->ventas_telefono;
@@ -1267,7 +1268,7 @@ class CalidadResource extends Resource
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('grabacionauditoria.fecha_llamada')
-                    ->label('Fecha primera llamada')
+                    ->label('Primera llamada')
                     ->formatStateUsing(function (Calidad $calidad) {
                         // dd($calidad->grabacionauditoria->first()->fecha_llamada);
                         // Get first date and from grabacion auditoria table and format the day from Y/m/d to d/m/Y

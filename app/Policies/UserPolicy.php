@@ -113,4 +113,9 @@ class UserPolicy
         return $user->hasRole('Filtro de papelera para calidad')|| $user->email === 'dgamboa@test.com';
     }
 
+    // User policy createCalidad for Calidad Resource:
+    public function createCalidad(User $user): bool
+    {
+        return $user->hasRole('Crear calidad') || $user->email === 'dgamboa@test.com';
+    }
 }

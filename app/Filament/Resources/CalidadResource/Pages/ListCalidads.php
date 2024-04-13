@@ -6,6 +6,7 @@ use App\Filament\Resources\CalidadResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Pages\Concerns\ExposesTableToWidgets;
+use Illuminate\Support\Facades\Gate;
 
 class ListCalidads extends ListRecords
 {
@@ -26,7 +27,8 @@ class ListCalidads extends ListRecords
         return [
             Actions\CreateAction::make()
                 ->label('Crear')
-                ->icon('heroicon-o-plus'),
+                ->icon('heroicon-o-plus')
+                ->visible(fn() => Gate::allows('createCalidad', auth()->user())),
         ];
     }
 
