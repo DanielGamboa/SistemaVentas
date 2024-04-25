@@ -16,62 +16,74 @@ class PermissionsSeeder extends Seeder
         // Make seeder for Spatie permissions
         DB::table('permissions')->insert([
             // Users Model Policy
-            ['name' => 'Ver usuarios', 'gard_name' => 'web'],
-            ['name' => 'Crear usuarios', 'gard_name' => 'web'],
-            ['name' => 'Editar usuarios', 'gard_name' => 'web'],
-            ['name' => 'Borrar usuarios', 'gard_name' => 'web'],
-            ['name' => 'Restaurar usuarios', 'gard_name' => 'web'],
-            ['name' => 'Eliminar usuarios', 'gard_name' => 'web'],
-            ['name' => 'Exportar usuarios', 'gard_name' => 'web'],
-            ['name' => 'Importar usuarios', 'gard_name' => 'web'],
+            ['name' => 'Ver usuarios', 'guard_name' => 'web'],
+            ['name' => 'Crear usuarios', 'guard_name' => 'web'],
+            ['name' => 'Editar usuarios', 'guard_name' => 'web'],
+            ['name' => 'Borrar usuarios', 'guard_name' => 'web'],
+            ['name' => 'Restaurar usuarios', 'guard_name' => 'web'],
+            ['name' => 'Eliminar usuarios', 'guard_name' => 'web'],
+            ['name' => 'Exportar usuarios', 'guard_name' => 'web'],
+            ['name' => 'Importar usuarios', 'guard_name' => 'web'],
             // Roles Model Policy
-            ['name' => 'Ver roles', 'gard_name' => 'web'],
-            ['name' => 'Crear roles', 'gard_name' => 'web'],
-            ['name' => 'Editar roles', 'gard_name' => 'web'],
-            ['name' => 'Borrar roles', 'gard_name' => 'web'],
-            ['name' => 'Restaurar roles', 'gard_name' => 'web'],
-            ['name' => 'Eliminar roles', 'gard_name' => 'web'],
+            ['name' => 'Ver roles', 'guard_name' => 'web'],
+            ['name' => 'Crear roles', 'guard_name' => 'web'],
+            ['name' => 'Editar roles', 'guard_name' => 'web'],
+            ['name' => 'Borrar roles', 'guard_name' => 'web'],
+            ['name' => 'Restaurar roles', 'guard_name' => 'web'],
+            ['name' => 'Eliminar roles', 'guard_name' => 'web'],
             
             // Permissions Model Policy
             //  Commented out because permissions will only be managed by Daniel Gamboa
-            // ['name' => 'Ver permisos', 'gard_name' => 'web'],
-            // ['name' => 'Crear permisos', 'gard_name' => 'web'],
-            // ['name' => 'Editar permisos', 'gard_name' => 'web'],
-            // ['name' => 'Borrar permisos', 'gard_name' => 'web'],
-            // ['name' => 'Restaurar permisos', 'gard_name' => 'web'],
-            // ['name' => 'Eliminar permisos', 'gard_name' => 'web'],
+            // ['name' => 'Ver permisos', 'guard_name' => 'web'],
+            // ['name' => 'Crear permisos', 'guard_name' => 'web'],
+            // ['name' => 'Editar permisos', 'guard_name' => 'web'],
+            // ['name' => 'Borrar permisos', 'guard_name' => 'web'],
+            // ['name' => 'Restaurar permisos', 'guard_name' => 'web'],
+            // ['name' => 'Eliminar permisos', 'guard_name' => 'web'],
             
             // Provincia Model Policy
-            ['name' => 'Ver provincias', 'gard_name' => 'web'],
+            ['name' => 'Ver provincias', 'guard_name' => 'web'],
 
             // Cantone Model Policy
-            ['name' => 'Ver cantones', 'gard_name' => 'web'],
+            ['name' => 'Ver cantones', 'guard_name' => 'web'],
 
             // Distrito Model Policy
-            ['name' => 'Ver distritos', 'gard_name' => 'web'],
+            ['name' => 'Ver distritos', 'guard_name' => 'web'],
             
             // Cliente Model Policy
-            ['name' => 'Ver cliente', 'gard_name' => 'web'],
-            ['name' => 'Crear cliente', 'gard_name' => 'web'],
-            ['name' => 'Editar cliente', 'gard_name' => 'web'],
-            ['name' => 'Borrar cliente', 'gard_name' => 'web'],
-            ['name' => 'Restaurar cliente', 'gard_name' => 'web'],
-            ['name' => 'Eliminar cliente', 'gard_name' => 'web'],
+            ['name' => 'Ver cliente', 'guard_name' => 'web'],
+            ['name' => 'Crear cliente', 'guard_name' => 'web'],
+            ['name' => 'Editar cliente', 'guard_name' => 'web'],
+            ['name' => 'Borrar cliente', 'guard_name' => 'web'],
+            ['name' => 'Restaurar cliente', 'guard_name' => 'web'],
+            ['name' => 'Eliminar cliente', 'guard_name' => 'web'],
             // This policy is for Client model but its defined under UserPolicy
-            ['name' => 'Exportar cliente', 'gard_name' => 'web'],
-            ['name' => 'Importar cliente', 'gard_name' => 'web'],
+            ['name' => 'Exportar cliente', 'guard_name' => 'web'],
+            ['name' => 'Importar cliente', 'guard_name' => 'web'],
 
             // Calidad Model Policy
-            ['name' => 'Ver calidad', 'gard_name' => 'web'],
-            ['name' => 'Crear calidad', 'gard_name' => 'web'],
-            ['name' => 'Editar calidad', 'gard_name' => 'web'],
-            ['name' => 'Borrar calidad', 'gard_name' => 'web'],
-            ['name' => 'Restaurar calidad', 'gard_name' => 'web'],
-            ['name' => 'Eliminar calidad', 'gard_name' => 'web'],
+            ['name' => 'Ver calidad', 'guard_name' => 'web'],
+            ['name' => 'Calidad ver todos', 'guard_name' => 'web'],
+            ['name' => 'Crear calidad', 'guard_name' => 'web'],
+            ['name' => 'Editar calidad', 'guard_name' => 'web'],
+            ['name' => 'Borrar calidad', 'guard_name' => 'web'],
+            ['name' => 'Restaurar calidad', 'guard_name' => 'web'],
+            ['name' => 'Eliminar calidad', 'guard_name' => 'web'],
 
             // This policy is for Calidad model but its defined under UserPolicy
-            ['name' => 'Filtro de papelera para calidad', 'gard_name' => 'web'],
-            ['name' => 'createCalidad', 'gard_name' => 'web'],
+            ['name' => 'Filtro de papelera para calidad', 'guard_name' => 'web'],
+            // ['name' => 'createCalidad', 'guard_name' => 'web'],
+
+            // VentaLinea Policy
+            ['name' => 'Ver venta línea', 'guard_name' => 'web'],
+            ['name' => 'Ver venta línea propia', 'guard_name' => 'web'],
+            ['name' => 'Crear venta línea', 'guard_name' => 'web'],
+            ['name' => 'Editar venta línea', 'guard_name' => 'web'],
+            ['name' => 'Borrar venta línea', 'guard_name' => 'web'],
+            ['name' => 'Restaurar venta línea', 'guard_name' => 'web'],
+            ['name' => 'Eliminar venta línea', 'guard_name' => 'web'],
+            ['name' => 'Exportar venta línea', 'guard_name' => 'web'],
+            ['name' => 'Importar venta línea', 'guard_name' => 'web'],
             
         ]);
     }

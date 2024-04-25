@@ -21,6 +21,8 @@ use App\Models\CalidadAuditoria;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\VentaLinea;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Gate;
 
 class Calidad extends Model implements HasMedia
 {
@@ -54,7 +56,6 @@ class Calidad extends Model implements HasMedia
              * abandono_llamada
              * liberty_negativo 
             */
-    /**
     /**
      * Write code on Method
      *
@@ -164,13 +165,13 @@ class Calidad extends Model implements HasMedia
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function agente(): BelongsTo
     {
         // Agente is the user_id from the users table
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'agente');
         // return $this->belongsTo(User::class, 'agente');
         // return $this->belongsTo(User::class);
     }
@@ -227,4 +228,22 @@ class Calidad extends Model implements HasMedia
     {
         return $this->belongsTo(CalidadAuditoria::class);
     }
+
+    public function scopeFilterByUserPermission(Builder $query): Builder
+    {
+        // Get the current user
+        $user = auth()->user();
+
+        // If the user has the "Calidad ver todos" permission, return the base query
+        if (Gate::allows('viewAllCalidad', $user)) {
+            return $query;
+        }
+
+        // Otherwise, only include records created by the user or where the user is the "agente"
+        return $query->where(function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                  ->orWhere('agente', $user->id);
+        });
+    }
+
 }

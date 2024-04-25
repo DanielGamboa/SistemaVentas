@@ -43,8 +43,7 @@ class CreateCalidad extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Asign Logged in user to user_id in order to record who did the audit.
-        $data['user_id'] = auth()->id();
+        
 
         // If evaluacion_completo it's true, then the total score is 100, otherwise it's 0
         $totalScore = $data['evaluacion_completa'] ? 100 : 0;
@@ -280,7 +279,9 @@ class CreateCalidad extends CreateRecord
 
         // Add the total score to the data array
         $data['calificacion'] = $totalScore;
-
+        // Asign Logged in user to user_id in order to record who did the audit.
+        $data['user_id'] = auth()->id();
+        // dd($data);    
         // After mutating the data, return it
         return $data;
 

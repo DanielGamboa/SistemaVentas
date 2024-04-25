@@ -225,7 +225,7 @@ class VentaLineaResource extends Resource
 
             ])->columns(12);
     }
-
+// --------------------------------------------------------------------------- START TABLE ---------------------------------------------------------------------------
     public static function table(Table $table): Table
     {
         return $table

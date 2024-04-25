@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             DistritoSeeder::class,
             TelefonosSeeder::class,
             EstatusCountSeeder::class,
+            PermissionsSeeder::class,
         ]);
     }
 }

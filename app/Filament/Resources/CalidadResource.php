@@ -62,6 +62,7 @@ use App\Models\CalidadAuditoria;
 use App\Models\CalidadAuditorium;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Gate;
+;
 
 // Cache
 use Illuminate\Support\Facades\Cache;
@@ -72,6 +73,7 @@ use Illuminate\Support\Facades\Cache;
 //  Filament\Forms\Components\Actions\Action
 // use Filament\Forms\Components\Actions\Action;
 // Spatie media library
+use Filament\Forms\Components\Hidden;
 
 
 class CalidadResource extends Resource
@@ -133,7 +135,8 @@ class CalidadResource extends Resource
 
 
                         Select::make('agente')
-                            ->relationship('user')
+                            // ->relationship('user')
+                            // ->relationship('agente')
                             ->label('Seleccione el Agente')
                             ->live()
                             
@@ -767,7 +770,7 @@ class CalidadResource extends Resource
                             // Mutate data in order to record duracion in H:i:s format between ending and starting time as well as calculate the duration of the call in seconds minutes and hours
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 // Set current user as the user_id
-                                $data['user_id'] = auth()->id();
+                                $data['cargo_audios'] = auth()->id();
                                 // Get value from dia_hora_inicio & dia_hora_final
                                 $HoraInicio = $data['dia_hora_inicio'];
                                 $HoraFinal = $data['dia_hora_final'];
@@ -805,7 +808,7 @@ class CalidadResource extends Resource
                             // mutate data before update
                             ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
                                 // Set current user as the user_id
-                                $data['user_id'] = auth()->id();
+                                $data['cargo_audios'] = auth()->id();
                                 // Get value from dia_hora_inicio & dia_hora_final
                                 $HoraInicio = $data['dia_hora_inicio'];
                                 $HoraFinal = $data['dia_hora_final'];
@@ -1169,6 +1172,7 @@ class CalidadResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Calidad::query()->filterByUserPermission())
             ->defaultSort('created_at', 'desc') // Sort Newest to oldest
             ->columns([
                 // Get bool value for 'evaluacion_completa' and return icon, color and label
@@ -1444,4 +1448,54 @@ class CalidadResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    // public static function canView($record, $user): bool
+//     public static function canView(): bool
+// {
+//     // User who created the audit can view it
+//     if ($user->id === $record->created_by) {
+//         return true;
+//     }
+
+//     // User who was audited can view it
+//     if ($user->id === $record->agente_id) {
+//         return true;
+//     }
+
+//     // User who has "ver todas las calidades" permission can view it
+//     if ($user->can('ver todas las calidades')) {
+//         return true;
+//     }
+
+//     // If none of the above conditions are met, the user can't view the record
+//     return false;
+// }
+
+public static function query(): Builder
+{
+    // Get the current user
+    $user = auth()->user();
+
+    // Start with the base query
+    $query = parent::query();
+
+    // If the user has the "Calidad ver todos" permission, return the base query
+    // if ($user->can('Calidad ver todos')) {
+    //     return $query;
+    // }
+    if (Gate::allows('viewAllCalidad', auth()->user())) {
+        return $query;
+    }
+    // if ($user->hasPermissionTo('Calidad ver todos')) {
+    //     return $query;
+    // }
+    
+    // Otherwise, only include records created by the user or where the user is the "agente"
+    return $query->where(function ($query) use ($user) {
+        $query->where('user_id', $user->id)
+              ->orWhere('agente', $user->id);
+    });
+    }
+
+
 }

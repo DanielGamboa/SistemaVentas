@@ -29,8 +29,9 @@ class CalidadAuditoria extends Model implements HasMedia
 
 
     protected $fillable = [
-        // 'calidad_id', // 'calidad_id' is the foreign key in the pivot table
-        'user_id', // 'user_id' is the foreign key in the pivot table
+        'calidad_id', // 'calidad_id' is the foreign key in the pivot table
+        // 'user_id', // 'user_id' is the foreign key in the pivot table
+        'cargo_audios', // 'cargo_audios' is the foreign key in the pivot table
         'sort', // Sort order for the grabaciones repeater
         'grabacion', // Recording file name
         'original_filename', // Original file name

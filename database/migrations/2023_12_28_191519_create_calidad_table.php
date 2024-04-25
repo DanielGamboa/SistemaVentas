@@ -24,7 +24,11 @@ return new class extends Migration
             // Phone nunmber called, to be audited
             $table->unsignedBigInteger('tlf')->nullable();
             // In case of sales, related sale Id
-            $table->foreignId('venta_lineas_id')->constrained()->restrictOnDelete()->nullable();
+            // Had to change the type of the column to unsignedBigInteger bevause ->constrained() was not working
+            // if was making the field not nullable.
+            $table->unsignedBigInteger('venta_lineas_id')->nullable()->restrictOnDelete();
+            $table->foreign('venta_lineas_id')->references('id')->on('venta_lineas');
+            // $table->foreignId('venta_lineas_id')->nullable()->constrained()->restrictOnDelete();
             $table->string('ventas_telefono')->nullable();
             // Was the audit completed
             $table->boolean('evaluacion_completa')->default(0);

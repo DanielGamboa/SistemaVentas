@@ -118,4 +118,24 @@ class UserPolicy
     {
         return $user->hasRole('Crear calidad') || $user->email === 'dgamboa@test.com';
     }
+
+    // User policy for VentaLinea Resource:
+        // Importer
+    public function importVentaLinea(User $user): bool
+    {
+        return $user->hasRole('Importar venta línea') || $user->email === 'dgamboa@test.com';
+    }
+
+        // Crear VentaLinea
+    public function createVentaLinea(User $user): bool
+    {
+        return $user->hasRole('Crear venta línea') || $user->email === 'dgamboa@test.com';
+    }
+
+    // Ver calidad todos
+    public function viewAllCalidad(User $user): bool
+    {
+        return $user->hasRole('Calidad ver todos') || $user->email === 'dgamboa@test.com';
+    }
+
 }

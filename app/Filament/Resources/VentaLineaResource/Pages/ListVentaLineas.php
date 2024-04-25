@@ -10,6 +10,7 @@ use Filament\Resources\Components\Tab;
 // use App\Filament\Resources\VentaLineaResource\Widgets\StatsOverview;
 // use App\Models\VentaLinea;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Facades\Gate;
 
 class ListVentaLineas extends ListRecords
 {
@@ -22,9 +23,11 @@ class ListVentaLineas extends ListRecords
         return [
             Actions\ImportAction::make()
                 ->color('primary')
+                ->visible(fn () => Gate::allows('importVentaLinea', auth()->user()))
                 ->importer(VentaLineaImporter::class),
             Actions\CreateAction::make()
                 ->label('Crear')
+                ->visible(fn () => Gate::allows('createVentaLinea', auth()->user()))
                 ->icon('heroicon-o-plus'),
         ];
     }

@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('calidad_id')->constrained('calidads')->nullable();
             $table->unsignedInteger('sort')->nullable(); // Sort order for the grabaciones repeater
             // $table->foreignId('calidad_id')->constrained()->restrictOnDelete()->nullable();
-            // $table->foreignId('user_id')->constrained('users')->nullable();
-            $table->foreignId('user_id')->constrained()->restrictOnDelete()->nullable();
+            // $table->foreignId('user_id')->constrained('users')->nullable()
+            $table->unsignedBigInteger('cargo_audios')->restrictOnDelete();
+            $table->foreign('cargo_audios')->references('id')->on('users');;
+            // $table->foreignId('user_id')->constrained()->restrictOnDelete()->nullable();
             $table->string('grabacion');
             $table->string('original_filename');
             $table->date('fecha_llamada')->nullable();
