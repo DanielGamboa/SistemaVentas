@@ -160,6 +160,33 @@ innodb_buffer_pool_instances = 4
 
 sudo service mysql restart
 
+Server Side:
+    Configure .env and database:
+    Configure DB
+        CREATE DATABASE sistemaventasdb;
+    
+    Create DB user with read and write permisions on local host and asign permisions.
+        CREATE USER 'libertydbuser'@'127.0.0.1' IDENTIFIED BY 'CaracasConcordCaracasMirafloresSantaAna9783696018!';
+        CREATE USER 'libertydbuser'@'localhost' IDENTIFIED BY 'CaracasConcordCaracasMirafloresSantaAna9783696018!';
+        GRANT ALL ON sistemaventadb.* TO 'libertydbuser'@'localhost';
+        GRANT ALL ON sistemaventasdb.* TO 'libertydbuser'@'127.0.0.1';
+        FLUSH PRIVILEGES;
+        EXIT;
+    Condigure .env key
+        sudo php artisan key:generate
+        sudo nano .env
+
+    Fill out .env fields for database:
+        db_databse: sistemaventadb
+        db_username: libertydbuser
+        db_password: CaracasConcordCaracasMirafloresSantaAna9783696018!
+    Configure apache2 permisions for laravel proyect
+        sudo chown -R www-data:www-data /var/www/html/liberty
+        sudo chmod -R 755 /var/www/html/liberty/SistemaVentas/storage
+        sudo chmod -R 755 /var/www/html/liberty/SistemaVentas/bootstrap/cache
+
+
+
 
 
 

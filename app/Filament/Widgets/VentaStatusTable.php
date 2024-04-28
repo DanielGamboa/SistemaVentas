@@ -23,6 +23,13 @@ use Filament\Tables\Columns\Summarizers\Sum;
 
 class VentaStatusTable extends BaseWidget
 {
+    // Make 9 columns wide
+    protected int | string | array $columnSpan = 2;
+    // protected int $columnSpan = 10;
+    // protected int | string | array $columnSpan = [
+    //     'md' => 2,
+    //     'xl' => 2,
+    // ];
     
     public function table(Table $table): Table
     {
@@ -49,10 +56,12 @@ class VentaStatusTable extends BaseWidget
             \App\Models\EstatusCount::query()->select('ID', 'estatus', 'count_week', 'count_month', 'count', 'week_sale', 'month_sale', 'total_sale')
         )
             ->columns([
+                
                 // ...
                 TextColumn::make('estatus')
                     ->label('Estatus')
-                    ->summarize(Sum::make()    
+                    ->summarize(Sum::make()
+                        ->label('Total')    
                         ->numeric(
                         decimalPlaces: 0,
                         decimalSeparator: '.',
@@ -67,6 +76,7 @@ class VentaStatusTable extends BaseWidget
                         thousandsSeparator: ',',
                     )
                     ->summarize(Sum::make()    
+                        ->label('')
                         ->numeric(
                         decimalPlaces: 0,
                         decimalSeparator: '.',
@@ -80,7 +90,8 @@ class VentaStatusTable extends BaseWidget
                         decimalSeparator: '.',
                         thousandsSeparator: ',',
                     )
-                    ->summarize(Sum::make()    
+                    ->summarize(Sum::make()
+                        ->label('')
                         ->numeric(
                         decimalPlaces: 0,
                         decimalSeparator: '.',
@@ -95,6 +106,7 @@ class VentaStatusTable extends BaseWidget
                         thousandsSeparator: ',',
                     )
                     ->summarize(Sum::make()
+                        ->label('')
                         ->numeric(
                             decimalPlaces: 0,
                             decimalSeparator: '.',
@@ -109,6 +121,7 @@ class VentaStatusTable extends BaseWidget
                         thousandsSeparator: ',',
                     )
                     ->summarize(Sum::make()
+                        ->label('')
                         ->numeric(
                             decimalPlaces: 0,
                             decimalSeparator: '.',
@@ -123,6 +136,7 @@ class VentaStatusTable extends BaseWidget
                         thousandsSeparator: ',',
                     )
                     ->summarize(Sum::make()
+                        ->label('')
                         ->numeric(
                             decimalPlaces: 0,
                             decimalSeparator: '.',
@@ -137,6 +151,7 @@ class VentaStatusTable extends BaseWidget
                         thousandsSeparator: ',',
                     )
                     ->summarize(Sum::make()
+                        ->label('')
                         ->numeric(
                             decimalPlaces: 0,
                             decimalSeparator: '.',
